@@ -1,9 +1,10 @@
-name: Import Troublio from GitLab
+name: Apply Troublio bundle
 
 on:
   push:
     branches: [main]
     paths:
+      - '.github/troublio-bundle.zip.b64'
       - '.github/workflows/import-from-gitlab.yml'
   workflow_dispatch:
 
@@ -11,35 +12,57 @@ permissions:
   contents: write
 
 jobs:
-  import:
+  apply:
     if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout GitHub repository
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Clone current Troublio project from GitLab
+      - name: Detect update bundle
+        id: bundle
+        shell: bash
         run: |
-          git clone --depth 1 https://gitlab.com/oguzdurak16/troublio.git /tmp/troublio-gitlab
+          if [ -f .github/troublio-bundle.zip.b64 ]; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+            echo "No update bundle is present."
+          fi
 
-      - name: Copy project files into GitHub repository
+      - name: Decode update bundle
+        if: steps.bundle.outputs.exists == 'true'
+        shell: bash
+        run: |
+          rm -rf /tmp/troublio-bundle
+          mkdir -p /tmp/troublio-bundle
+          base64 --decode .github/troublio-bundle.zip.b64 > /tmp/troublio-bundle.zip
+          unzip -q /tmp/troublio-bundle.zip -d /tmp/troublio-bundle
+
+      - name: Apply project files
+        if: steps.bundle.outputs.exists == 'true'
+        shell: bash
         run: |
           rsync -a --delete \
             --exclude '.git/' \
-            --exclude '.github/' \
-            /tmp/troublio-gitlab/ ./
+            --exclude '.github/workflows/import-from-gitlab.yml' \
+            --exclude '.github/troublio-bundle.zip.b64' \
+            /tmp/troublio-bundle/ ./
+          rm -f .github/troublio-bundle.zip.b64
 
-      - name: Commit imported project
+      - name: Commit Troublio update
+        if: steps.bundle.outputs.exists == 'true'
+        shell: bash
         run: |
           git config user.name "oguzdurak16"
           git config user.email "oguzdurak16@gmail.com"
           git add -A
           if git diff --cached --quiet; then
-            echo "No changes to import."
+            echo "No project changes detected."
             exit 0
           fi
-          git commit -m "Import current Troublio project from GitLab"
+          git commit -m "Release Troublio v1.5.0 decoder and model tools"
           git push origin main
