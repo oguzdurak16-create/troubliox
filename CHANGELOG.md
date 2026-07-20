@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.7.2 — 2026-07-20
+
+- Added an automated repository integrity audit for required files, imports, routes, sitemap entries, internal links, public assets, lockfile consistency, verification files, and accidental artifacts.
+- Added the repository audit to GitHub Actions and `BUILD_KONTROL.bat`.
+- Removed obsolete `.gitlab-ci.yml` and `GITLABA-YUKLE.bat` files from the GitHub production repository.
+- Rewrote the README for the active GitHub, pull-request, squash-merge, and single-production-deployment workflow.
+- Verified the existing 40-character IndexNow key and root verification file against the current IndexNow key rules.
+- Updated IndexNow client version metadata and ignored generated Next.js route declarations during pre-build import auditing.
+
 ## 1.7.1 — 2026-07-20
 
 - Changed homepage search suggestions to use the canonical slugs produced by the content merge instead of hard-coded URLs.

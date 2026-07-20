@@ -1,12 +1,13 @@
 {
   "name": "troublio",
-  "version": "1.7.1",
+  "version": "1.7.2",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
+    "audit:repo": "node scripts/audit-repository.mjs --strict",
     "indexnow": "node scripts/submit-indexnow.mjs",
     "indexnow:check": "node scripts/submit-indexnow.mjs --dry-run",
     "validate:content": "node scripts/validate-content.mjs"

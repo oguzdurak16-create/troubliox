@@ -28,6 +28,20 @@ jobs:
           cache: pnpm
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+      - name: Audit repository structure
+        id: repository_audit
+        continue-on-error: true
+        run: pnpm audit:repo > audit-report.txt 2>&1
+      - name: Upload repository audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: repository-audit
+          path: audit-report.txt
+          if-no-files-found: error
+      - name: Enforce repository audit
+        if: steps.repository_audit.outcome == 'failure'
+        run: cat audit-report.txt && exit 1
       - name: Validate content
         run: pnpm validate:content
       - name: Typecheck
