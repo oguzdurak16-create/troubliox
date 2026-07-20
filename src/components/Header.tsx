@@ -7,11 +7,12 @@ export function Header() {
       <div className="container header-inner">
         <Logo />
         <nav className="main-nav" aria-label="Primary navigation">
+          <Link href="/decoder">Decoder</Link>
           <Link href="/devices">Devices</Link>
           <Link href="/issues">Issues</Link>
           <Link href="/error-codes">Error codes</Link>
+          <Link href="/model-number">Model finder</Link>
           <Link href="/guides">All guides</Link>
-          <Link href="/recent">Recent</Link>
         </nav>
         <div className="header-tools">
           <Link className="header-tool header-diagnose" href="/diagnose" aria-label="Guided diagnosis">
@@ -26,6 +27,8 @@ export function Header() {
           <details className="mobile-menu">
             <summary aria-label="Open navigation"><span aria-hidden="true">☰</span></summary>
             <nav aria-label="Mobile navigation">
+              <Link href="/decoder">Error code decoder</Link>
+              <Link href="/model-number">Find a model number</Link>
               <Link href="/devices">Devices</Link>
               <Link href="/issues">Issue hubs</Link>
               <Link href="/error-codes">Error codes</Link>
