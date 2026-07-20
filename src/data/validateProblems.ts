@@ -1,14 +1,16 @@
 import type { Problem } from "./problems";
+import { mergeGscOpportunityProblems } from "./gscOpportunityProblems";
 
 function invariant(condition: unknown, message: string): asserts condition {
   if (!condition) throw new Error(`[Troublio content] ${message}`);
 }
 
 export function validateProblems(items: Problem[]): Problem[] {
+  const mergedItems = mergeGscOpportunityProblems(items);
   const slugs = new Set<string>();
   const titles = new Set<string>();
 
-  for (const problem of items) {
+  for (const problem of mergedItems) {
     invariant(/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(problem.slug), `Invalid slug: ${problem.slug}`);
     invariant(!slugs.has(problem.slug), `Duplicate slug: ${problem.slug}`);
     invariant(!titles.has(problem.title.toLowerCase()), `Duplicate title: ${problem.title}`);
@@ -35,5 +37,5 @@ export function validateProblems(items: Problem[]): Problem[] {
     }
   }
 
-  return items;
+  return mergedItems;
 }

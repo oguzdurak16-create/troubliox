@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.7.0 — 2026-07-20
+
+- Added six exact-query appliance guides based on early Google Search Console impressions.
+- Added official-source coverage for Whirlpool washer rL, Bosch washer F29 and E32, Bosch dishwasher E90, LG washer FF, and Samsung washer 5D.
+- Added search-language aliases and direct answers for the wording users entered in Google.
+- Added safeguards for easily confused displays such as Samsung 5d versus 5E and Bosch dishwasher E90 versus dryer E90.
+- Added a homepage search-demand section and updated hero links to strengthen internal discovery.
+- Added semantic code-target merging so stronger curated content replaces an existing equivalent page without creating duplicate URLs.
+
 ## 1.6.0 — 2026-07-20
 
 - Added a reset assistant that chooses between restart, power cycle, network reset, settings reset, and factory reset.

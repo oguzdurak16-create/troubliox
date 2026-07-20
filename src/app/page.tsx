@@ -14,6 +14,7 @@ export default function HomePage() {
   const errorCodes = problems.filter((problem) => problem.contentKind === "error-code");
   const washerCodes = errorCodes.filter((problem) => problem.device === "Washing machine").length;
   const dishwasherCodes = errorCodes.filter((problem) => problem.device === "Dishwasher").length;
+  const searchDemandGuides = problems.filter((problem) => problem.tags.includes("gsc-opportunity")).slice(0, 6);
   const expansionGuides = problems.filter((problem) => [
     "windows-11-wifi-connected-no-internet",
     "printer-offline-but-connected",
@@ -46,9 +47,9 @@ export default function HomePage() {
             <div className="hero-actions"><Link className="button button-primary" href="/diagnose">Start guided diagnosis</Link><Link className="button button-secondary" href="/decoder">Decode an error code</Link></div>
             <div className="search-suggestions">
               <span>Try:</span>
-              <Link href="/problems/windows-update-error-0x80070005">Windows 0x80070005</Link>
-              <Link href="/problems/printer-offline-but-connected">Printer offline</Link>
-              <Link href="/problems/wifi-connected-no-internet">Wi-Fi no internet</Link>
+              <Link href="/problems/whirlpool-washer-rl-code">Whirlpool washer rL</Link>
+              <Link href="/problems/bosch-washer-f29-error">Bosch washer F29</Link>
+              <Link href="/problems/samsung-washer-5d-error">Samsung washer 5D</Link>
             </div>
           </div>
           <div className="diagnostic-visual" aria-hidden="true">
@@ -56,11 +57,11 @@ export default function HomePage() {
             <div className="float-note float-note-one">Safe checks first</div>
             <div className="float-note float-note-two">Model check required</div>
             <div className="diagnostic-panel">
-              <div className="panel-top"><span className="panel-status">Diagnosis active</span><span className="panel-code">E15</span></div>
-              <div className="signal-row"><span className="signal-icon">01</span><span className="signal-copy"><strong>Display identified</strong><span>Bosch dishwasher</span></span><span className="signal-score">100%</span></div>
-              <div className="signal-row"><span className="signal-icon">02</span><span className="signal-copy"><strong>Likely condition</strong><span>Base leak protection</span></span><span className="signal-score">Likely</span></div>
-              <div className="signal-row"><span className="signal-icon">03</span><span className="signal-copy"><strong>Safety state</strong><span>Power and water off</span></span><span className="signal-score">High</span></div>
-              <div className="panel-result"><small>Next safe check</small><strong>Inspect visible hoses and stop before tilting the unit</strong></div>
+              <div className="panel-top"><span className="panel-status">Diagnosis active</span><span className="panel-code">rL</span></div>
+              <div className="signal-row"><span className="signal-icon">01</span><span className="signal-copy"><strong>Display identified</strong><span>Whirlpool washer</span></span><span className="signal-score">Exact</span></div>
+              <div className="signal-row"><span className="signal-icon">02</span><span className="signal-copy"><strong>Likely condition</strong><span>Load detected in Clean Washer</span></span><span className="signal-score">Likely</span></div>
+              <div className="signal-row"><span className="signal-icon">03</span><span className="signal-copy"><strong>Safety state</strong><span>Empty drum before restart</span></span><span className="signal-score">Safe</span></div>
+              <div className="panel-result"><small>Next safe check</small><strong>Remove every item and restart the empty cleaning cycle</strong></div>
             </div>
           </div>
         </div>
@@ -82,6 +83,16 @@ export default function HomePage() {
             <Link className="home-tool-card" href="/model-number"><span>Product identification</span><h3>Model number finder</h3><p>Locate model, product-code, and hardware-revision labels without exposing private serial data.</p><strong>Find the label →</strong></Link>
             <Link className="home-tool-card" href="/reset"><span>Data-loss prevention</span><h3>Reset assistant</h3><p>Choose between restart, power cycle, network reset, settings reset, and factory reset.</p><strong>Choose a safe reset →</strong></Link>
           </div>
+        </div>
+      </section>
+
+      <section className="section section-dark">
+        <div className="container">
+          <div className="section-heading">
+            <div><span className="eyebrow">Current search demand</span><h2>Exact appliance codes people are searching now.</h2></div>
+            <p>These pages answer the full query directly, distinguish easily confused displays, and link back to official manufacturer support.</p>
+          </div>
+          <div className="problem-grid">{searchDemandGuides.map((problem) => <ProblemCard key={problem.slug} problem={problem} />)}</div>
         </div>
       </section>
 
