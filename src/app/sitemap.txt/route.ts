@@ -1,5 +1,7 @@
 import { brands, categories, problems } from "@/data/problems";
 import { deviceHubs, issueHubs } from "@/data/hubs";
+import { modelNumberGuides } from "@/data/modelNumberGuides";
+import { resetGuides } from "@/data/resetGuides";
 import { SITE_URL } from "@/lib/site";
 
 export const dynamic = "force-static";
@@ -7,6 +9,9 @@ export const dynamic = "force-static";
 export function GET() {
   const staticPaths = [
     "",
+    "/decoder",
+    "/model-number",
+    "/reset",
     "/diagnose",
     "/guides",
     "/recent",
@@ -31,6 +36,8 @@ export function GET() {
   ];
   const urls = [
     ...staticPaths.map((path) => `${SITE_URL}${path}`),
+    ...resetGuides.map((guide) => `${SITE_URL}/reset/${guide.slug}`),
+    ...modelNumberGuides.map((guide) => `${SITE_URL}/model-number/${guide.slug}`),
     ...deviceHubs.map((hub) => `${SITE_URL}/devices/${hub.slug}`),
     ...issueHubs.map((hub) => `${SITE_URL}/issues/${hub.slug}`),
     ...categories.map((category) => `${SITE_URL}/categories/${category.slug}`),
