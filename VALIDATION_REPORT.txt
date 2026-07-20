@@ -1,0 +1,19 @@
+Troublio v1.4.0 validation report
+Date: 2026-07-17
+
+PASS - 61 TypeScript/TSX source files passed syntax transpilation.
+PASS - Content validation completed.
+PASS - 373 unique troubleshooting guides.
+PASS - 286 error-code guides and 73 symptom guides.
+PASS - 331 guides contain one or more reference sources.
+PASS - 25 distinct source domains are represented.
+PASS - 0 duplicate slugs detected by the content validator.
+PASS - 26 brands and 8 categories generated from the guide library.
+PASS - 10 device hubs and 13 issue hubs contain matching guides.
+PASS - XML sitemap architecture contains approximately 452 indexable URLs.
+PASS - Noindex problem-submission page was removed from sitemap outputs.
+PASS - Error-code collection pages contain ItemList structured data.
+PASS - Search, feed, OpenSearch, dynamic OG, and IndexNow routes passed syntax checks.
+
+Environment limitation:
+A full Next.js production build could not be executed in this container because outbound access to registry.npmjs.org is unavailable and project dependencies are not cached. The production lockfile, Node 22 requirement, GitLab CI verification, and Vercel install/build settings remain configured for the real deployment environment.

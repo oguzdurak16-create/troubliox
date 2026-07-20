@@ -1,0 +1,7 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = { title: "Terms of use", description: "Troublio terms of use.", alternates: { canonical: "/terms" } };
+
+export default function TermsPage() {
+  return <><section className="page-hero"><div className="container page-hero-narrow"><span className="eyebrow">Terms</span><h1>Terms of use.</h1><p>These starter terms define basic use of the Troublio information service and require legal review before commercial launch.</p></div></section><article className="container prose-page"><h2>Informational service</h2><p>Troublio provides general troubleshooting information without warranties that a guide will identify or solve every fault.</p><h2>Acceptable use</h2><p>Do not use the service to submit unlawful, private, deceptive, harmful, or security-sensitive material. Do not attempt to disrupt or scrape the service in a way that degrades access for others.</p><h2>Intellectual property</h2><p>Site design, original text, structure, and branding are protected to the extent allowed by law. Product and company names remain the property of their respective owners and are used for identification.</p><h2>Limitation</h2><p>Use the guides at your own judgment and risk. Stop when the page or product documentation indicates professional help is required.</p><h2>Changes</h2><p>The site may update these terms, guide content, or available features as the service develops.</p></article></>;
+}

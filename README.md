@@ -8,7 +8,7 @@ Global troubleshooting search and diagnosis library built with Next.js App Route
 - 286 exact error-code guides and 73 symptom guides
 - 331 source-backed pages using 25 distinct reference domains
 - 26 brands, 8 categories, 10 device hubs, and 13 issue hubs
-- Browser, DNS, HTTP, streaming, TV, HDMI, console, and audio problem clusters
+- New browser, DNS, HTTP, streaming, TV, HDMI, console, and audio problem clusters
 - Compact client search index served from `/api/search-index`
 - Search autocomplete, exact-code ranking, keyboard navigation, and zero-result analytics
 - Guided diagnosis, interactive checks, save/share/history, and worked/did-not-work feedback
@@ -18,8 +18,9 @@ Global troubleshooting search and diagnosis library built with Next.js App Route
 - Source and editorial trust panel on guide pages
 - TechArticle, ItemList, Organization, and breadcrumb structured data
 - IndexNow key and batch submission utility
-- Content validation in local build checks and CI
-- Search Console verification, GA4 consent management, GitHub, and Vercel configuration
+- Content validation in local build checks and GitLab CI
+- Search Console verification, GA4 consent management, GitLab, and Vercel configuration
+- Working `GITLABA-YUKLE.bat` fixed to the Troublio repository
 
 ## Local development
 
@@ -40,15 +41,17 @@ pnpm typecheck
 pnpm build
 ```
 
+Windows users can run `BUILD_KONTROL.bat`.
+
 ## Deploy
 
-The production repository is:
+Run `GITLABA-YUKLE.bat`. It pushes the project to:
 
 ```text
-https://github.com/oguzdurak16-create/troubliox
+https://gitlab.com/oguzdurak16/troublio.git
 ```
 
-Connect the GitHub repository to Vercel and deploy the `main` branch automatically.
+Vercel deploys the `main` branch automatically.
 
 ## Environment
 
@@ -71,6 +74,8 @@ https://www.troublio.com/feed.json
 https://www.troublio.com/opensearch.xml
 https://www.troublio.com/recent
 ```
+
+After a successful production deployment, run `INDEXNOW_GONDER.bat` once to submit the current sitemap URLs. Run it again after a substantial batch of new or materially changed pages, not after cosmetic edits.
 
 ## Content maintenance
 

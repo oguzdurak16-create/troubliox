@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#f7f4eb"/>
+  <circle cx="1010" cy="120" r="260" fill="#c9f47b" opacity=".7"/>
+  <circle cx="1030" cy="460" r="190" fill="#0d6967" opacity=".12"/>
+  <text x="90" y="180" font-family="Arial, sans-serif" font-size="68" font-weight="800" fill="#10282a">troubli<tspan fill="#0d6967">o</tspan></text>
+  <text x="90" y="315" font-family="Arial, sans-serif" font-size="74" font-weight="800" fill="#10282a">Find what’s wrong.</text>
+  <text x="90" y="402" font-family="Arial, sans-serif" font-size="74" font-weight="800" fill="#0d6967">Know what to do.</text>
+  <text x="90" y="505" font-family="Arial, sans-serif" font-size="28" fill="#435c5d">Clear troubleshooting paths for devices, apps, vehicles, appliances and everyday problems.</text>
+  <circle cx="1012" cy="302" r="112" fill="#073f40"/>
+  <rect x="997" y="222" width="30" height="98" rx="15" fill="#c9f47b"/>
+  <circle cx="1012" cy="354" r="18" fill="#c9f47b"/>
+</svg>

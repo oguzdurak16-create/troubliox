@@ -1,0 +1,7 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = { title: "Safety disclaimer", description: "Important limitations and safety information for using Troublio guides.", alternates: { canonical: "/disclaimer" } };
+
+export default function DisclaimerPage() {
+  return <><section className="page-hero"><div className="container page-hero-narrow"><span className="eyebrow">Safety disclaimer</span><h1>Use observations, not unsafe experiments.</h1><p>Troublio provides general informational guidance. Conditions, models, and risks can differ.</p></div></section><article className="container prose-page"><div className="callout"><strong>Stop immediately for urgent hazards.</strong>Disconnect power only when it is safe to do so, move away from smoke, fire, gas odor, exposed wiring, leaking fuel, swelling batteries, or unstable structures, and contact the appropriate emergency or qualified service.</div><h2>No professional relationship</h2><p>Using the site does not create a technician, engineering, legal, medical, financial, or other professional relationship.</p><h2>Model-specific instructions control</h2><p>Follow the manufacturer manual, warnings, recall notices, and local regulations for the exact model and location. Do not perform a step that conflicts with them.</p><h2>Your responsibility</h2><p>You are responsible for deciding whether a step is within your ability and safe for the situation. When uncertain, stop and use qualified help.</p></article></>;
+}

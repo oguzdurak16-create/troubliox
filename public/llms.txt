@@ -1,0 +1,25 @@
+# Troublio
+
+Troublio is a global troubleshooting reference that helps visitors identify likely causes, complete safer external checks, and know when qualified service is required.
+
+## Main sections
+
+- https://www.troublio.com/diagnose — guided matching by symptom, error code, category, and brand
+- https://www.troublio.com/error-codes — appliance, Windows, printer, browser, DNS, certificate, and HTTP error-code guides
+- https://www.troublio.com/devices — device-focused troubleshooting hubs
+- https://www.troublio.com/issues — symptom-focused troubleshooting hubs
+- https://www.troublio.com/guides — complete A–Z guide directory
+- https://www.troublio.com/recent — recently reviewed and materially updated guides
+- https://www.troublio.com/feed.xml — recent guide RSS feed
+- https://www.troublio.com/editorial-policy — evidence and safety standards
+- https://www.troublio.com/disclaimer — limitations and stop conditions
+
+## Content principles
+
+- Direct answer before background information.
+- Observable symptoms before assumptions about failed components.
+- Safer external checks before internal work.
+- Official support documents and manufacturer manuals control when model-specific instructions differ.
+- Every error-code guide includes at least one source and a model-context warning.
+- Stop conditions are included for water, heat, electricity, pressure, chemicals, batteries, glass, and moving parts.
+- Search and diagnosis pages use a cached compact index instead of sending the full content library to the browser.
