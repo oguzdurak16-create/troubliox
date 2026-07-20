@@ -43,7 +43,7 @@ export default function HomePage() {
             <h1>Something&apos;s not working. <em>Start here.</em></h1>
             <p>Search the exact error code, symptom, appliance, device, or app. Troublio maps likely causes, safe checks, and the point where qualified service is the right next step.</p>
             <SearchBox />
-            <div className="hero-actions"><Link className="button button-primary" href="/diagnose">Start guided diagnosis</Link><Link className="button button-secondary" href="/saved">Saved guides</Link></div>
+            <div className="hero-actions"><Link className="button button-primary" href="/diagnose">Start guided diagnosis</Link><Link className="button button-secondary" href="/decoder">Decode an error code</Link></div>
             <div className="search-suggestions">
               <span>Try:</span>
               <Link href="/problems/windows-update-error-0x80070005">Windows 0x80070005</Link>
@@ -71,6 +71,17 @@ export default function HomePage() {
           <div className="trust-item"><span>1</span><div><strong>Direct answer first</strong><small>No long introduction before the likely condition.</small></div></div>
           <div className="trust-item"><span>2</span><div><strong>Safe checks in order</strong><small>External observations before parts or service.</small></div></div>
           <div className="trust-item"><span>3</span><div><strong>Official manual links</strong><small>Model-specific documentation remains the deciding reference.</small></div></div>
+        </div>
+      </section>
+
+      <section className="section-tight">
+        <div className="container">
+          <div className="section-heading"><div><span className="eyebrow">Free troubleshooting tools</span><h2>Use the fastest route to the correct guide.</h2></div><p>Decode the display, find the exact model, or choose the least destructive reset before changing parts or erasing settings.</p></div>
+          <div className="home-tool-grid">
+            <Link className="home-tool-card" href="/decoder"><span>Exact code lookup</span><h3>Error code decoder</h3><p>Filter by brand and device, then prioritize an exact display-code match.</p><strong>Decode a code →</strong></Link>
+            <Link className="home-tool-card" href="/model-number"><span>Product identification</span><h3>Model number finder</h3><p>Locate model, product-code, and hardware-revision labels without exposing private serial data.</p><strong>Find the label →</strong></Link>
+            <Link className="home-tool-card" href="/reset"><span>Data-loss prevention</span><h3>Reset assistant</h3><p>Choose between restart, power cycle, network reset, settings reset, and factory reset.</p><strong>Choose a safe reset →</strong></Link>
+          </div>
         </div>
       </section>
 

@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.6.0 — 2026-07-20
+
+- Added a reset assistant that chooses between restart, power cycle, network reset, settings reset, and factory reset.
+- Added six detailed reset guides for routers, printers, smart TVs and streaming devices, phones and tablets, Windows PCs, and appliance controls.
+- Added explicit data-loss boundaries, backup preparation, stop conditions, and post-reset verification steps.
+- Added reset pages to homepage tools, desktop/mobile navigation, footer navigation, and sitemap discovery.
+- Added analytics events for reset decisions without collecting serial numbers or private setup values.
+- Expanded content validation to cover model-number guides, reset-guide slugs, reset levels, and required reset data.
+- Updated GitHub Actions to validate development branches before the production branch is moved.
+
+## 1.5.0 — 2026-07-20
+
+- Added an exact error-code decoder with brand and device filters.
+- Added a model-number finder and six device-specific label-location guides.
+- Added decoder and model-number pages to navigation and sitemap discovery.
+- Added GitHub Actions content validation, TypeScript checking, and production-build verification.
+- Migrated the production repository to GitHub and connected Vercel to the `main` branch.
+
 ## 1.4.0 — 2026-07-17
 
 - Expanded the library to 373 guides, including 286 exact error-code guides and 73 symptom guides.
