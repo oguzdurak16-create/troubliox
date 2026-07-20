@@ -28,6 +28,8 @@ jobs:
           cache: pnpm
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+      - name: Audit repository structure
+        run: pnpm audit:repo
       - name: Validate content
         run: pnpm validate:content
       - name: Typecheck
