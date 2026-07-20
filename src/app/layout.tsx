@@ -4,6 +4,7 @@ import { Header } from "@/components/Header";
 import { ConsentManager } from "@/components/ConsentManager";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
+import "./tooling.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
