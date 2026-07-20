@@ -1,3 +1,4 @@
+import "../tooling.css";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
