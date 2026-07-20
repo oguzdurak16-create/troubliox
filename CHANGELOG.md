@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.7.1 — 2026-07-20
+
+- Changed homepage search suggestions to use the canonical slugs produced by the content merge instead of hard-coded URLs.
+- Prevented broken links when an existing error-code page keeps its established URL during a Search Console content upgrade.
+
 ## 1.7.0 — 2026-07-20
 
 - Added six exact-query appliance guides based on early Google Search Console impressions.
