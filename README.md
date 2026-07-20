@@ -1,26 +1,40 @@
-# Troublio v1.4.0
+# Troublio v1.7.2
 
-Global troubleshooting search and diagnosis library built with Next.js App Router and TypeScript.
+Troublio is a global troubleshooting search and diagnosis library built with Next.js App Router, React, TypeScript, and pnpm.
 
-## Included
+Production repository:
 
-- 373 unique troubleshooting guides
-- 286 exact error-code guides and 73 symptom guides
-- 331 source-backed pages using 25 distinct reference domains
-- 26 brands, 8 categories, 10 device hubs, and 13 issue hubs
-- New browser, DNS, HTTP, streaming, TV, HDMI, console, and audio problem clusters
+```text
+https://github.com/oguzdurak16-create/troubliox
+```
+
+## Current capabilities
+
+- Exact error-code decoder with brand and device filters
+- Guided diagnosis by symptom, device, brand, and visible behavior
+- Reset assistant that separates restart, power cycle, network reset, settings reset, and factory reset
+- Model-number finder with device-specific label locations
+- Source-backed appliance, Windows, printer, Wi-Fi, phone, app, browser, TV, and everyday troubleshooting guides
+- Search Console opportunity pages for exact queries already receiving Google impressions
+- Safe external checks, clear stop conditions, model warnings, and official support links
 - Compact client search index served from `/api/search-index`
-- Search autocomplete, exact-code ranking, keyboard navigation, and zero-result analytics
-- Guided diagnosis, interactive checks, save/share/history, and worked/did-not-work feedback
-- Dynamic guide social images through `/og/[slug]`
-- RSS, JSON Feed, OpenSearch, XML sitemap, and text sitemap discovery endpoints
-- Recently reviewed guide log
-- Source and editorial trust panel on guide pages
-- TechArticle, ItemList, Organization, and breadcrumb structured data
-- IndexNow key and batch submission utility
-- Content validation in local build checks and GitLab CI
-- Search Console verification, GA4 consent management, GitLab, and Vercel configuration
-- Working `GITLABA-YUKLE.bat` fixed to the Troublio repository
+- Search autocomplete, exact-code ranking, keyboard navigation, local saves, recent history, sharing, and feedback
+- Dynamic social images through `/og/[slug]`
+- XML sitemap, text sitemap, RSS, JSON Feed, OpenSearch, robots, and IndexNow support
+- GA4 consent management and optional AdSense loading
+- Automated repository, content, TypeScript, and production-build checks
+
+## Deployment workflow
+
+Vercel deploys the GitHub `main` branch automatically.
+
+All development follows this sequence:
+
+```text
+dev/** branch → pull request → GitHub Actions checks → squash merge to main → one production deployment
+```
+
+Do not develop directly on `main` and do not use force push. A release can change many files while still producing one production deployment.
 
 ## Local development
 
@@ -36,6 +50,7 @@ Open `http://localhost:3000`.
 ## Verify before deployment
 
 ```bash
+pnpm audit:repo
 pnpm validate:content
 pnpm typecheck
 pnpm build
@@ -43,15 +58,7 @@ pnpm build
 
 Windows users can run `BUILD_KONTROL.bat`.
 
-## Deploy
-
-Run `GITLABA-YUKLE.bat`. It pushes the project to:
-
-```text
-https://gitlab.com/oguzdurak16/troublio.git
-```
-
-Vercel deploys the `main` branch automatically.
+The repository audit checks required files, imports, App Router routes, sitemap entries, internal links, public assets, package-manager consistency, Google verification, IndexNow verification, temporary files, and obsolete deployment artifacts.
 
 ## Environment
 
@@ -60,39 +67,51 @@ NEXT_PUBLIC_SITE_URL=https://www.troublio.com
 NEXT_PUBLIC_CONTACT_EMAIL=hello@troublio.com
 NEXT_PUBLIC_GA_ID=G-VGX2TJ3J31
 NEXT_PUBLIC_ADSENSE_CLIENT=
+SITE_URL=https://www.troublio.com
+INDEXNOW_KEY=
+INDEXNOW_ENDPOINT=
 ```
 
-GA4 defaults to `G-VGX2TJ3J31` when the environment variable is omitted. Analytics loads only after consent.
+GA4 defaults to `G-VGX2TJ3J31` when `NEXT_PUBLIC_GA_ID` is omitted. Analytics and advertising scripts load only after consent.
 
 ## Discovery endpoints
 
 ```text
 https://www.troublio.com/sitemap.xml
 https://www.troublio.com/sitemap.txt
+https://www.troublio.com/robots.txt
 https://www.troublio.com/feed.xml
 https://www.troublio.com/feed.json
 https://www.troublio.com/opensearch.xml
 https://www.troublio.com/recent
 ```
 
-After a successful production deployment, run `INDEXNOW_GONDER.bat` once to submit the current sitemap URLs. Run it again after a substantial batch of new or materially changed pages, not after cosmetic edits.
+After a substantial production content update, run `INDEXNOW_GONDER.bat` once. Do not submit IndexNow again for cosmetic-only changes.
 
-## Content maintenance
+## Content architecture
 
-- Curated appliance references: `src/data/applianceProblems.ts`
-- Hand-authored appliance symptom guides: `src/data/symptomProblems.ts`
+- Curated appliance codes: `src/data/applianceProblems.ts`
+- Appliance symptom guides: `src/data/symptomProblems.ts`
 - Windows, printer, Wi-Fi, mobile, and app clusters: `src/data/trafficProblems.ts`
 - Browser, web, streaming, and entertainment clusters: `src/data/growthProblems.ts`
+- Search Console opportunity guides: `src/data/gscOpportunityProblems.ts`
+- Reset assistant content: `src/data/resetGuides.ts`
+- Model-number location guides: `src/data/modelNumberGuides.ts`
 - Device and issue hubs: `src/data/hubs.ts`
-- Shared data model and search helpers: `src/data/problems.ts`
-- Build-time validator: `scripts/validate-content.mjs`
+- Shared problem model and search helpers: `src/data/problems.ts`
+- Content validator: `scripts/validate-content.mjs`
+- Repository validator: `scripts/audit-repository.mjs`
 
-Error codes can vary by model, region, firmware, service, and production year. Verify exact codes against the complete model manual or official platform documentation before materially expanding a page. Never add live electrical, gas, refrigerant, battery, pressurized-system, or unsafe bypass procedures.
+## Verification files
 
-## Search Console
-
-Verification file:
+Google Search Console:
 
 ```text
 public/googlebe83404e57cafffd.html
 ```
+
+IndexNow uses the key declared in `scripts/submit-indexnow.mjs` and requires a matching root text file in `public/`.
+
+## Safety and editorial rule
+
+Error codes can vary by model, region, firmware, service, and production year. Verify exact codes against the complete model manual or official platform documentation before materially expanding a page. Never add live electrical, gas, refrigerant, battery, pressurized-system, unsafe bypass, or undocumented service-menu procedures.
