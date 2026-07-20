@@ -46,7 +46,9 @@ const requiredFiles = [
   ".github/workflows/ci.yml",
   ".gitignore",
   ".npmrc",
+  "BUILD_KONTROL.bat",
   "CHANGELOG.md",
+  "INDEXNOW_GONDER.bat",
   "README.md",
   "next.config.ts",
   "package.json",
@@ -54,6 +56,7 @@ const requiredFiles = [
   "public/googlebe83404e57cafffd.html",
   "public/icon.svg",
   "public/og-image.svg",
+  "scripts/audit-repository.mjs",
   "scripts/submit-indexnow.mjs",
   "scripts/validate-content.mjs",
   "src/app/layout.tsx",
@@ -96,7 +99,7 @@ if (exists("package.json")) {
   packageJson = JSON.parse(read("package.json"));
   if (!String(packageJson.packageManager || "").startsWith("pnpm@")) addError("package.json must declare a pnpm packageManager version.");
   if (packageJson.engines?.node !== "22.x") addWarning(`Expected Node 22.x in package.json, found ${packageJson.engines?.node || "none"}.`);
-  for (const script of ["build", "typecheck", "validate:content"]) {
+  for (const script of ["audit:repo", "build", "typecheck", "validate:content"]) {
     if (!packageJson.scripts?.[script]) addError(`Missing package script: ${script}`);
   }
 }
@@ -165,6 +168,7 @@ if (exists("src/app/sitemap.ts")) {
 }
 
 function resolveImport(fromFile, specifier) {
+  if (specifier.includes(".next/")) return true;
   if (!specifier.startsWith(".") && !specifier.startsWith("@/")) return true;
   const start = specifier.startsWith("@/")
     ? path.join(root, "src", specifier.slice(2))
@@ -215,8 +219,19 @@ for (const [asset, origins] of assetReferences) {
 const verificationFiles = files.filter((file) => /^public\/google[a-z0-9]+\.html$/i.test(file));
 if (verificationFiles.length !== 1) addWarning(`Expected exactly one Google verification file; found ${verificationFiles.length}.`);
 
-const indexNowKeys = files.filter((file) => /^public\/[a-f0-9]{32}\.txt$/i.test(file));
-if (indexNowKeys.length === 0) addWarning("No 32-character IndexNow verification file was found in public/.");
+if (exists("scripts/submit-indexnow.mjs")) {
+  const indexNowScript = read("scripts/submit-indexnow.mjs");
+  const indexNowKey = indexNowScript.match(/INDEXNOW_KEY\s*\|\|\s*["']([A-Za-z0-9-]+)["']/)?.[1];
+  if (!indexNowKey) {
+    addError("Could not determine the default IndexNow key from scripts/submit-indexnow.mjs.");
+  } else if (!/^[A-Za-z0-9-]{8,128}$/.test(indexNowKey)) {
+    addError("The default IndexNow key must be 8 to 128 characters using letters, numbers, or dashes.");
+  } else {
+    const keyFile = `public/${indexNowKey}.txt`;
+    if (!fileSet.has(keyFile)) addError(`IndexNow verification file is missing: ${keyFile}`);
+    else if (read(keyFile).trim() !== indexNowKey) addError(`IndexNow verification file content does not match its key: ${keyFile}`);
+  }
+}
 
 const summary = {
   files: files.length,
