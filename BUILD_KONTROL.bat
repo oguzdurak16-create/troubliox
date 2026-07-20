@@ -10,6 +10,8 @@ if errorlevel 1 goto :error
 echo Temiz kurulum ve uretim kontrolu baslatiliyor...
 call pnpm install --frozen-lockfile
 if errorlevel 1 goto :error
+call pnpm audit:repo
+if errorlevel 1 goto :error
 call pnpm validate:content
 if errorlevel 1 goto :error
 call pnpm typecheck
@@ -17,7 +19,7 @@ if errorlevel 1 goto :error
 call pnpm build
 if errorlevel 1 goto :error
 echo.
-echo [OK] Troublio uretim derlemesi basarili.
+echo [OK] Troublio depo, icerik ve uretim derlemesi basarili.
 pause
 exit /b 0
 :node_error
