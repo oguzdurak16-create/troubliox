@@ -1,0 +1,45 @@
+name: Import Troublio from GitLab
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/import-from-gitlab.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout GitHub repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Clone current Troublio project from GitLab
+        run: |
+          git clone --depth 1 https://gitlab.com/oguzdurak16/troublio.git /tmp/troublio-gitlab
+
+      - name: Copy project files into GitHub repository
+        run: |
+          rsync -a --delete \
+            --exclude '.git/' \
+            --exclude '.github/' \
+            /tmp/troublio-gitlab/ ./
+
+      - name: Commit imported project
+        run: |
+          git config user.name "oguzdurak16"
+          git config user.email "oguzdurak16@gmail.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to import."
+            exit 0
+          fi
+          git commit -m "Import current Troublio project from GitLab"
+          git push origin main
