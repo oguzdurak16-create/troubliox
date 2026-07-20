@@ -13,27 +13,30 @@ export function Footer() {
           </p>
         </div>
         <div>
+          <h2>Tools</h2>
+          <Link href="/decoder">Error code decoder</Link>
+          <Link href="/reset">Reset assistant</Link>
+          <Link href="/model-number">Model number finder</Link>
+          <Link href="/diagnose">Guided diagnosis</Link>
+          <Link href="/search">Search</Link>
+          <Link href="/saved">Saved guides</Link>
+        </div>
+        <div>
           <h2>Explore</h2>
           <Link href="/devices">Devices</Link>
           <Link href="/issues">Issue hubs</Link>
           <Link href="/guides">All guides A–Z</Link>
           <Link href="/recent">Recently reviewed</Link>
-          <Link href="/diagnose">Guided diagnosis</Link>
           <Link href="/error-codes">Error codes</Link>
           <Link href="/categories">Categories</Link>
           <Link href="/brands">Brands</Link>
-          <Link href="/search">Search</Link>
           <a href="/feed.xml">RSS updates</a>
-          <Link href="/saved">Saved guides</Link>
         </div>
         <div>
-          <h2>Trust</h2>
+          <h2>Trust and legal</h2>
           <Link href="/editorial-policy">Editorial policy</Link>
           <Link href="/disclaimer">Safety disclaimer</Link>
           <Link href="/about">About</Link>
-        </div>
-        <div>
-          <h2>Legal</h2>
           <Link href="/privacy">Privacy</Link>
           <ConsentSettingsButton />
           <Link href="/terms">Terms</Link>
