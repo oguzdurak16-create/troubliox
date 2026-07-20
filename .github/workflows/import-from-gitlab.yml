@@ -1,10 +1,10 @@
-name: Apply Troublio bundle
+name: Apply Troublio update patch
 
 on:
   push:
     branches: [main]
     paths:
-      - '.github/troublio-bundle.zip.b64'
+      - '.github/troublio-v1.5.0-patch.zip.b64'
       - '.github/workflows/import-from-gitlab.yml'
   workflow_dispatch:
 
@@ -22,39 +22,32 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Detect update bundle
-        id: bundle
+      - name: Detect update patch
+        id: patch
         shell: bash
         run: |
-          if [ -f .github/troublio-bundle.zip.b64 ]; then
+          if [ -f .github/troublio-v1.5.0-patch.zip.b64 ]; then
             echo "exists=true" >> "$GITHUB_OUTPUT"
           else
             echo "exists=false" >> "$GITHUB_OUTPUT"
-            echo "No update bundle is present."
+            echo "No update patch is present."
           fi
 
-      - name: Decode update bundle
-        if: steps.bundle.outputs.exists == 'true'
+      - name: Decode update patch
+        if: steps.patch.outputs.exists == 'true'
         shell: bash
         run: |
-          rm -rf /tmp/troublio-bundle
-          mkdir -p /tmp/troublio-bundle
-          base64 --decode .github/troublio-bundle.zip.b64 > /tmp/troublio-bundle.zip
-          unzip -q /tmp/troublio-bundle.zip -d /tmp/troublio-bundle
+          base64 --decode .github/troublio-v1.5.0-patch.zip.b64 > /tmp/troublio-v1.5.0-patch.zip
 
       - name: Apply project files
-        if: steps.bundle.outputs.exists == 'true'
+        if: steps.patch.outputs.exists == 'true'
         shell: bash
         run: |
-          rsync -a --delete \
-            --exclude '.git/' \
-            --exclude '.github/workflows/import-from-gitlab.yml' \
-            --exclude '.github/troublio-bundle.zip.b64' \
-            /tmp/troublio-bundle/ ./
-          rm -f .github/troublio-bundle.zip.b64
+          unzip -qo /tmp/troublio-v1.5.0-patch.zip -d .
+          rm -f .github/troublio-v1.5.0-patch.zip.b64
 
       - name: Commit Troublio update
-        if: steps.bundle.outputs.exists == 'true'
+        if: steps.patch.outputs.exists == 'true'
         shell: bash
         run: |
           git config user.name "oguzdurak16"
