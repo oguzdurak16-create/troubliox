@@ -10,7 +10,7 @@ function decodeXml(value) {
 }
 
 async function getUrls() {
-  const response = await fetch(sitemapUrl, { headers: { "User-Agent": "Troublio-IndexNow/1.4" } });
+  const response = await fetch(sitemapUrl, { headers: { "User-Agent": "Troublio-IndexNow/1.7.2" } });
   if (!response.ok) throw new Error(`Sitemap could not be read: HTTP ${response.status}`);
   const xml = await response.text();
   const urls = [...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map((match) => decodeXml(match[1].trim()));
