@@ -47,9 +47,7 @@ export default function HomePage() {
             <div className="hero-actions"><Link className="button button-primary" href="/diagnose">Start guided diagnosis</Link><Link className="button button-secondary" href="/decoder">Decode an error code</Link></div>
             <div className="search-suggestions">
               <span>Try:</span>
-              <Link href="/problems/whirlpool-washer-rl-code">Whirlpool washer rL</Link>
-              <Link href="/problems/bosch-washer-f29-error">Bosch washer F29</Link>
-              <Link href="/problems/samsung-washer-5d-error">Samsung washer 5D</Link>
+              {searchDemandGuides.slice(0, 3).map((problem) => <Link href={`/problems/${problem.slug}`} key={problem.slug}>{problem.shortTitle}</Link>)}
             </div>
           </div>
           <div className="diagnostic-visual" aria-hidden="true">
