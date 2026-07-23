@@ -15,6 +15,15 @@ const nextConfig: NextConfig = {
   async headers() {
     return [{ source: "/(.*)", headers: securityHeaders }];
   },
+  async redirects() {
+    return [
+      {
+        source: "/problems/bosch-washer-e17-f17-error",
+        destination: "/problems/bosch-washer-e29-f29-error",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
