@@ -6,6 +6,8 @@ import { modelNumberGuides } from "@/data/modelNumberGuides";
 import { resetGuides } from "@/data/resetGuides";
 import { SITE_URL } from "@/lib/site";
 
+const redirectedProblemSlugs = new Set(["bosch-washer-e17-f17-error"]);
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const updated = new Date("2026-07-23");
   const pages = [
@@ -53,11 +55,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...issueHubs.map((hub) => ({ url: `${SITE_URL}/issues/${hub.slug}`, lastModified: updated, changeFrequency: "weekly" as const, priority: 0.85 })),
     ...categories.map((category) => ({ url: `${SITE_URL}/categories/${category.slug}`, lastModified: updated, changeFrequency: "weekly" as const, priority: 0.75 })),
     ...brands.map((brand) => ({ url: `${SITE_URL}/brands/${brand.slug}`, lastModified: updated, changeFrequency: "weekly" as const, priority: 0.8 })),
-    ...problems.map((problem) => ({
-      url: `${SITE_URL}/problems/${problem.slug}`,
-      lastModified: new Date(problem.updated),
-      changeFrequency: "monthly" as const,
-      priority: problem.featured ? 0.9 : problem.contentKind === "error-code" ? 0.82 : 0.78,
-    })),
+    ...problems
+      .filter((problem) => !redirectedProblemSlugs.has(problem.slug))
+      .map((problem) => ({
+        url: `${SITE_URL}/problems/${problem.slug}`,
+        lastModified: new Date(problem.updated),
+        changeFrequency: "monthly" as const,
+        priority: problem.featured ? 0.9 : problem.contentKind === "error-code" ? 0.82 : 0.78,
+      })),
   ];
 }
