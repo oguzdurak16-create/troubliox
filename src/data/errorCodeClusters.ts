@@ -12,6 +12,8 @@ export type ErrorCodeCluster = {
   problems: Problem[];
 };
 
+const clusterDevices = new Set(["Washing machine", "Dishwasher", "Dryer", "Refrigerator", "Printer"]);
+
 function slugify(value: string) {
   return value
     .toLowerCase()
@@ -20,21 +22,17 @@ function slugify(value: string) {
     .replace(/^-+|-+$/g, "");
 }
 
-function pluralDevice(device: string) {
-  const normalized = device.toLowerCase();
-  if (normalized === "washing machine") return "washing machines";
-  if (normalized === "dishwasher") return "dishwashers";
-  if (normalized === "printer") return "printers";
-  if (normalized === "dryer") return "dryers";
-  if (normalized === "refrigerator") return "refrigerators";
-  if (normalized.endsWith("s")) return normalized;
-  return `${normalized}s`;
-}
-
 const grouped = new Map<string, Problem[]>();
 
 for (const problem of problems) {
-  if (problem.contentKind !== "error-code" || !problem.brand || !problem.brandSlug || !problem.errorCode) continue;
+  if (
+    problem.contentKind !== "error-code" ||
+    !problem.brand ||
+    !problem.brandSlug ||
+    !problem.errorCode ||
+    !clusterDevices.has(problem.device)
+  ) continue;
+
   const key = `${problem.brandSlug}:${problem.device}`;
   const group = grouped.get(key) || [];
   group.push(problem);
@@ -47,7 +45,6 @@ export const errorCodeClusters: ErrorCodeCluster[] = Array.from(grouped.entries(
     const deviceSlug = slugify(first.device);
     const sorted = [...items].sort((a, b) => a.shortTitle.localeCompare(b.shortTitle));
     const brand = first.brand || first.brandSlug || "Device";
-    const devicePlural = pluralDevice(first.device);
 
     return {
       slug: `${first.brandSlug}-${deviceSlug}`,
