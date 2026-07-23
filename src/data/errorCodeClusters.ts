@@ -13,6 +13,7 @@ export type ErrorCodeCluster = {
 };
 
 const clusterDevices = new Set(["Washing machine", "Dishwasher", "Dryer", "Refrigerator", "Printer"]);
+const redirectedProblemSlugs = new Set(["bosch-washer-e17-f17-error"]);
 
 function slugify(value: string) {
   return value
@@ -30,7 +31,8 @@ for (const problem of problems) {
     !problem.brand ||
     !problem.brandSlug ||
     !problem.errorCode ||
-    !clusterDevices.has(problem.device)
+    !clusterDevices.has(problem.device) ||
+    redirectedProblemSlugs.has(problem.slug)
   ) continue;
 
   const key = `${problem.brandSlug}:${problem.device}`;
@@ -66,7 +68,7 @@ export function getErrorCodeCluster(slug: string) {
 }
 
 export function getErrorCodeClusterForProblem(problem: Problem) {
-  if (!problem.brandSlug || problem.contentKind !== "error-code") return undefined;
+  if (!problem.brandSlug || problem.contentKind !== "error-code" || redirectedProblemSlugs.has(problem.slug)) return undefined;
   return errorCodeClusters.find(
     (cluster) => cluster.brandSlug === problem.brandSlug && cluster.device === problem.device,
   );
