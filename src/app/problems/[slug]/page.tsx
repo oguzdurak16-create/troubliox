@@ -7,6 +7,7 @@ import { DiagnosticWizard } from "@/components/DiagnosticWizard";
 import { GuideActions } from "@/components/GuideActions";
 import { SourceTrustPanel } from "@/components/SourceTrustPanel";
 import { ProblemCard } from "@/components/ProblemCard";
+import { getErrorCodeClusterForProblem } from "@/data/errorCodeClusters";
 import { getProblem, problems } from "@/data/problems";
 import { deviceHubs, issueHubs } from "@/data/hubs";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
@@ -22,13 +23,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const problem = getProblem(slug);
   if (!problem) return {};
 
+  const seoTitle = problem.contentKind === "error-code"
+    ? `${problem.shortTitle}: Meaning & Fixes`
+    : problem.title;
+
   return {
-    title: problem.title,
+    title: seoTitle,
     description: problem.summary,
     alternates: { canonical: `/problems/${problem.slug}` },
     openGraph: {
       type: "article",
-      title: problem.title,
+      title: seoTitle,
       description: problem.summary,
       url: `/problems/${problem.slug}`,
       modifiedTime: problem.updated,
@@ -36,7 +41,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     twitter: {
       card: "summary_large_image",
-      title: problem.title,
+      title: seoTitle,
       description: problem.summary,
       images: [`/og/${problem.slug}`],
     },
@@ -64,6 +69,7 @@ export default async function ProblemPage({ params }: Props) {
 
   const matchingDeviceHubs = deviceHubs.filter((hub) => hub.match(problem)).slice(0, 2);
   const matchingIssueHubs = issueHubs.filter((hub) => hub.match(problem)).slice(0, 3);
+  const errorCodeCluster = getErrorCodeClusterForProblem(problem);
 
   const articleSchema = {
     "@context": "https://schema.org",
@@ -187,12 +193,12 @@ export default async function ProblemPage({ params }: Props) {
         </div>
       </section>
 
-
-      {(matchingDeviceHubs.length || matchingIssueHubs.length) ? (
+      {(errorCodeCluster || matchingDeviceHubs.length || matchingIssueHubs.length) ? (
         <section className="section-tight topic-links-section">
           <div className="container topic-links-card">
-            <div><span className="eyebrow">Explore the problem space</span><h2>Browse related device and symptom hubs.</h2></div>
+            <div><span className="eyebrow">Explore the problem space</span><h2>Browse related code, device, and symptom hubs.</h2></div>
             <div className="topic-link-pills">
+              {errorCodeCluster ? <Link href={`/error-codes/brands/${errorCodeCluster.slug}`}>All {errorCodeCluster.brand} {errorCodeCluster.device.toLowerCase()} codes</Link> : null}
               {matchingDeviceHubs.map((hub) => <Link href={`/devices/${hub.slug}`} key={`device-${hub.slug}`}>{hub.name}</Link>)}
               {matchingIssueHubs.map((hub) => <Link href={`/issues/${hub.slug}`} key={`issue-${hub.slug}`}>{hub.name}</Link>)}
             </div>
