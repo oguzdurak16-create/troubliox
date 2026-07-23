@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { ProblemCard } from "@/components/ProblemCard";
+import { errorCodeClusters } from "@/data/errorCodeClusters";
 import { brands, problems } from "@/data/problems";
 
 export const metadata: Metadata = {
-  title: "Error code lookup",
-  description: "Look up appliance, Windows, printer, browser, DNS, certificate, and HTTP error codes with direct meanings, safer checks, and official references.",
+  title: "Error Code Lookup by Brand & Device",
+  description: "Look up washer, dishwasher, Windows, printer, browser, DNS, certificate, and HTTP error codes by exact brand and device, with safer checks and official references.",
   alternates: { canonical: "/error-codes" },
 };
 
@@ -34,8 +35,8 @@ export default function ErrorCodesPage() {
       <section className="page-hero">
         <div className="container page-hero-narrow">
           <span className="eyebrow">{codes.length} code-specific guides</span>
-          <h1>Error code lookup.</h1>
-          <p>Search the complete code exactly as shown. Match the device, model, Windows action, or printer family before applying a repair.</p>
+          <h1>Error code lookup by brand and device.</h1>
+          <p>Search the complete code exactly as shown. Match the maker, device, model, Windows action, or printer family before applying a repair.</p>
         </div>
       </section>
       <section className="section-tight">
@@ -47,6 +48,26 @@ export default function ErrorCodesPage() {
           <Link className="error-hub-card" href="/error-codes/browser-web"><span className="error-hub-count">{browserWeb.length}</span><h2>Browser & web codes</h2><p>Chrome connection, DNS, certificate, redirect, and HTTP status messages.</p><strong>Browse web codes →</strong></Link>
         </div>
       </section>
+
+      <section className="section-tight">
+        <div className="container">
+          <div className="section-heading">
+            <div><span className="eyebrow">Brand + device libraries</span><h2>Target the exact product family.</h2></div>
+            <Link className="text-link" href="/error-codes/brands">View every library →</Link>
+          </div>
+          <div className="error-hub-grid">
+            {errorCodeClusters.slice(0, 12).map((cluster) => (
+              <Link className="error-hub-card" href={`/error-codes/brands/${cluster.slug}`} key={cluster.slug}>
+                <span className="error-hub-count">{cluster.problems.length}</span>
+                <h2>{cluster.brand} {cluster.device.toLowerCase()} codes</h2>
+                <p>Exact meanings, display variants, model warnings, and safe first checks.</p>
+                <strong>Open code library →</strong>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="section-tight">
         <div className="container cross-library-card">
           <div><span className="eyebrow">No error display?</span><h2>Diagnose the visible symptom instead.</h2><p>Use sound, timing, connection state, water movement, startup behavior, leaks, heat, and other observations.</p></div>
