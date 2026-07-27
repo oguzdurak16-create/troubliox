@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.8.0 — 2026-07-27
+
+- Reworked seven existing Search Console opportunity pages instead of publishing another bulk content batch.
+- Added source-backed recovery guides for Bosch washer E36, Samsung washer LC/LE, LG washer Cd and dHE, Netflix black screen with sound, AirPods connected with no sound, and Android Bluetooth connected with no sound.
+- Added exact-query wording, direct answers, observation-based diagnosis, model boundaries, official support links, and clear stop conditions.
+- Added a priority-recovery content layer that replaces the established canonical URLs without producing duplicate pages.
+- Kept the earlier Whirlpool rL, Bosch F29/E32/E90, LG FF, and Samsung 5D Search Console upgrades active.
+
 ## 1.7.2 — 2026-07-20
 
 - Added an automated repository integrity audit for required files, imports, routes, sitemap entries, internal links, public assets, lockfile consistency, verification files, and accidental artifacts.

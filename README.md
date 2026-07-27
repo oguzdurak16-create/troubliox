@@ -1,4 +1,4 @@
-# Troublio v1.7.2
+# Troublio v1.8.0
 
 Troublio is a global troubleshooting search and diagnosis library built with Next.js App Router, React, TypeScript, and pnpm.
 
@@ -95,6 +95,7 @@ After a substantial production content update, run `INDEXNOW_GONDER.bat` once. D
 - Windows, printer, Wi-Fi, mobile, and app clusters: `src/data/trafficProblems.ts`
 - Browser, web, streaming, and entertainment clusters: `src/data/growthProblems.ts`
 - Search Console opportunity guides: `src/data/gscOpportunityProblems.ts`
+- Search Console recovery replacements: `src/data/gscRecoveryProblems.ts` and `src/data/gsc-recovery/`
 - Reset assistant content: `src/data/resetGuides.ts`
 - Model-number location guides: `src/data/modelNumberGuides.ts`
 - Device and issue hubs: `src/data/hubs.ts`
