@@ -18,24 +18,41 @@ function assertUnique(items, label) {
   }
 }
 
+function listTypeScriptFiles(directory, relativeDirectory = "") {
+  const currentDirectory = path.join(directory, relativeDirectory);
+  const files = [];
+
+  for (const entry of fs.readdirSync(currentDirectory, { withFileTypes: true })) {
+    const relativePath = path.join(relativeDirectory, entry.name);
+    if (entry.isDirectory()) files.push(...listTypeScriptFiles(directory, relativePath));
+    else if (entry.isFile() && entry.name.endsWith(".ts")) files.push(relativePath);
+  }
+
+  return files;
+}
+
 try {
-  for (const filename of fs.readdirSync(sourceDirectory).filter((name) => name.endsWith(".ts"))) {
-    const source = fs.readFileSync(path.join(sourceDirectory, filename), "utf8");
+  for (const relativeFilename of listTypeScriptFiles(sourceDirectory)) {
+    const sourceFilename = path.join(sourceDirectory, relativeFilename);
+    const source = fs.readFileSync(sourceFilename, "utf8");
     const result = ts.transpileModule(source, {
       compilerOptions: {
         module: ts.ModuleKind.CommonJS,
         target: ts.ScriptTarget.ES2020,
         esModuleInterop: true,
       },
-      fileName: filename,
+      fileName: relativeFilename,
       reportDiagnostics: true,
     });
     const errors = (result.diagnostics || []).filter((diagnostic) => diagnostic.category === ts.DiagnosticCategory.Error);
     if (errors.length) {
-      for (const error of errors) console.error(`${filename}: ${ts.flattenDiagnosticMessageText(error.messageText, "\n")}`);
+      for (const error of errors) console.error(`${relativeFilename}: ${ts.flattenDiagnosticMessageText(error.messageText, "\n")}`);
       process.exit(1);
     }
-    fs.writeFileSync(path.join(outputDirectory, filename.replace(/\.ts$/, ".js")), result.outputText);
+
+    const outputFilename = path.join(outputDirectory, relativeFilename.replace(/\.ts$/, ".js"));
+    fs.mkdirSync(path.dirname(outputFilename), { recursive: true });
+    fs.writeFileSync(outputFilename, result.outputText);
   }
 
   const data = require(path.join(outputDirectory, "problems.js"));
