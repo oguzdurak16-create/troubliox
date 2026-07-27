@@ -43,7 +43,6 @@ export const viewport: Viewport = { width: "device-width", initialScale: 1, them
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const gaId = process.env.NEXT_PUBLIC_GA_ID || "G-VGX2TJ3J31";
-  const adsenseClient = process.env.NEXT_PUBLIC_ADSENSE_CLIENT;
 
   const organizationSchema = {
     "@context": "https://schema.org",
@@ -58,12 +57,17 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en">
       <head>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4491868887846507"
+          crossOrigin="anonymous"
+        />
         <link rel="search" type="application/opensearchdescription+xml" title="Search Troublio" href="/opensearch.xml" />
         <link rel="alternate" type="application/rss+xml" title="Troublio updates" href="/feed.xml" />
       </head>
       <body>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }} />
-        <ConsentManager gaId={gaId} adsenseClient={adsenseClient} />
+        <ConsentManager gaId={gaId} />
         <Header />
         <main>{children}</main>
         <Footer />
