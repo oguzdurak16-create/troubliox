@@ -73,7 +73,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <ConsentManager gaId={gaId} />
         <Header />
         <main>{children}</main>
-        <AdSlot slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT} />
+        <AdSlot slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT} afterSelector=".direct-answer" />
         <Footer />
       </body>
     </html>
