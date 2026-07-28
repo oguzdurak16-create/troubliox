@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { ConsentManager } from "@/components/ConsentManager";
+import { AdSlot } from "@/components/AdSlot";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
 import "./tooling.css";
@@ -72,6 +73,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <ConsentManager gaId={gaId} />
         <Header />
         <main>{children}</main>
+        <AdSlot slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT} />
         <Footer />
       </body>
     </html>
