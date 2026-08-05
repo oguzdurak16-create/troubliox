@@ -19,6 +19,7 @@ export const metadata: Metadata = {
   publisher: SITE_NAME,
   openGraph: {
     type: "website",
+    locale: "en_US",
     siteName: SITE_NAME,
     title: `${SITE_NAME} — Find what’s wrong. Know what to do.`,
     description: SITE_DESCRIPTION,
@@ -33,6 +34,11 @@ export const metadata: Metadata = {
   },
   icons: { icon: "/icon.svg" },
   alternates: {
+    canonical: SITE_URL,
+    languages: {
+      en: SITE_URL,
+      "x-default": SITE_URL,
+    },
     types: {
       "application/rss+xml": `${SITE_URL}/feed.xml`,
       "application/feed+json": `${SITE_URL}/feed.json`,
