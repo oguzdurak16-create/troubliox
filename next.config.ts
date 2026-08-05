@@ -18,6 +18,12 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: "/:path*",
+        has: [{ type: "host", value: "troublio.com" }],
+        destination: "https://www.troublio.com/:path*",
+        permanent: true,
+      },
+      {
         source: "/problems/bosch-washer-e17-f17-error",
         destination: "/problems/bosch-washer-e29-f29-error",
         permanent: true,
