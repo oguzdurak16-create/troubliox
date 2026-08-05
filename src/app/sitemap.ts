@@ -8,8 +8,20 @@ import { SITE_URL } from "@/lib/site";
 
 const redirectedProblemSlugs = new Set(["bosch-washer-e17-f17-error"]);
 
+function addEnglishAlternates(entry: MetadataRoute.Sitemap[number]): MetadataRoute.Sitemap[number] {
+  return {
+    ...entry,
+    alternates: {
+      languages: {
+        en: entry.url,
+        "x-default": entry.url,
+      },
+    },
+  };
+}
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const updated = new Date("2026-07-23");
+  const updated = new Date("2026-08-05");
   const pages = [
     "",
     "/decoder",
@@ -41,7 +53,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const highPriorityPages = ["/decoder", "/model-number", "/reset", "/guides", "/recent", "/devices", "/issues", "/diagnose", "/error-codes/brands"];
 
-  return [
+  const entries: MetadataRoute.Sitemap = [
     ...pages.map((path) => ({
       url: `${SITE_URL}${path}`,
       lastModified: updated,
@@ -64,4 +76,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
         priority: problem.featured ? 0.9 : problem.contentKind === "error-code" ? 0.82 : 0.78,
       })),
   ];
+
+  return entries.map(addEnglishAlternates);
 }
