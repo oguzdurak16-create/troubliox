@@ -14,6 +14,52 @@ import { SITE_NAME, SITE_URL } from "@/lib/site";
 
 type Props = { params: Promise<{ slug: string }> };
 
+type OpportunitySeoOverride = {
+  title: string;
+  description: string;
+  quickAnswer: string;
+  priorityLinks: { href: string; label: string }[];
+};
+
+const SEO_OPPORTUNITY_OVERRIDES: Record<string, OpportunitySeoOverride> = {
+  "whirlpool-washer-rl-error": {
+    title: "Whirlpool Washer rL Error: Clothes Detected in Clean Cycle",
+    description:
+      "Whirlpool washer showing rL or F34? Items were detected during the Clean Washer cycle. Remove the load, restart the cycle, and use these safe checks if it returns.",
+    quickAnswer:
+      "On supported Whirlpool models, rL or F34 means the washer detected clothing or another item while the Clean Washer cycle was running. Empty the drum and restart the cleaning cycle; if the code returns with an empty drum, stop and check the model manual or arrange service.",
+    priorityLinks: [
+      { href: "/problems/whirlpool-washer-f9e1-error", label: "Whirlpool F9E1 drain error" },
+      { href: "/problems/whirlpool-washer-f1e1-error", label: "Whirlpool F1E1 control error" },
+      { href: "/error-codes/washing-machines", label: "All washing machine error codes" },
+    ],
+  },
+  "bosch-washer-e29-f29-error": {
+    title: "Bosch Washer E29 / F29 Error: Meaning and Safe Checks",
+    description:
+      "Bosch washer E29 or F29? Check the model-specific manual, water supply, hoses, filters and drain path before service. Follow safe checks and stop conditions.",
+    quickAnswer:
+      "Bosch E29 / F29 handling varies by model family, so confirm the full E-Nr first. Start with safe external checks: fully open the water tap, inspect inlet and drain hoses for kinks, check accessible filters, and stop if there is leakage or the code returns.",
+    priorityLinks: [
+      { href: "/problems/bosch-washer-e17-f17-error", label: "Bosch E17 / F17 water error" },
+      { href: "/problems/bosch-washer-e18-f18-error", label: "Bosch E18 / F18 drain error" },
+      { href: "/problems/bosch-washer-e23-f23-error", label: "Bosch E23 / F23 leak error" },
+    ],
+  },
+  "netflix-black-screen-with-sound": {
+    title: "Netflix Black Screen With Sound: TV and HDMI Fixes",
+    description:
+      "Netflix has sound but no picture? Restart the device, check the HDMI or video connection, and follow safe fixes for TVs, streaming sticks, browsers and apps.",
+    quickAnswer:
+      "When Netflix plays sound but shows a black screen, the usual causes are the playback device, app state, display settings, or the video connection to the TV. Restart the device first, then check HDMI and try another input or cable before changing advanced settings.",
+    priorityLinks: [
+      { href: "/problems/netflix-not-working-on-smart-tv", label: "Netflix not working on Smart TV" },
+      { href: "/problems/netflix-keeps-buffering", label: "Netflix keeps buffering" },
+      { href: "/devices/streaming-tv", label: "Streaming and TV troubleshooting" },
+    ],
+  },
+};
+
 export function generateStaticParams() {
   return problems.map((problem) => ({ slug: problem.slug }));
 }
@@ -23,13 +69,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const problem = getProblem(slug);
   if (!problem) return {};
 
+  const opportunitySeo = SEO_OPPORTUNITY_OVERRIDES[problem.slug];
   const codeLabel = problem.errorCode ? `${problem.errorCode} Error` : problem.shortTitle;
-  const seoTitle = problem.contentKind === "error-code"
+  const defaultTitle = problem.contentKind === "error-code"
     ? `${problem.brand ? `${problem.brand} ` : ""}${problem.device} ${codeLabel}: Meaning, Causes & Fixes`
     : `${problem.title} | Causes & Safe Fixes`;
-  const description = problem.contentKind === "error-code"
+  const defaultDescription = problem.contentKind === "error-code"
     ? `See what ${codeLabel} means, the most likely causes, safe checks to try first, and when to stop and call service. ${problem.summary}`
     : problem.summary;
+  const seoTitle = opportunitySeo?.title || defaultTitle;
+  const description = opportunitySeo?.description || defaultDescription;
 
   return {
     title: seoTitle,
@@ -58,6 +107,7 @@ export default async function ProblemPage({ params }: Props) {
   const problem = getProblem(slug);
   if (!problem) notFound();
 
+  const opportunitySeo = SEO_OPPORTUNITY_OVERRIDES[problem.slug];
   const related = problems
     .filter((item) => item.slug !== problem.slug)
     .map((item) => ({
@@ -79,8 +129,8 @@ export default async function ProblemPage({ params }: Props) {
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "TechArticle",
-    headline: problem.title,
-    description: problem.summary,
+    headline: opportunitySeo?.title || problem.title,
+    description: opportunitySeo?.description || problem.summary,
     dateModified: problem.updated,
     datePublished: problem.updated,
     mainEntityOfPage: `${SITE_URL}/problems/${problem.slug}`,
@@ -133,7 +183,7 @@ export default async function ProblemPage({ params }: Props) {
             </div>
             <div className="answer-capsule">
               <span>Quick answer</span>
-              <p>{problem.summary}</p>
+              <p>{opportunitySeo?.quickAnswer || problem.summary}</p>
               <strong>Start here: {problem.quickChecks[0]?.title}. {problem.quickChecks[0]?.detail}</strong>
             </div>
             <GuideActions slug={problem.slug} title={problem.title} />
@@ -153,7 +203,7 @@ export default async function ProblemPage({ params }: Props) {
             <DiagnosticWizard slug={problem.slug} title={problem.title} steps={problem.quickChecks} observations={problem.observations} stopConditions={problem.whenToStop} />
             <section id="causes"><h2>Likely causes</h2><ul className="cause-list">{problem.likelyCauses.map((cause) => <li key={cause}>{cause}</li>)}</ul></section>
             <section id="checks"><h2>Quick checks, in order</h2><div className="step-list">{problem.quickChecks.map((step) => <article className="step-card" key={step.title}><div><h3>{step.title}</h3><p>{step.detail}</p></div><span className={`level level-${step.level || "safe"}`}>{step.level === "stop" ? "Professional" : step.level || "safe"}</span></article>)}</div></section>
-            <section id="observations"><h2>{problem.decisionTitle}</h2><div className="observation-list">{problem.observations.map((item) => <div className="observation" key={item.label}><strong>{item.label}</strong><p>{item.advice}</p></div>)}</div></section>
+            <section id="observations"><h2>{problem.decisionTitle}</h2><div className="observation-list">{problem.observations.map((item) => <div className="observation" key={item.label}><strong>{item.label}</strong><p>{item.advice}</p></div>)}</section>
             <section id="stop"><h2>Stop and get qualified help when</h2><div className="stop-box"><strong>Do not continue troubleshooting if any of these apply:</strong><ul>{problem.whenToStop.map((item) => <li key={item}>{item}</li>)}</ul></div></section>
             {problem.sources?.length ? <section id="sources"><h2>Official support and model manuals</h2><p className="source-intro">Use the full model number from the rating label. The manufacturer manual is the deciding reference when codes differ by region or product family.</p><div className="source-list">{problem.sources.map((source) => <a key={source.url} href={source.url} target="_blank" rel="noopener noreferrer"><span>{source.label}</span><span aria-hidden="true">↗</span></a>)}</div></section> : null}
             <section id="faq"><h2>Frequently asked questions</h2><div className="faq-list">{problem.faq.map((item) => <article className="faq-item" key={item.question}><h3>{item.question}</h3><p>{item.answer}</p></article>)}</div></section>
@@ -163,7 +213,7 @@ export default async function ProblemPage({ params }: Props) {
         </div>
       </section>
 
-      {(errorCodeCluster || matchingDeviceHubs.length || matchingIssueHubs.length) ? <section className="section-tight topic-links-section"><div className="container topic-links-card"><div><span className="eyebrow">Explore the problem space</span><h2>Browse related code, device, and symptom hubs.</h2></div><div className="topic-link-pills">{errorCodeCluster ? <Link href={`/error-codes/brands/${errorCodeCluster.slug}`}>All {errorCodeCluster.brand} {errorCodeCluster.device.toLowerCase()} codes</Link> : null}{matchingDeviceHubs.map((hub) => <Link href={`/devices/${hub.slug}`} key={`device-${hub.slug}`}>{hub.name}</Link>)}{matchingIssueHubs.map((hub) => <Link href={`/issues/${hub.slug}`} key={`issue-${hub.slug}`}>{hub.name}</Link>)}</div></div></section> : null}
+      {(opportunitySeo?.priorityLinks.length || errorCodeCluster || matchingDeviceHubs.length || matchingIssueHubs.length) ? <section className="section-tight topic-links-section"><div className="container topic-links-card"><div><span className="eyebrow">Explore the problem space</span><h2>Browse related code, device, and symptom hubs.</h2></div><div className="topic-link-pills">{opportunitySeo?.priorityLinks.map((item) => <Link href={item.href} key={item.href}>{item.label}</Link>)}{errorCodeCluster ? <Link href={`/error-codes/brands/${errorCodeCluster.slug}`}>All {errorCodeCluster.brand} {errorCodeCluster.device.toLowerCase()} codes</Link> : null}{matchingDeviceHubs.map((hub) => <Link href={`/devices/${hub.slug}`} key={`device-${hub.slug}`}>{hub.name}</Link>)}{matchingIssueHubs.map((hub) => <Link href={`/issues/${hub.slug}`} key={`issue-${hub.slug}`}>{hub.name}</Link>)}</div></div></section> : null}
 
       {related.length ? <section className="section-tight"><div className="container"><div className="section-heading"><div><span className="eyebrow">Keep diagnosing</span><h2>Related troubleshooting guides</h2></div><Link className="text-link" href={problem.brandSlug ? `/brands/${problem.brandSlug}` : `/categories/${problem.categorySlug}`}>View more →</Link></div><div className="problem-grid">{related.map((item) => <ProblemCard key={item.slug} problem={item} />)}</div></div></section> : null}
     </>
