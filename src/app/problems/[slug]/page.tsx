@@ -58,6 +58,30 @@ const SEO_OPPORTUNITY_OVERRIDES: Record<string, OpportunitySeoOverride> = {
       { href: "/devices/streaming-tv", label: "Streaming and TV troubleshooting" },
     ],
   },
+  "bosch-dishwasher-e90-error": {
+    title: "Bosch Dishwasher E90 Error: Meaning, Reset and Safe Checks",
+    description:
+      "Bosch dishwasher showing E90? Learn what the control-electronics fault can mean, which safe reset and external checks to try, and when to stop and call service.",
+    quickAnswer:
+      "Bosch dishwasher E90 generally points to a control-electronics fault on supported models. Power the dishwasher off, leave it disconnected briefly, then restart once. If E90 returns, avoid internal electrical work and verify the exact E-Nr with the Bosch manual or service guidance.",
+    priorityLinks: [
+      { href: "/problems/bosch-dishwasher-e10-error", label: "Bosch dishwasher E10 error" },
+      { href: "/problems/bosch-dishwasher-e26-error", label: "Bosch dishwasher E26 error" },
+      { href: "/error-codes/brands/bosch-dishwasher", label: "All Bosch dishwasher error codes" },
+    ],
+  },
+  "samsung-washer-sud-5d-error": {
+    title: "Samsung Washer SUD / 5D Error: Too Many Suds and Safe Fixes",
+    description:
+      "Samsung washer showing SUD, Sd or 5D? Excess detergent or poor draining can leave too many suds. See the safest checks, detergent steps and when service is needed.",
+    quickAnswer:
+      "Samsung SUD / Sd / 5D usually means the washer detected excessive suds. Let the machine finish its suds-reduction routine, avoid adding more detergent, then check detergent type and dose. If the code keeps returning, inspect the user-accessible drain path and use the model manual before any internal work.",
+    priorityLinks: [
+      { href: "/problems/samsung-washer-5c-5e-error", label: "Samsung 5C / 5E drain error" },
+      { href: "/problems/samsung-washer-4c-4e-error", label: "Samsung 4C / 4E water error" },
+      { href: "/error-codes/brands/samsung-washing-machine", label: "All Samsung washer error codes" },
+    ],
+  },
 };
 
 export function generateStaticParams() {
