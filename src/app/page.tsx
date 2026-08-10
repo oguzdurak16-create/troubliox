@@ -18,7 +18,17 @@ export default function HomePage() {
   const errorCodes = problems.filter((problem) => problem.contentKind === "error-code");
   const washerCodes = errorCodes.filter((problem) => problem.device === "Washing machine").length;
   const dishwasherCodes = errorCodes.filter((problem) => problem.device === "Dishwasher").length;
-  const searchDemandGuides = problems.filter((problem) => problem.tags.includes("gsc-opportunity")).slice(0, 6);
+  const searchDemandPriority = [
+    "bosch-dishwasher-e90-error",
+    "whirlpool-washer-rl-error",
+    "bosch-washer-e29-f29-error",
+    "samsung-washer-sud-5d-error",
+    "netflix-black-screen-with-sound",
+    "lg-washer-ff-error",
+  ];
+  const searchDemandGuides = problems
+    .filter((problem) => searchDemandPriority.includes(problem.slug))
+    .sort((a, b) => searchDemandPriority.indexOf(a.slug) - searchDemandPriority.indexOf(b.slug));
   const expansionGuides = problems.filter((problem) => [
     "windows-11-wifi-connected-no-internet",
     "printer-offline-but-connected",
