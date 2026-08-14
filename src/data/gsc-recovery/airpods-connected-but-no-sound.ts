@@ -2,16 +2,16 @@ import type { Problem } from "../problems";
 
 export const airpodsConnectedButNoSoundProblem: Problem = {
   slug: "airpods-connected-but-no-sound",
-  title: "AirPods connected but no sound: select the output, verify charge, and re-pair safely",
+  title: "AirPods Connected but No Sound",
   shortTitle: "AirPods connected but no sound",
   summary:
-    "If AirPods show as connected but stay silent, first select them as the active audio output and raise the device volume. Then confirm both earbuds are charging, test each side, close the case briefly, and re-pair or reset only if the basic output checks fail.",
+    "AirPods connected but no sound? First select AirPods as the active audio output and raise the device volume. Then confirm both earbuds are charging, test each side, and re-pair or reset only if those basic checks fail.",
   category: "TV & entertainment",
   categorySlug: "tv-entertainment",
   brand: "Apple",
   brandSlug: "apple",
   device: "AirPods",
-  updated: "2026-07-27",
+  updated: "2026-08-14",
   readTime: 5,
   likelyCauses: [
     "Audio is still routed to the phone, computer speakers, car, TV, or another Bluetooth device",
@@ -85,6 +85,8 @@ export const airpodsConnectedButNoSoundProblem: Problem = {
     "priority-recovery",
     "airpods connected but no sound",
     "airpod no sound but connected",
+    "airpods connected but not playing audio",
+    "airpods 4 connected but no sound",
     "airpods no audio",
     "audio output",
     "one airpod not working",
