@@ -5,6 +5,7 @@ import { DiagnoseFinder } from "@/components/DiagnoseFinder";
 export const metadata: Metadata = {
   title: "Guided problem diagnosis",
   description: "Describe a symptom or error code and match it to the most relevant Troublio troubleshooting guides.",
+  robots: { index: false, follow: true },
   alternates: { canonical: "/diagnose" },
 };
 
