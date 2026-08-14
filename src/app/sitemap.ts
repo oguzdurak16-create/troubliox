@@ -21,13 +21,12 @@ function addEnglishAlternates(entry: MetadataRoute.Sitemap[number]): MetadataRou
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const updated = new Date("2026-08-05");
+  const updated = new Date("2026-08-14");
   const pages = [
     "",
     "/decoder",
     "/model-number",
     "/reset",
-    "/diagnose",
     "/guides",
     "/recent",
     "/devices",
@@ -51,7 +50,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/terms",
   ];
 
-  const highPriorityPages = ["/decoder", "/model-number", "/reset", "/guides", "/recent", "/devices", "/issues", "/diagnose", "/error-codes/brands"];
+  const highPriorityPages = ["/decoder", "/model-number", "/reset", "/guides", "/recent", "/devices", "/issues", "/error-codes/brands"];
 
   const entries: MetadataRoute.Sitemap = [
     ...pages.map((path) => ({
