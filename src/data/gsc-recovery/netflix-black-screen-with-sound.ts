@@ -2,16 +2,16 @@ import type { Problem } from "../problems";
 
 export const netflixBlackScreenWithSoundProblem: Problem = {
   slug: "netflix-black-screen-with-sound",
-  title: "Netflix black screen with sound: isolate the device, app, browser, or HDMI path",
+  title: "Netflix black screen with sound: restart the device, then check HDMI or video output",
   shortTitle: "Netflix black screen with sound",
   summary:
-    "When Netflix audio plays but video is black, Netflix says the fault usually sits in the playback device or video connection. Restart the device first, then separate an app or browser problem from an HDMI, display, driver, mirroring, or title-specific problem.",
+    "If Netflix has sound but the screen is black, Netflix says the problem usually comes from the playback device or the video connection. Restart the device first; on TV-connected devices, test the HDMI cable, port, receiver path, and direct connection before reinstalling apps or resetting the whole device.",
   category: "TV & entertainment",
   categorySlug: "tv-entertainment",
   brand: "Netflix",
   brandSlug: "netflix",
   device: "Netflix playback device",
-  updated: "2026-07-27",
+  updated: "2026-08-24",
   readTime: 5,
   likelyCauses: [
     "The streaming device or app has a temporary video-output state",
@@ -22,39 +22,39 @@ export const netflixBlackScreenWithSoundProblem: Problem = {
   ],
   quickChecks: [
     {
-      title: "Test another title and another app",
+      title: "Restart the playback device completely",
+      detail: "Netflix recommends unplugging TV-connected devices, pressing the power button once and waiting 1 minute, or leaving the device unplugged for 3 minutes before reconnecting.",
+      level: "safe",
+    },
+    {
+      title: "Test another Netflix title and another video app",
       detail: "If only one Netflix title fails, report that title. If every video app is black, focus on the device or display path.",
       level: "safe",
     },
     {
-      title: "Fully restart the playback device",
-      detail: "Turn it off completely or unplug it as Netflix instructs, then reconnect and test before changing settings.",
+      title: "Bypass the HDMI connection chain",
+      detail: "For TV-connected devices, connect directly to the TV, try another HDMI port, reverse the cable ends, or test another HDMI cable.",
       level: "safe",
     },
     {
-      title: "Bypass the video connection chain",
-      detail: "For TV-connected devices, connect directly to the TV, try another HDMI port, reverse the cable ends, or test another cable.",
-      level: "safe",
-    },
-    {
-      title: "Update the correct software layer",
-      detail: "Update the browser, device firmware, operating system, or supported graphics driver for the device that actually renders Netflix.",
+      title: "Update the software layer that renders video",
+      detail: "Update the device firmware, operating system, supported browser, or graphics driver only after the restart and connection tests.",
       level: "caution",
     },
   ],
-  decisionTitle: "Where does the black screen occur?",
+  decisionTitle: "Where does the Netflix black screen occur?",
   observations: [
     {
-      label: "Sound works and all Netflix titles are black",
+      label: "Sound works and every Netflix title is black",
       advice: "Restart the device, then focus on the app, browser, graphics driver, firmware, or HDMI path.",
     },
     {
       label: "Only one title is affected",
-      advice: "Use Netflix Viewing Activity to report the title instead of resetting the whole device.",
+      advice: "Report that title through Netflix rather than resetting the whole device.",
     },
     {
       label: "Netflix works on the built-in TV app but not an external player",
-      advice: "The external device, receiver, HDMI cable, port, output format, or HDCP handshake is the likely difference.",
+      advice: "The external device, receiver, HDMI cable, port, output format, or video handshake is the likely difference.",
     },
     {
       label: "The problem appears only while mirroring",
@@ -68,12 +68,16 @@ export const netflixBlackScreenWithSoundProblem: Problem = {
   ],
   faq: [
     {
-      question: "Why does Netflix have sound but no picture?",
-      answer: "Netflix says this usually means the device or a video cable stopped Netflix from displaying video, although browser, driver, firmware, mirroring, and title-specific problems can produce the same symptom.",
+      question: "Why is Netflix showing a black screen with sound?",
+      answer: "Netflix says sound with no picture usually points to the playback device or a video connection problem. Restart the device first, then isolate HDMI, display, app, browser, firmware, or driver issues.",
+    },
+    {
+      question: "How do I fix Netflix black screen with sound on a TV?",
+      answer: "Restart the TV or streaming device, then connect the player directly to the TV, try another HDMI port, reverse the cable ends, or test another HDMI cable. Netflix recommends those connection checks before broader resets.",
     },
     {
       question: "Should I reinstall Netflix immediately?",
-      answer: "No. First test another title, restart the device, and isolate the display or HDMI path. Reinstallation is device-specific and can remove downloads or sign-in data.",
+      answer: "No. First restart the device, test another title, and isolate the display or HDMI path. Reinstallation is device-specific and can remove downloads or sign-in data.",
     },
     {
       question: "Why does Netflix work on another screen?",
@@ -84,10 +88,12 @@ export const netflixBlackScreenWithSoundProblem: Problem = {
     "gsc-opportunity",
     "priority-recovery",
     "netflix black screen with sound",
+    "netflix black screen sound works",
+    "netflix sound but no picture",
     "netflix no picture audio works",
-    "netflix black screen",
+    "netflix black screen on tv",
     "hdmi",
-    "video driver",
+    "video output",
   ],
   appliesTo: "Netflix on TVs, streaming devices, phones, tablets, and supported computer browsers",
   modelNote:
