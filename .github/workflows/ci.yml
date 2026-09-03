@@ -44,6 +44,15 @@ jobs:
         run: cat audit-report.txt && exit 1
       - name: Validate content
         run: pnpm validate:content
+      - name: Audit content similarity
+        run: pnpm audit:similarity | tee content-similarity-report.txt
+      - name: Upload content similarity report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: content-similarity-report
+          path: content-similarity-report.txt
+          if-no-files-found: warn
       - name: Typecheck
         run: pnpm typecheck
       - name: Production build
