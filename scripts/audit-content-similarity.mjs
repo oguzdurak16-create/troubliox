@@ -88,7 +88,9 @@ try {
   }
 
   const { problems } = require(path.join(outputDirectory, "problems.js"));
-  const errorGuides = problems.filter((problem) => problem.contentKind === "error-code");
+  const { redirectedProblemSlugs } = require(path.join(outputDirectory, "problemAliases.js"));
+  const allErrorGuides = problems.filter((problem) => problem.contentKind === "error-code");
+  const errorGuides = allErrorGuides.filter((problem) => !redirectedProblemSlugs.has(problem.slug));
   const tokenSets = new Map(errorGuides.map((problem) => [problem.slug, contentTokens(problem)]));
   const pairs = [];
 
@@ -109,21 +111,23 @@ try {
   const genericOnly = errorGuides.length - sourceBacked;
 
   console.log("Troublio content similarity audit");
-  console.log(`Error-code guides: ${errorGuides.length}`);
+  console.log(`Error-code guides in data: ${allErrorGuides.length}`);
+  console.log(`Redirected alias guides excluded: ${allErrorGuides.length - errorGuides.length}`);
+  console.log(`Canonical error-code guides audited: ${errorGuides.length}`);
   console.log(`Guides with at least one specific/deep source URL: ${sourceBacked}`);
   console.log(`Guides backed only by generic support/manual landing URLs: ${genericOnly}`);
   console.log(`Critical similarity pairs (>= 0.90): ${critical.length}`);
   console.log(`High similarity pairs (0.80-0.89): ${high.length}`);
 
   if (pairs.length) {
-    console.log("\nHighest-similarity pairs:");
+    console.log("\nHighest-similarity canonical pairs:");
     for (const pair of pairs.slice(0, 30)) {
       console.log(`${pair.score.toFixed(3)}\t${pair.brand}\t${pair.device}\t${pair.a}\t${pair.b}`);
     }
   }
 
   if (critical.length) {
-    console.warn("\nWarning: critical near-duplicate pairs exist. Treat this report as a remediation queue; it is intentionally non-blocking until the current baseline is reduced.");
+    console.warn("\nWarning: critical near-duplicate canonical pairs exist. Treat this report as a remediation queue; it is intentionally non-blocking until the current baseline is reduced.");
   }
 } finally {
   fs.rmSync(outputDirectory, { recursive: true, force: true });
