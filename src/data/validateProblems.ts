@@ -1,13 +1,16 @@
 import type { Problem } from "./problems";
 import { mergeGscOpportunityProblems } from "./gscOpportunityProblems";
 import { mergeGscRecoveryProblems } from "./gscRecoveryProblems";
+import { applyProblemSourceOverrides } from "./problemSourceOverrides";
 
 function invariant(condition: unknown, message: string): asserts condition {
   if (!condition) throw new Error(`[Troublio content] ${message}`);
 }
 
 export function validateProblems(items: Problem[]): Problem[] {
-  const mergedItems = mergeGscRecoveryProblems(mergeGscOpportunityProblems(items));
+  const mergedItems = applyProblemSourceOverrides(
+    mergeGscRecoveryProblems(mergeGscOpportunityProblems(items)),
+  );
   const slugs = new Set<string>();
   const titles = new Set<string>();
 
