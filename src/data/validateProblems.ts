@@ -4,6 +4,7 @@ import { mergeGscRecoveryProblems } from "./gscRecoveryProblems";
 import { applyProblemContentOverrides } from "./problemContentOverrides";
 import { applyBoschProblemContentOverrides } from "./problemContentOverridesBosch";
 import { applySamsungProblemContentOverrides } from "./problemContentOverridesSamsung";
+import { applyWhirlpoolSupplyProblemContentOverrides } from "./problemContentOverridesWhirlpoolSupply";
 import { applyProblemSourceOverrides } from "./problemSourceOverrides";
 
 function invariant(condition: unknown, message: string): asserts condition {
@@ -14,8 +15,10 @@ export function validateProblems(items: Problem[]): Problem[] {
   const mergedItems = applyProblemSourceOverrides(
     applySamsungProblemContentOverrides(
       applyBoschProblemContentOverrides(
-        applyProblemContentOverrides(
-          mergeGscRecoveryProblems(mergeGscOpportunityProblems(items)),
+        applyWhirlpoolSupplyProblemContentOverrides(
+          applyProblemContentOverrides(
+            mergeGscRecoveryProblems(mergeGscOpportunityProblems(items)),
+          ),
         ),
       ),
     ),
