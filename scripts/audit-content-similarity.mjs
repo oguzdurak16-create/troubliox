@@ -8,6 +8,8 @@ const root = process.cwd();
 const sourceDirectory = path.join(root, "src", "data");
 const outputDirectory = fs.mkdtempSync(path.join(os.tmpdir(), "troublio-similarity-"));
 const require = createRequire(import.meta.url);
+const MAX_CRITICAL_PAIRS = 221;
+const MAX_GENERIC_SOURCE_ONLY_GUIDES = 0;
 
 function listTypeScriptFiles(directory, relativeDirectory = "") {
   const currentDirectory = path.join(directory, relativeDirectory);
@@ -151,8 +153,19 @@ try {
     }
   }
 
-  if (critical.length) {
-    console.warn("\nWarning: critical near-duplicate canonical pairs exist. Treat this report as a remediation queue; it is intentionally non-blocking until the current baseline is reduced.");
+  const regressions = [];
+  if (critical.length > MAX_CRITICAL_PAIRS) {
+    regressions.push(`critical similarity pairs increased from the locked baseline ${MAX_CRITICAL_PAIRS} to ${critical.length}`);
+  }
+  if (genericOnlyGuides.length > MAX_GENERIC_SOURCE_ONLY_GUIDES) {
+    regressions.push(`generic-source-only guides increased above ${MAX_GENERIC_SOURCE_ONLY_GUIDES}: ${genericOnlyGuides.length}`);
+  }
+
+  if (regressions.length) {
+    for (const regression of regressions) console.error(`\nQuality regression: ${regression}`);
+    process.exitCode = 1;
+  } else if (critical.length) {
+    console.warn(`\nKnown similarity debt remains (${critical.length} critical pairs), but the locked baseline did not regress.`);
   }
 } finally {
   fs.rmSync(outputDirectory, { recursive: true, force: true });
