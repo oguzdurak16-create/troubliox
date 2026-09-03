@@ -4,6 +4,7 @@ import { mergeGscRecoveryProblems } from "./gscRecoveryProblems";
 import { applyProblemContentOverrides } from "./problemContentOverrides";
 import { applyBoschProblemContentOverrides } from "./problemContentOverridesBosch";
 import { applyBoschControlProblemContentOverrides } from "./problemContentOverridesBoschControl";
+import { applyBoschLeakProblemContentOverrides } from "./problemContentOverridesBoschLeak";
 import { applyGeProblemContentOverrides } from "./problemContentOverridesGe";
 import { applySamsungProblemContentOverrides } from "./problemContentOverridesSamsung";
 import { applyWhirlpoolSupplyProblemContentOverrides } from "./problemContentOverridesWhirlpoolSupply";
@@ -17,11 +18,13 @@ export function validateProblems(items: Problem[]): Problem[] {
   const mergedItems = applyProblemSourceOverrides(
     applySamsungProblemContentOverrides(
       applyGeProblemContentOverrides(
-        applyBoschControlProblemContentOverrides(
-          applyBoschProblemContentOverrides(
-            applyWhirlpoolSupplyProblemContentOverrides(
-              applyProblemContentOverrides(
-                mergeGscRecoveryProblems(mergeGscOpportunityProblems(items)),
+        applyBoschLeakProblemContentOverrides(
+          applyBoschControlProblemContentOverrides(
+            applyBoschProblemContentOverrides(
+              applyWhirlpoolSupplyProblemContentOverrides(
+                applyProblemContentOverrides(
+                  mergeGscRecoveryProblems(mergeGscOpportunityProblems(items)),
+                ),
               ),
             ),
           ),
