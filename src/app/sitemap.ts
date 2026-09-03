@@ -1,12 +1,11 @@
 import type { MetadataRoute } from "next";
 import { brands, categories, problems } from "@/data/problems";
+import { redirectedProblemSlugs } from "@/data/problemAliases";
 import { deviceHubs, issueHubs } from "@/data/hubs";
 import { errorCodeClusters } from "@/data/errorCodeClusters";
 import { modelNumberGuides } from "@/data/modelNumberGuides";
 import { resetGuides } from "@/data/resetGuides";
 import { SITE_URL } from "@/lib/site";
-
-const redirectedProblemSlugs = new Set(["bosch-washer-e17-f17-error"]);
 
 function addEnglishAlternates(entry: MetadataRoute.Sitemap[number]): MetadataRoute.Sitemap[number] {
   return {
@@ -21,7 +20,7 @@ function addEnglishAlternates(entry: MetadataRoute.Sitemap[number]): MetadataRou
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const updated = new Date("2026-08-14");
+  const updated = new Date("2026-09-03");
   const pages = [
     "",
     "/decoder",
