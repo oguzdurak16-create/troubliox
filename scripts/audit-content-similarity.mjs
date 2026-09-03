@@ -67,6 +67,15 @@ function isGenericSource(urlString) {
   }
 }
 
+function groupPairCounts(pairs) {
+  const groups = new Map();
+  for (const pair of pairs) {
+    const key = `${pair.brand}\t${pair.device}`;
+    groups.set(key, (groups.get(key) || 0) + 1);
+  }
+  return [...groups.entries()].sort((a, b) => b[1] - a[1]);
+}
+
 try {
   for (const relativeFilename of listTypeScriptFiles(sourceDirectory)) {
     const sourceFilename = path.join(sourceDirectory, relativeFilename);
@@ -107,22 +116,38 @@ try {
   pairs.sort((a, b) => b.score - a.score);
   const critical = pairs.filter((pair) => pair.score >= 0.9);
   const high = pairs.filter((pair) => pair.score >= 0.8 && pair.score < 0.9);
-  const sourceBacked = errorGuides.filter((problem) => (problem.sources || []).some((source) => !isGenericSource(source.url))).length;
-  const genericOnly = errorGuides.length - sourceBacked;
+  const genericOnlyGuides = errorGuides.filter((problem) => !(problem.sources || []).some((source) => !isGenericSource(source.url)));
+  const sourceBacked = errorGuides.length - genericOnlyGuides.length;
 
   console.log("Troublio content similarity audit");
   console.log(`Error-code guides in data: ${allErrorGuides.length}`);
   console.log(`Redirected alias guides excluded: ${allErrorGuides.length - errorGuides.length}`);
   console.log(`Canonical error-code guides audited: ${errorGuides.length}`);
   console.log(`Guides with at least one specific/deep source URL: ${sourceBacked}`);
-  console.log(`Guides backed only by generic support/manual landing URLs: ${genericOnly}`);
+  console.log(`Guides backed only by generic support/manual landing URLs: ${genericOnlyGuides.length}`);
   console.log(`Critical similarity pairs (>= 0.90): ${critical.length}`);
   console.log(`High similarity pairs (0.80-0.89): ${high.length}`);
+
+  const criticalGroups = groupPairCounts(critical);
+  if (criticalGroups.length) {
+    console.log("\nCritical-pair concentration by brand/device:");
+    for (const [group, count] of criticalGroups.slice(0, 20)) console.log(`${count}\t${group}`);
+  }
 
   if (pairs.length) {
     console.log("\nHighest-similarity canonical pairs:");
     for (const pair of pairs.slice(0, 30)) {
       console.log(`${pair.score.toFixed(3)}\t${pair.brand}\t${pair.device}\t${pair.a}\t${pair.b}`);
+    }
+  }
+
+  if (genericOnlyGuides.length) {
+    console.log("\nGeneric-source-only remediation queue:");
+    for (const problem of genericOnlyGuides
+      .slice()
+      .sort((a, b) => `${a.brand} ${a.device} ${a.slug}`.localeCompare(`${b.brand} ${b.device} ${b.slug}`))
+      .slice(0, 80)) {
+      console.log(`${problem.brand}\t${problem.device}\t${problem.slug}`);
     }
   }
 
