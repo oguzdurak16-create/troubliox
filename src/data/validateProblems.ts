@@ -1,6 +1,7 @@
 import type { Problem } from "./problems";
 import { mergeGscOpportunityProblems } from "./gscOpportunityProblems";
 import { mergeGscRecoveryProblems } from "./gscRecoveryProblems";
+import { applyProblemContentOverrides } from "./problemContentOverrides";
 import { applyProblemSourceOverrides } from "./problemSourceOverrides";
 
 function invariant(condition: unknown, message: string): asserts condition {
@@ -9,7 +10,9 @@ function invariant(condition: unknown, message: string): asserts condition {
 
 export function validateProblems(items: Problem[]): Problem[] {
   const mergedItems = applyProblemSourceOverrides(
-    mergeGscRecoveryProblems(mergeGscOpportunityProblems(items)),
+    applyProblemContentOverrides(
+      mergeGscRecoveryProblems(mergeGscOpportunityProblems(items)),
+    ),
   );
   const slugs = new Set<string>();
   const titles = new Set<string>();
