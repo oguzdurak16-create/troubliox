@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { problemAliases } from "./src/data/problemAliases";
 
 const securityHeaders = [
   { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
@@ -23,11 +24,11 @@ const nextConfig: NextConfig = {
         destination: "https://www.troublio.com/:path*",
         permanent: true,
       },
-      {
-        source: "/problems/bosch-washer-e17-f17-error",
-        destination: "/problems/bosch-washer-e29-f29-error",
+      ...problemAliases.map((alias) => ({
+        source: `/problems/${alias.sourceSlug}`,
+        destination: `/problems/${alias.destinationSlug}`,
         permanent: true,
-      },
+      })),
     ];
   },
 };
