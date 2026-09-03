@@ -8,6 +8,7 @@
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "audit:repo": "node scripts/audit-repository.mjs --strict",
+    "audit:similarity": "node scripts/audit-content-similarity.mjs",
     "indexnow": "node scripts/submit-indexnow.mjs",
     "indexnow:check": "node scripts/submit-indexnow.mjs --dry-run",
     "validate:content": "node scripts/validate-content.mjs"
