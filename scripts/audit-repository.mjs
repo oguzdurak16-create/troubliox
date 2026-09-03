@@ -5,7 +5,7 @@ const root = process.cwd();
 const strict = process.argv.includes("--strict");
 const ignoredDirectories = new Set([".git", ".next", ".pnpm-store", ".vercel", "coverage", "node_modules", "out"]);
 const sourceExtensions = new Set([".ts", ".tsx", ".js", ".jsx", ".mjs", ".cjs"]);
-const assetExtensions = new Set([".avif", ".gif", ".html", ".ico", ".jpeg", ".jpg", ".json", ".png", ".svg", ".txt", ".webmanifest", ".webp", ".xml"]);
+const assetExtensions = new Set([".avif", ".css", ".gif", ".html", ".ico", ".jpeg", ".jpg", ".js", ".json", ".png", ".svg", ".txt", ".webmanifest", ".webp", ".xml"]);
 const errors = [];
 const warnings = [];
 
