@@ -5,6 +5,11 @@ const BOSCH_DISHWASHER_ERROR_CODES_SOURCE = {
   url: "https://www.bosch-home.com/us/owner-support/dishwashers/error-codes",
 };
 
+const BOSCH_DISHWASHER_E25_SOURCE = {
+  label: "Bosch Support — dishwasher E25",
+  url: "https://www.bosch-home.com/us/owner-support/get-support/support-selfhelp-dishwasher-error-e25",
+};
+
 const BOSCH_WASHER_E16_SOURCE = {
   label: "Bosch Support — washer E16 / F16",
   url: "https://www.bosch-home.com/us/owner-support/get-support/support-selfhelp-washing-error-e16-or-f16-washing-machine",
@@ -137,6 +142,76 @@ const overrides: Record<string, Partial<Problem>> = {
     modelNote: "Confirm E21 against the exact Bosch E-number documentation because components and service procedures vary by dishwasher platform. Do not assume a filter blockage when the model reports a heat-pump blockage.",
     sources: [BOSCH_DISHWASHER_ERROR_CODES_SOURCE],
     updated: "2026-09-03",
+  },
+  "bosch-dishwasher-e24-error": {
+    title: "Bosch dishwasher E24 error: drain path, hose, or outlet blockage",
+    shortTitle: "Bosch dishwasher E24 drain-path error",
+    summary: "Bosch dishwasher E24 is primarily a waste-water drainage-path fault. Bosch documentation points to a kinked or blocked drain hose, a sealed/blocked siphon or air-gap connection, and on some models a loose pump cover as the main user-checkable causes.",
+    likelyCauses: [
+      "The waste-water hose is kinked, sharply bent, or blocked",
+      "The sink siphon, air gap, or drain connection is obstructed or still sealed",
+      "The drain-pump cover is not locked correctly on a model that monitors that condition",
+      "A deeper drain-pump or plumbing fault remains after the external drain path is cleared",
+    ],
+    quickChecks: [
+      { title: "Check the drain hose route", detail: "With the dishwasher off, inspect the visible waste-water hose for sharp bends, crushing, or obvious blockage. Restore the hose to a smooth route without kinks.", level: "safe" },
+      { title: "Check the sink drain connection", detail: "Inspect the accessible air gap or siphon connection for debris and confirm a newly installed connection is actually open rather than still capped/sealed.", level: "safe" },
+      { title: "Check the pump cover seating", detail: "After disconnecting power, follow the model manual to confirm the drain-pump cover is correctly seated. Use caution around debris because broken glass or sharp fragments may be present.", level: "caution" },
+      { title: "Stop if drainage still fails", detail: "If E24 persists after the external hose/connection checks, avoid repeated cycles with standing water and arrange model-specific service.", level: "stop" },
+    ],
+    decisionTitle: "Is the external waste-water path clear and correctly connected?",
+    observations: [
+      { label: "The hose is kinked or the sink connection is blocked", advice: "Correct the external drain restriction, then run one rinse/drain test and watch for normal discharge." },
+      { label: "Water remains but the hose path is clear", advice: "The fault may be at the pump cover, drain pump, or another internal drainage component; continue only with model-specific Bosch guidance." },
+      { label: "E24 returns immediately after cleaning the drain path", advice: "Stop repeating resets. Arrange service to distinguish an internal pump/control problem from the plumbing path." },
+    ],
+    whenToStop: [
+      "E24 remains after the hose and accessible drain connection are confirmed clear",
+      "Standing water contains sharp debris that cannot be removed safely",
+      "Internal pump, wiring, or control diagnosis is required",
+    ],
+    faq: [
+      { question: "What does Bosch dishwasher E24 mean?", answer: "Bosch links E24 mainly to a blocked or kinked waste-water hose/drain path, with the siphon/air-gap connection and pump-cover seating also listed as possible causes on supported models." },
+      { question: "Is E24 the same as E25?", answer: "No. They are related drainage faults, but Bosch documentation distinguishes E24 around the drain path/hose and E25 more specifically around a blocked drain pump or loose/missing pump cover." },
+    ],
+    modelNote: "Bosch drain-system layouts vary. Confirm the exact E-number and installation type before disconnecting hoses or opening the pump area.",
+    sources: [BOSCH_DISHWASHER_ERROR_CODES_SOURCE],
+    updated: "2026-09-04",
+  },
+  "bosch-dishwasher-e25-error": {
+    title: "Bosch dishwasher E25 error: blocked drain pump or loose pump cover",
+    shortTitle: "Bosch dishwasher E25 drain-pump error",
+    summary: "Bosch dishwasher E25 specifically indicates that the drain pump is blocked or that the drain-pump cover is loose or missing on supported models. That makes E25 more pump-specific than the broader E24 drain-path condition.",
+    likelyCauses: [
+      "Food, glass, labels, or other debris is blocking the drain-pump area",
+      "The drain-pump cover is loose, incorrectly seated, or missing",
+      "Standing water or debris is preventing the pump from moving normally",
+      "The pump itself is faulty if the area is clean and the cover is correctly locked",
+    ],
+    quickChecks: [
+      { title: "Disconnect power before the pump area", detail: "Turn the dishwasher off and disconnect power before removing the filter or accessing the drain-pump cover.", level: "safe" },
+      { title: "Remove standing water and inspect for debris", detail: "Follow Bosch's user guidance to sponge out standing water, remove the filter, and inspect the pump-cover area. Wear protection and use caution because glass fragments can be sharp.", level: "caution" },
+      { title: "Seat the pump cover correctly", detail: "Reinstall the drain-pump cover so it locks/clicks into its intended position before replacing the filter.", level: "safe" },
+      { title: "Arrange service if E25 returns", detail: "If the pump area is clear and the cover is correctly seated but E25 persists, stop repeated operation and have the pump/control system diagnosed.", level: "stop" },
+    ],
+    decisionTitle: "Is the drain pump free of debris and its cover correctly locked?",
+    observations: [
+      { label: "Debris is found around the pump", advice: "Remove only safely accessible debris with power disconnected, reassemble the cover/filter correctly, and test one rinse/drain cycle." },
+      { label: "The pump cover was loose", advice: "Lock it correctly and retest once. A loose cover can prevent proper drainage and trigger E25." },
+      { label: "The pump area is clean but E25 returns", advice: "The pump or its control may be faulty. Arrange Bosch service instead of repeatedly opening the pump area." },
+    ],
+    whenToStop: [
+      "Sharp debris cannot be removed safely",
+      "E25 returns with a clean pump area and correctly locked cover",
+      "Electrical or internal pump diagnosis would be required",
+    ],
+    faq: [
+      { question: "What does Bosch dishwasher E25 mean?", answer: "Bosch defines E25 as a blocked drain pump or a drain-pump cover that is loose or missing." },
+      { question: "Should I replace the drain pump immediately for E25?", answer: "No. Bosch first directs users to check for blockage and pump-cover seating. Replacement should only follow model-specific diagnosis if the code persists after those checks." },
+    ],
+    modelNote: "Pump-cover access and filter design differ by Bosch dishwasher generation. Follow the exact model manual and keep power disconnected while accessing the pump area.",
+    sources: [BOSCH_DISHWASHER_ERROR_CODES_SOURCE, BOSCH_DISHWASHER_E25_SOURCE],
+    updated: "2026-09-04",
   },
 };
 
