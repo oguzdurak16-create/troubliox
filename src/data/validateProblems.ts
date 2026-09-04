@@ -9,6 +9,7 @@ import { applyGeProblemContentOverrides } from "./problemContentOverridesGe";
 import { applySamsungProblemContentOverrides } from "./problemContentOverridesSamsung";
 import { applySamsungSystemDoorProblemContentOverrides } from "./problemContentOverridesSamsungSystemDoor";
 import { applyWhirlpoolDishwasherDoorProblemContentOverrides } from "./problemContentOverridesWhirlpoolDishwasherDoor";
+import { applyWhirlpoolDrainProblemContentOverrides } from "./problemContentOverridesWhirlpoolDrain";
 import { applyWhirlpoolSupplyProblemContentOverrides } from "./problemContentOverridesWhirlpoolSupply";
 import { applyProblemSourceOverrides } from "./problemSourceOverrides";
 
@@ -25,9 +26,11 @@ export function validateProblems(items: Problem[]): Problem[] {
             applyBoschControlProblemContentOverrides(
               applyBoschProblemContentOverrides(
                 applyWhirlpoolDishwasherDoorProblemContentOverrides(
-                  applyWhirlpoolSupplyProblemContentOverrides(
-                    applyProblemContentOverrides(
-                      mergeGscRecoveryProblems(mergeGscOpportunityProblems(items)),
+                  applyWhirlpoolDrainProblemContentOverrides(
+                    applyWhirlpoolSupplyProblemContentOverrides(
+                      applyProblemContentOverrides(
+                        mergeGscRecoveryProblems(mergeGscOpportunityProblems(items)),
+                      ),
                     ),
                   ),
                 ),
