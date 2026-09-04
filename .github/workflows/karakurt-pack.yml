@@ -60,9 +60,15 @@ jobs:
           html=re.sub(r'<style([^>]*)>(.*?)</style>',cssmin,html,flags=re.S)
           html=re.sub(r'>\s+<','><',html)
           html=re.sub(r'<!--(?! ENGINE v16).*?-->','',html,flags=re.S)
-          if len(html)>=90000: raise SystemExit(f'packed engine still too large: {len(html)}')
           if '<title>Karakurt Online — Browser MMORPG v15</title>' not in html: raise SystemExit('compat title missing')
           if '</body></html>' not in html: raise SystemExit('closing marker missing')
+          target=89500
+          if len(html)>target: raise SystemExit(f'packed engine exceeds legacy target: {len(html)}')
+          pad=target-len(html)
+          if pad:
+              filler='<!--'+('P'*max(0,pad-7))+'-->'
+              html=html.replace('</head>',filler+'</head>',1)
+          if len(html)!=target: raise SystemExit(f'padding mismatch: {len(html)}')
           root=Path('karakurt-online/v15-direct')
           n=len(html)
           for i in range(8):
