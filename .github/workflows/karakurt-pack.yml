@@ -41,7 +41,7 @@ jobs:
           Path('/tmp/pre.html').write_text(html[:m.start(1)],encoding='utf-8')
           Path('/tmp/post.html').write_text(html[m.end(1):],encoding='utf-8')
           PY
-          npx terser /tmp/engine.js --module --compress passes=2 -o /tmp/engine.min.js
+          npx terser /tmp/engine.js --module --compress passes=3 --mangle -o /tmp/engine.min.js
           node --check /tmp/engine.min.js
           python3 - <<'PY'
           from pathlib import Path
@@ -59,7 +59,8 @@ jobs:
           html=pre+js+post
           html=re.sub(r'<style([^>]*)>(.*?)</style>',cssmin,html,flags=re.S)
           html=re.sub(r'>\s+<','><',html)
-          if len(html)>=100000: raise SystemExit(f'packed engine still too large: {len(html)}')
+          html=re.sub(r'<!--(?! ENGINE v16).*?-->','',html,flags=re.S)
+          if len(html)>=90000: raise SystemExit(f'packed engine still too large: {len(html)}')
           if '<title>Karakurt Online — Browser MMORPG v15</title>' not in html: raise SystemExit('compat title missing')
           if '</body></html>' not in html: raise SystemExit('closing marker missing')
           root=Path('karakurt-online/v15-direct')
