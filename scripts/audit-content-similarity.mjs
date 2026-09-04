@@ -8,7 +8,7 @@ const root = process.cwd();
 const sourceDirectory = path.join(root, "src", "data");
 const outputDirectory = fs.mkdtempSync(path.join(os.tmpdir(), "troublio-similarity-"));
 const require = createRequire(import.meta.url);
-const MAX_CRITICAL_PAIRS = 186;
+const MAX_CRITICAL_PAIRS = 183;
 const MAX_GENERIC_SOURCE_ONLY_GUIDES = 0;
 
 function listTypeScriptFiles(directory, relativeDirectory = "") {
