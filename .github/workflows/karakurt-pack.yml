@@ -41,7 +41,7 @@ jobs:
           Path('/tmp/pre.html').write_text(html[:m.start(1)],encoding='utf-8')
           Path('/tmp/post.html').write_text(html[m.end(1):],encoding='utf-8')
           PY
-          npx terser /tmp/engine.js --module --compress passes=2 --mangle false -o /tmp/engine.min.js
+          npx terser /tmp/engine.js --module --compress passes=2 -o /tmp/engine.min.js
           node --check /tmp/engine.min.js
           python3 - <<'PY'
           from pathlib import Path
@@ -49,15 +49,15 @@ jobs:
           pre=Path('/tmp/pre.html').read_text(encoding='utf-8')
           js=Path('/tmp/engine.min.js').read_text(encoding='utf-8')
           post=Path('/tmp/post.html').read_text(encoding='utf-8')
-          # Conservative CSS/HTML whitespace compaction.
           def cssmin(m):
-              x=m.group(1)
+              attrs=m.group(1) or ''
+              x=m.group(2)
               x=re.sub(r'/\*.*?\*/','',x,flags=re.S)
               x=re.sub(r'\s+',' ',x)
               x=re.sub(r'\s*([{}:;,>])\s*',r'\1',x)
-              return '<style>'+x.strip()+'</style>'
+              return '<style'+attrs+'>'+x.strip()+'</style>'
           html=pre+js+post
-          html=re.sub(r'<style(?:\s+id="[^"]+")?>(.*?)</style>',cssmin,html,flags=re.S)
+          html=re.sub(r'<style([^>]*)>(.*?)</style>',cssmin,html,flags=re.S)
           html=re.sub(r'>\s+<','><',html)
           if len(html)>=100000: raise SystemExit(f'packed engine still too large: {len(html)}')
           if '<title>Karakurt Online — Browser MMORPG v15</title>' not in html: raise SystemExit('compat title missing')
