@@ -8,7 +8,8 @@
   "git": {
     "deploymentEnabled": {
       "main": true,
-      "dev/**": false
+      "dev/**": false,
+      "karakurt-online": false
     }
   }
 }
