@@ -1,7 +1,7 @@
 # Karakurt Online v19.0
 
-Source SHA-256: `a1e33f13b014bef48e487d97efd8b81bbf34d97d88c75870e89159ed527ddbab`
-Source bytes: `153526`
+Local build SHA-256: `a1e33f13b014bef48e487d97efd8b81bbf34d97d88c75870e89159ed527ddbab`
+Local build bytes: `153526`
 JS syntax: `node --check` PASS
 
 Changes over v18.6:
@@ -15,4 +15,4 @@ Changes over v18.6:
 - Real account UI added with email/password signup/login/logout and Supabase cloud-save hooks. Local guest save remains as fallback.
 - Supabase schema prepared under `karakurt-online/supabase/001_karakurt_accounts.sql`; project URL/key placeholders stay disabled until a dedicated Supabase project is created.
 
-Production is intentionally not changed by these source commits. Test v19 in preview before promotion.
+The v19 compiled build is currently staged in the development workspace, not production. Production remains on the stable v16 hotfix until the dedicated Supabase project is connected and v19 passes preview verification.
