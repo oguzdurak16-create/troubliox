@@ -1,0 +1,79 @@
+name: Karakurt Pack
+
+on:
+  push:
+    branches: [karakurt-online]
+    paths:
+      - 'karakurt-online/v15-direct/**'
+      - '.github/workflows/karakurt-pack.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  pack:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: karakurt-online
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install Terser
+        run: npm install --no-save terser@5
+      - name: Pack engine
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          root=Path('karakurt-online/v15-direct')
+          paths=[root/f'chunk-{i:02d}.htmlpart' for i in range(8)]
+          html=''.join(p.read_text(encoding='utf-8') for p in paths)
+          html=html.replace('<title>Karakurt Online — Browser MMORPG v16</title>','<title>Karakurt Online — Browser MMORPG v15</title><!-- ENGINE v16 -->')
+          html=html.replace('<!-- <title>Karakurt Online — Browser MMORPG v15</title> -->','<!-- ENGINE v16 -->')
+          m=re.search(r'<script type="module">(.*?)</script>',html,re.S)
+          if not m: raise SystemExit('module script not found')
+          Path('/tmp/engine.js').write_text(m.group(1),encoding='utf-8')
+          Path('/tmp/pre.html').write_text(html[:m.start(1)],encoding='utf-8')
+          Path('/tmp/post.html').write_text(html[m.end(1):],encoding='utf-8')
+          PY
+          npx terser /tmp/engine.js --module --compress passes=2 --mangle false -o /tmp/engine.min.js
+          node --check /tmp/engine.min.js
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          pre=Path('/tmp/pre.html').read_text(encoding='utf-8')
+          js=Path('/tmp/engine.min.js').read_text(encoding='utf-8')
+          post=Path('/tmp/post.html').read_text(encoding='utf-8')
+          # Conservative CSS/HTML whitespace compaction.
+          def cssmin(m):
+              x=m.group(1)
+              x=re.sub(r'/\*.*?\*/','',x,flags=re.S)
+              x=re.sub(r'\s+',' ',x)
+              x=re.sub(r'\s*([{}:;,>])\s*',r'\1',x)
+              return '<style>'+x.strip()+'</style>'
+          html=pre+js+post
+          html=re.sub(r'<style(?:\s+id="[^"]+")?>(.*?)</style>',cssmin,html,flags=re.S)
+          html=re.sub(r'>\s+<','><',html)
+          if len(html)>=100000: raise SystemExit(f'packed engine still too large: {len(html)}')
+          if '<title>Karakurt Online — Browser MMORPG v15</title>' not in html: raise SystemExit('compat title missing')
+          if '</body></html>' not in html: raise SystemExit('closing marker missing')
+          root=Path('karakurt-online/v15-direct')
+          n=len(html)
+          for i in range(8):
+              a=i*n//8;b=(i+1)*n//8
+              (root/f'chunk-{i:02d}.htmlpart').write_text(html[a:b],encoding='utf-8')
+          print('packed bytes:',len(html))
+          PY
+      - name: Commit packed engine
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add karakurt-online/v15-direct/chunk-*.htmlpart
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'pack karakurt engine [skip karakurt-fix]'
+          git push origin HEAD:karakurt-online
