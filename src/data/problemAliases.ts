@@ -27,6 +27,10 @@ export const problemAliases = [
     sourceSlug: "whirlpool-dishwasher-2-1-error",
     destinationSlug: "whirlpool-dishwasher-f2e1-error",
   },
+  {
+    sourceSlug: "whirlpool-dishwasher-9-1-error",
+    destinationSlug: "whirlpool-dishwasher-f9e1-error",
+  },
 ] as const;
 
 export const redirectedProblemSlugs = new Set<string>(
