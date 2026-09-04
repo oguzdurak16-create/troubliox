@@ -7,6 +7,7 @@ import { applyBoschControlProblemContentOverrides } from "./problemContentOverri
 import { applyBoschLeakProblemContentOverrides } from "./problemContentOverridesBoschLeak";
 import { applyGeProblemContentOverrides } from "./problemContentOverridesGe";
 import { applySamsungProblemContentOverrides } from "./problemContentOverridesSamsung";
+import { applySamsungSystemDoorProblemContentOverrides } from "./problemContentOverridesSamsungSystemDoor";
 import { applyWhirlpoolDishwasherDoorProblemContentOverrides } from "./problemContentOverridesWhirlpoolDishwasherDoor";
 import { applyWhirlpoolSupplyProblemContentOverrides } from "./problemContentOverridesWhirlpoolSupply";
 import { applyProblemSourceOverrides } from "./problemSourceOverrides";
@@ -17,15 +18,17 @@ function invariant(condition: unknown, message: string): asserts condition {
 
 export function validateProblems(items: Problem[]): Problem[] {
   const mergedItems = applyProblemSourceOverrides(
-    applySamsungProblemContentOverrides(
-      applyGeProblemContentOverrides(
-        applyBoschLeakProblemContentOverrides(
-          applyBoschControlProblemContentOverrides(
-            applyBoschProblemContentOverrides(
-              applyWhirlpoolDishwasherDoorProblemContentOverrides(
-                applyWhirlpoolSupplyProblemContentOverrides(
-                  applyProblemContentOverrides(
-                    mergeGscRecoveryProblems(mergeGscOpportunityProblems(items)),
+    applySamsungSystemDoorProblemContentOverrides(
+      applySamsungProblemContentOverrides(
+        applyGeProblemContentOverrides(
+          applyBoschLeakProblemContentOverrides(
+            applyBoschControlProblemContentOverrides(
+              applyBoschProblemContentOverrides(
+                applyWhirlpoolDishwasherDoorProblemContentOverrides(
+                  applyWhirlpoolSupplyProblemContentOverrides(
+                    applyProblemContentOverrides(
+                      mergeGscRecoveryProblems(mergeGscOpportunityProblems(items)),
+                    ),
                   ),
                 ),
               ),
