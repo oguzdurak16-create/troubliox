@@ -4,6 +4,10 @@ export const problemAliases = [
     destinationSlug: "bosch-washer-e29-f29-error",
   },
   {
+    sourceSlug: "samsung-washer-sud-5d-error",
+    destinationSlug: "samsung-washer-5d-error",
+  },
+  {
     sourceSlug: "whirlpool-dishwasher-4-3-error",
     destinationSlug: "whirlpool-dishwasher-f4e3-error",
   },
