@@ -70,10 +70,10 @@ const SEO_OPPORTUNITY_OVERRIDES: Record<string, OpportunitySeoOverride> = {
       { href: "/error-codes/brands/bosch-dishwasher", label: "All Bosch dishwasher error codes" },
     ],
   },
-  "samsung-washer-sud-5d-error": {
-    title: "Samsung Washer SUD / 5D Error: Too Many Suds and Safe Fixes",
+  "samsung-washer-5d-error": {
+    title: "Samsung Washer 5D / Sd / SUD Error: Too Many Suds, Not 5E",
     description:
-      "Samsung washer showing SUD, Sd or 5D? Excess detergent or poor draining can leave too many suds. See the safest checks, detergent steps and when service is needed.",
+      "Samsung washer showing 5D, Sd or SUD? It usually means excessive suds, not the 5E/5C drain code. See safe detergent, rinse and drainage checks.",
     quickAnswer:
       "Samsung SUD / Sd / 5D usually means the washer detected excessive suds. Let the machine finish its suds-reduction routine, avoid adding more detergent, then check detergent type and dose. If the code keeps returning, inspect the user-accessible drain path and use the model manual before any internal work.",
     priorityLinks: [
