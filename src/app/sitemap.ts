@@ -20,7 +20,7 @@ function addEnglishAlternates(entry: MetadataRoute.Sitemap[number]): MetadataRou
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const updated = new Date("2026-09-03");
+  const updated = new Date("2026-09-06");
   const pages = [
     "",
     "/decoder",
