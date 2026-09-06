@@ -22,7 +22,7 @@ export default function HomePage() {
     "bosch-dishwasher-e90-error",
     "whirlpool-washer-rl-error",
     "bosch-washer-e29-f29-error",
-    "samsung-washer-sud-5d-error",
+    "samsung-washer-5d-error",
     "netflix-black-screen-with-sound",
     "lg-washer-ff-error",
   ];
