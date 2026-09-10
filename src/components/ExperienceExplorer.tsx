@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { experienceSeed, type ExperienceProduct } from "@/data/experienceSeed";
 import styles from "@/app/experience/experience.module.css";
@@ -11,9 +12,13 @@ type ApiStatsResponse = {
   stats?: LiveStats;
 };
 
-export function ExperienceExplorer() {
+type ExperienceExplorerProps = {
+  initialSlug?: string;
+};
+
+export function ExperienceExplorer({ initialSlug }: ExperienceExplorerProps = {}) {
   const [query, setQuery] = useState("");
-  const [selectedSlug, setSelectedSlug] = useState(experienceSeed[0]?.slug || "");
+  const [selectedSlug, setSelectedSlug] = useState(initialSlug || experienceSeed[0]?.slug || "");
   const [hadProblem, setHadProblem] = useState(false);
   const [status, setStatus] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -158,6 +163,7 @@ export function ExperienceExplorer() {
           <div>
             <p>{selected.category}</p>
             <h2>{selected.brand} {selected.model}</h2>
+            <p><Link href={`/experience/${selected.slug}`}>Open the permanent model page →</Link></p>
           </div>
           <span className={styles.demoBadge}>{backendLive ? "Live user data" : "Demo aggregate"}</span>
         </div>
