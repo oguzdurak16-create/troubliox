@@ -34,16 +34,16 @@ const SEO_OPPORTUNITY_OVERRIDES: Record<string, OpportunitySeoOverride> = {
       { href: "/error-codes/washing-machines", label: "All washing machine error codes" },
     ],
   },
-  "bosch-washer-e29-f29-error": {
-    title: "Bosch Washer E29 / F29 Error: Meaning and Safe Checks",
+  "bosch-washer-f29-error": {
+    title: "Bosch Washer F29 / E29 Error: Meaning and Safe Checks",
     description:
-      "Bosch washer E29 or F29? Check the model-specific manual, water supply, hoses, filters and drain path before service. Follow safe checks and stop conditions.",
+      "Bosch washer showing F29, 29 or E29? Check the exact model, water supply, inlet hose and filter first. See safe checks and when to call service.",
     quickAnswer:
-      "Bosch E29 / F29 handling varies by model family, so confirm the full E-Nr first. Start with safe external checks: fully open the water tap, inspect inlet and drain hoses for kinks, check accessible filters, and stop if there is leakage or the code returns.",
+      "On supported Bosch washers, F29 / 29 is associated with the water-inlet path and may be grouped with F17/E17. If the display truly reads E29, confirm the full E-Nr before assuming the same meaning. Start with the tap, household water pressure, inlet hose and accessible inlet filter.",
     priorityLinks: [
-      { href: "/problems/bosch-washer-e17-f17-error", label: "Bosch E17 / F17 water error" },
       { href: "/problems/bosch-washer-e18-f18-error", label: "Bosch E18 / F18 drain error" },
       { href: "/problems/bosch-washer-e23-f23-error", label: "Bosch E23 / F23 leak error" },
+      { href: "/error-codes/brands/bosch-washing-machine", label: "All Bosch washer error codes" },
     ],
   },
   "netflix-black-screen-with-sound": {
