@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ExperienceExplorer } from "@/components/ExperienceExplorer";
+import { listExperienceProducts } from "@/lib/experienceProducts";
 import styles from "./experience.module.css";
 
 export const metadata: Metadata = {
@@ -9,7 +10,11 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function ExperiencePage() {
+export const revalidate = 300;
+
+export default async function ExperiencePage() {
+  const products = await listExperienceProducts();
+
   return (
     <>
       <section className="page-hero">
@@ -26,7 +31,7 @@ export default function ExperiencePage() {
       </section>
       <section className="section-tight">
         <div className="container">
-          <ExperienceExplorer />
+          <ExperienceExplorer products={products} />
         </div>
       </section>
     </>
