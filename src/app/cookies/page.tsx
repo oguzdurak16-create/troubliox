@@ -17,7 +17,7 @@ export default function CookiePolicyPage() {
         <p>Cookies and local browser storage are small records used to operate websites, remember choices, measure usage and support advertising. Troublio&apos;s core guides remain available when optional categories are rejected.</p>
 
         <h2>Essential storage</h2>
-        <p>Essential browser storage supports privacy choices, saved guides, recent guides, interface preferences and basic security. Troublio may also store a random anonymous contributor identifier so repeat product-experience submissions from the same browser can update the same contribution instead of inflating owner counts. This identifier is not used for advertising personalization and can be reset by clearing Troublio site data.</p>
+        <p>Essential browser storage supports privacy choices, saved guides, recent guides, interface preferences and basic security. Troublio may also store a random anonymous contributor identifier so repeat structured experience and troubleshooting submissions from the same browser can update existing contributions instead of inflating product, problem or model-community counts. This identifier is not used for advertising personalization and can be reset by clearing Troublio site data.</p>
 
         <h2>Analytics storage</h2>
         <p>If accepted, Google Analytics may use identifiers such as <code>_ga</code>, <code>_ga_*</code>, <code>_gid</code> or related technologies to measure visits and interactions. Analytics storage is denied until the visitor grants analytics consent.</p>
