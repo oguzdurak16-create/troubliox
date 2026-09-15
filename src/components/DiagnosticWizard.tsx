@@ -2,6 +2,7 @@
 
 import { Fragment, useEffect, useMemo, useState } from "react";
 import type { Step } from "@/data/problems";
+import { submitContribution } from "@/lib/contributionClient";
 import styles from "./DiagnosticWizard.module.css";
 
 type Observation = { label: string; advice: string };
@@ -117,27 +118,25 @@ export function DiagnosticWizard({ slug, title, steps, observations, stopConditi
     setFeedback((current) => ({ ...current, [index]: "saving" }));
 
     try {
-      const response = await fetch("/api/step-outcome", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ slug, stepLabel: step.title, fixed }),
+      const { response, result } = await submitContribution({
+        kind: "step",
+        slug,
+        stepLabel: step.title,
+        fixed,
       });
 
       if (response.ok) {
-        if (fixed) window.localStorage.setItem(`troublio-problem-experience:${slug}`, "done");
-        setFeedback((current) => ({ ...current, [index]: fixed ? "fixed" : "not-fixed" }));
+        const state: FeedbackState = result.duplicate ? "duplicate" : fixed ? "fixed" : "not-fixed";
+        setFeedback((current) => ({ ...current, [index]: state }));
         window.gtag?.("event", "quick_check_result", {
           guide_slug: slug,
           guide_title: title,
           step_number: index + 1,
           step_title: step.title,
           result: fixed ? "fixed" : "not_fixed",
+          updated: Boolean(result.updated),
+          duplicate: Boolean(result.duplicate),
         });
-        return;
-      }
-
-      if (response.status === 409) {
-        setFeedback((current) => ({ ...current, [index]: "duplicate" }));
         return;
       }
 
@@ -227,9 +226,9 @@ export function DiagnosticWizard({ slug, title, steps, observations, stopConditi
                   <div className={styles.microFeedback}>
                     <div className={styles.microCopy}>
                       <strong>Did this check fix the problem?</strong>
-                      <span>One tap helps Troublio learn which checks actually work.</span>
+                      <span>One tap helps Troublio learn which checks actually work. You can still add the exact model separately below.</span>
                     </div>
-                    {feedback[index] === "fixed" ? <span className={styles.microResult}>Recorded as a real-world fix.</span> : null}
+                    {feedback[index] === "fixed" ? <span className={styles.microResult}>Recorded as a real-world step result.</span> : null}
                     {feedback[index] === "duplicate" ? <span className={styles.microResult}>This check result is already recorded today.</span> : null}
                     {feedback[index] === "not-fixed" ? <span className={styles.microResult}>Recorded — continue to the next check.</span> : null}
                     {feedback[index] === "error" ? <span className={`${styles.microResult} ${styles.microError}`}>Could not save. You can try again.</span> : null}
