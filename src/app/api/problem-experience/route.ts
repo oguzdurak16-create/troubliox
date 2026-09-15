@@ -22,20 +22,32 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Unknown problem." }, { status: 404 });
   }
 
-  const response = await fetch(
-    `${SUPABASE_URL}/rest/v1/troublio_problem_aggregates?problem_slug=eq.${encodeURIComponent(slug)}&select=experience_count,resolved_count,resolution_rate,top_solutions&limit=1`,
-    { headers: headers(), cache: "no-store" },
-  );
+  const [aggregateResponse, stepResponse] = await Promise.all([
+    fetch(
+      `${SUPABASE_URL}/rest/v1/troublio_problem_aggregates?problem_slug=eq.${encodeURIComponent(slug)}&select=experience_count,resolved_count,resolution_rate,top_solutions&limit=1`,
+      { headers: headers(), cache: "no-store" },
+    ),
+    fetch(
+      `${SUPABASE_URL}/rest/v1/troublio_step_aggregates?problem_slug=eq.${encodeURIComponent(slug)}&select=step_label,attempts,fixed_count,success_rate&order=attempts.desc`,
+      { headers: headers(), cache: "no-store" },
+    ),
+  ]);
 
-  if (!response.ok) {
+  if (!aggregateResponse.ok || !stepResponse.ok) {
     return NextResponse.json({ error: "Community experience lookup failed." }, { status: 502 });
   }
 
-  const rows = (await response.json()) as Array<{
+  const rows = (await aggregateResponse.json()) as Array<{
     experience_count: number;
     resolved_count: number;
     resolution_rate: number;
     top_solutions: Array<{ label: string; reports: number }> | null;
+  }>;
+  const stepRows = (await stepResponse.json()) as Array<{
+    step_label: string;
+    attempts: number;
+    fixed_count: number;
+    success_rate: number;
   }>;
   const row = rows[0];
 
@@ -44,6 +56,12 @@ export async function GET(request: NextRequest) {
     resolvedCount: row?.resolved_count || 0,
     resolutionRate: row?.resolution_rate || 0,
     topSolutions: row?.top_solutions || [],
+    stepStats: stepRows.map((item) => ({
+      label: item.step_label,
+      attempts: item.attempts,
+      fixedCount: item.fixed_count,
+      successRate: item.success_rate,
+    })),
   };
 
   return NextResponse.json(body, {
