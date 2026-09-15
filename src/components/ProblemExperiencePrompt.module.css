@@ -1,0 +1,157 @@
+.card {
+  margin: 24px 0 10px;
+  border: 1px solid rgba(13, 105, 103, 0.18);
+  border-radius: 20px;
+  padding: 18px;
+  background: linear-gradient(135deg, rgba(201, 244, 123, 0.18), rgba(255, 255, 255, 0.78));
+}
+
+.topline {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.copy strong {
+  display: block;
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+}
+
+.copy span {
+  display: block;
+  margin-top: 3px;
+  color: #536a6b;
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.button,
+.solutionButton {
+  border: 1px solid #8bad59;
+  border-radius: 11px;
+  padding: 9px 13px;
+  background: #fff;
+  color: #073f40;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.buttonPrimary {
+  border-color: #073f40;
+  background: #073f40;
+  color: #fff;
+}
+
+.details {
+  display: grid;
+  gap: 14px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(13, 105, 103, 0.14);
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+}
+
+.field label,
+.solutionTitle {
+  color: #294b4d;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.field input {
+  width: 100%;
+  border: 1px solid #c9d3cb;
+  border-radius: 11px;
+  padding: 10px 12px;
+  background: #fff;
+  color: #10282a;
+  font: inherit;
+}
+
+.solutionGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.solutionButton {
+  text-align: left;
+  font-size: 0.84rem;
+}
+
+.notFixed {
+  border-color: #d3b15f;
+}
+
+.status {
+  margin: 2px 0 0;
+  color: #536a6b;
+  font-size: 0.82rem;
+}
+
+.community {
+  margin-top: 14px;
+  border-top: 1px solid rgba(13, 105, 103, 0.14);
+  padding-top: 12px;
+  color: #365a5b;
+  font-size: 0.84rem;
+}
+
+.community strong {
+  color: #073f40;
+}
+
+.communityList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px 12px;
+  margin-top: 6px;
+}
+
+.communityList span {
+  white-space: nowrap;
+}
+
+.done {
+  display: grid;
+  gap: 5px;
+}
+
+.done strong {
+  font-size: 0.95rem;
+}
+
+.done span {
+  color: #536a6b;
+  font-size: 0.84rem;
+}
+
+@media (max-width: 700px) {
+  .topline {
+    display: grid;
+  }
+
+  .actions,
+  .solutionGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .button,
+  .solutionButton {
+    width: 100%;
+  }
+}
