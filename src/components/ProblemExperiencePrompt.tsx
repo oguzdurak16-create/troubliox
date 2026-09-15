@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { submitContribution } from "@/lib/contributionClient";
+import { getContributorId } from "@/lib/contributorId";
+import { submitProblemExperience } from "@/lib/problemExperienceClient";
 import styles from "./ProblemExperiencePrompt.module.css";
 
 type Aggregate = {
@@ -71,9 +72,10 @@ export function ProblemExperiencePrompt({ slug, title, brand, device, solutions 
     setStatus("");
 
     try {
-      const { response, result } = await submitContribution({
-        kind: "problem",
+      const contributorId = getContributorId();
+      const { response, result } = await submitProblemExperience({
         slug,
+        contributorId: contributorId || undefined,
         model,
         resolved,
         solutionLabel: resolved ? solutionLabel : undefined,
@@ -96,7 +98,7 @@ export function ProblemExperiencePrompt({ slug, title, brand, device, solutions 
 
       window.localStorage.setItem(storageKey, "done");
       setStage("done");
-      setStatus(result.updated ? "Your earlier result was updated with the latest outcome." : result.duplicate ? "This result is already recorded for today." : "");
+      setStatus(result.updated ? "Your earlier result was updated with the latest outcome." : result.duplicate ? "This result is already recorded." : "");
       window.gtag?.("event", "experience_submitted", {
         guide_slug: slug,
         guide_title: title,
@@ -171,7 +173,7 @@ export function ProblemExperiencePrompt({ slug, title, brand, device, solutions 
 
       {showCommunity ? (
         <div className={styles.community}>
-          <strong>Real-world data:</strong> {aggregate.experienceCount} people reported this issue; {aggregate.resolutionRate}% reported a fix.
+          <strong>Real-world data:</strong> {aggregate.experienceCount} deduplicated contributors reported this issue; {aggregate.resolutionRate}% reported a fix.
           {aggregate.topSolutions.length ? (
             <div className={styles.communityList}>
               {aggregate.topSolutions.slice(0, 3).map((item) => <span key={item.label}>{item.label}: {item.reports}</span>)}
