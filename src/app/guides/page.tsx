@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { problems } from "@/data/problems";
+import { listPublishedDemandProblems, mergePublishedProblems } from "@/lib/publishedDemandProblems";
 import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -10,8 +11,12 @@ export const metadata: Metadata = {
   alternates: { canonical: "/guides" },
 };
 
-export default function GuidesPage() {
-  const sorted = [...problems].sort((a, b) => a.title.localeCompare(b.title));
+export const revalidate = 300;
+
+export default async function GuidesPage() {
+  const published = await listPublishedDemandProblems();
+  const allProblems = mergePublishedProblems(problems, published);
+  const sorted = [...allProblems].sort((a, b) => a.title.localeCompare(b.title));
   const groups = Array.from(new Set(sorted.map((problem) => problem.title[0]?.toUpperCase() || "#"))).map((letter) => ({
     letter,
     guides: sorted.filter((problem) => (problem.title[0]?.toUpperCase() || "#") === letter),
@@ -30,7 +35,7 @@ export default function GuidesPage() {
       <div className="container"><Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "All guides" }]} /></div>
       <section className="page-hero">
         <div className="container page-hero-narrow">
-          <span className="eyebrow">{problems.length} published guides</span>
+          <span className="eyebrow">{allProblems.length} published guides</span>
           <h1>All troubleshooting guides A–Z.</h1>
           <p>A crawlable directory of every current guide. Use Search for codes, aliases, brands, symptoms, and model wording.</p>
         </div>
