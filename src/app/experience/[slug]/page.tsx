@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ExperienceExplorer } from "@/components/ExperienceExplorer";
-import { getExperienceProduct, listExperienceProducts } from "@/lib/experienceProducts";
+import {
+  getExperienceProduct,
+  isExperienceProductIndexable,
+  listExperienceProducts,
+} from "@/lib/experienceProducts";
 import styles from "../experience.module.css";
 
 export const revalidate = 300;
@@ -20,11 +24,22 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     return { title: "Product experience", robots: { index: false, follow: false } };
   }
 
+  const indexable = isExperienceProductIndexable(product);
+  const description = indexable
+    ? `Real-world data from ${product.ownershipCount} deduplicated owner reports for ${product.brand} ${product.model}: median ownership ${product.medianMonths} months, ${product.issueRate}% reported a problem, and ${product.wouldBuyAgain}% would buy again.`
+    : `Structured owner experience for ${product.brand} ${product.model}: reported ownership duration, problems, repair costs and buy-again intent.`;
+
   return {
     title: `${product.brand} ${product.model} real-world owner experience`,
-    description: `Structured owner experience for ${product.brand} ${product.model}: reported ownership duration, problems, repair costs and buy-again intent.`,
+    description,
     alternates: { canonical: `/experience/${product.slug}` },
-    robots: { index: false, follow: false },
+    robots: { index: indexable, follow: true },
+    openGraph: indexable ? {
+      type: "website",
+      title: `${product.brand} ${product.model} real-world owner experience`,
+      description,
+      url: `/experience/${product.slug}`,
+    } : undefined,
   };
 }
 
