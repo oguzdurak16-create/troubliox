@@ -24,7 +24,7 @@ export async function GET(request: NextRequest) {
 
   const response = await fetch(
     `${SUPABASE_URL}/rest/v1/troublio_problem_aggregates?problem_slug=eq.${encodeURIComponent(slug)}&select=experience_count,resolved_count,resolution_rate,top_solutions&limit=1`,
-    { headers: headers(), next: { revalidate: 300 } },
+    { headers: headers(), cache: "no-store" },
   );
 
   if (!response.ok) {
