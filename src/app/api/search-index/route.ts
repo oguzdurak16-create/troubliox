@@ -1,12 +1,16 @@
 import { problems } from "@/data/problems";
+import { listPublishedDemandProblems, mergePublishedProblems } from "@/lib/publishedDemandProblems";
 import { buildSearchIndex } from "@/lib/search-index";
 
-export const dynamic = "force-static";
+export const revalidate = 300;
 
-export function GET() {
-  return Response.json(buildSearchIndex(problems), {
+export async function GET() {
+  const published = await listPublishedDemandProblems();
+  const allProblems = mergePublishedProblems(problems, published);
+
+  return Response.json(buildSearchIndex(allProblems), {
     headers: {
-      "Cache-Control": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800",
+      "Cache-Control": "public, max-age=0, s-maxage=300, stale-while-revalidate=3600",
       "X-Robots-Tag": "noindex",
     },
   });
