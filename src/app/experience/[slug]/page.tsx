@@ -17,11 +17,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const product = await getExperienceProduct(slug);
 
   if (!product) {
-    return { title: "Product experience | Troublio", robots: { index: false, follow: false } };
+    return { title: "Product experience", robots: { index: false, follow: false } };
   }
 
   return {
-    title: `${product.brand} ${product.model} real-world owner experience | Troublio`,
+    title: `${product.brand} ${product.model} real-world owner experience`,
     description: `Structured owner experience for ${product.brand} ${product.model}: reported ownership duration, problems, repair costs and buy-again intent.`,
     alternates: { canonical: `/experience/${product.slug}` },
     robots: { index: false, follow: false },
