@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ModelContributionPrompt } from "@/components/ModelContributionPrompt";
 import { getProblem } from "@/data/problems";
 import { getModelExperience, isModelIndexEligible } from "@/lib/modelExperience";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
@@ -44,6 +45,13 @@ export default async function ModelExperiencePage({ params }: Props) {
   const issues = aggregate.topIssues
     .map((item) => ({ ...item, problem: getProblem(item.slug) }))
     .filter((item) => Boolean(item.problem));
+  const contributionIssues = issues.map((item) => ({
+    slug: item.slug,
+    title: item.problem?.shortTitle || item.problem?.title || item.slug,
+    solutions: (item.problem?.quickChecks || [])
+      .filter((step) => step.level !== "stop")
+      .map((step) => step.title),
+  }));
 
   const datasetSchema = indexable ? {
     "@context": "https://schema.org",
@@ -86,6 +94,12 @@ export default async function ModelExperiencePage({ params }: Props) {
             <div className={styles.stat}><strong>{aggregate.resolutionRate}%</strong><span>reported a resolution</span></div>
             <div className={styles.stat}><strong>{aggregate.resolvedCount}</strong><span>resolved reports</span></div>
           </div>
+
+          <ModelContributionPrompt
+            brand={aggregate.brand}
+            model={aggregate.model}
+            issues={contributionIssues}
+          />
 
           <div className={styles.columns}>
             <section className={styles.panel}>

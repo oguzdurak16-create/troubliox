@@ -1,0 +1,110 @@
+.card {
+  display: grid;
+  gap: 16px;
+  margin-top: 22px;
+  padding: clamp(18px, 3vw, 26px);
+  border: 1px solid rgba(13, 105, 103, 0.16);
+  border-radius: 20px;
+  background: linear-gradient(180deg, rgba(13, 105, 103, 0.055), rgba(255, 255, 255, 0.9));
+}
+
+.heading {
+  display: grid;
+  gap: 5px;
+}
+
+.heading strong {
+  color: #073f40;
+  font-size: 1.05rem;
+}
+
+.heading span {
+  color: #607071;
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.issueGrid,
+.solutionGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.button {
+  border: 1px solid rgba(13, 105, 103, 0.18);
+  border-radius: 12px;
+  padding: 11px 12px;
+  background: #fff;
+  color: #294b4d;
+  font: inherit;
+  font-size: 0.84rem;
+  font-weight: 800;
+  text-align: left;
+  cursor: pointer;
+}
+
+.button:hover,
+.buttonActive {
+  border-color: #0d6967;
+  background: rgba(13, 105, 103, 0.06);
+}
+
+.button:disabled {
+  cursor: default;
+  opacity: 0.58;
+}
+
+.prompt {
+  display: grid;
+  gap: 10px;
+}
+
+.promptTitle {
+  color: #073f40;
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.notFixed {
+  border-style: dashed;
+}
+
+.status {
+  margin: 0;
+  color: #536466;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.done {
+  display: grid;
+  gap: 4px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: rgba(13, 105, 103, 0.08);
+}
+
+.done strong {
+  color: #073f40;
+}
+
+.done span {
+  color: #607071;
+  font-size: 0.84rem;
+}
+
+.link {
+  width: fit-content;
+  color: #0d6967;
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+@media (max-width: 700px) {
+  .issueGrid,
+  .solutionGrid {
+    grid-template-columns: 1fr;
+  }
+}
