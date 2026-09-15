@@ -4,6 +4,7 @@ import { experienceSeed, type ExperienceProduct } from "@/data/experienceSeed";
 const SUPABASE_URL = process.env.SUPABASE_URL || "https://ivvzpzmojfhtlfapfrxf.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = process.env.SUPABASE_PUBLISHABLE_KEY || "sb_publishable_SNvWSL7fDWJMWe1YoQUE6Q_pGJRVzhv";
 const REVALIDATE_SECONDS = 300;
+export const EXPERIENCE_INDEX_MIN_OWNERS = 10;
 
 type ProductRow = {
   id: string;
@@ -20,6 +21,7 @@ type AggregateRow = {
   issue_rate: number | null;
   would_buy_again: number | null;
   common_issues: Array<{ label: string; reports: number }> | null;
+  updated_at: string | null;
 };
 
 function headers() {
@@ -50,7 +52,12 @@ function asExperienceProduct(product: ProductRow, aggregate?: AggregateRow): Exp
     wouldBuyAgain: Math.max(0, Math.min(100, Number(aggregate?.would_buy_again || 0))),
     commonIssues: normalizeIssueList(aggregate?.common_issues || []),
     demo: false,
+    updatedAt: aggregate?.updated_at || undefined,
   };
+}
+
+export function isExperienceProductIndexable(product: ExperienceProduct) {
+  return !product.demo && product.ownershipCount >= EXPERIENCE_INDEX_MIN_OWNERS;
 }
 
 export async function listExperienceProducts(): Promise<ExperienceProduct[]> {
@@ -60,7 +67,7 @@ export async function listExperienceProducts(): Promise<ExperienceProduct[]> {
         headers: headers(),
         next: { revalidate: REVALIDATE_SECONDS },
       }),
-      fetch(`${SUPABASE_URL}/rest/v1/troublio_product_aggregates?select=product_id,ownership_count,median_months,issue_rate,would_buy_again,common_issues&limit=1000`, {
+      fetch(`${SUPABASE_URL}/rest/v1/troublio_product_aggregates?select=product_id,ownership_count,median_months,issue_rate,would_buy_again,common_issues,updated_at&limit=1000`, {
         headers: headers(),
         next: { revalidate: REVALIDATE_SECONDS },
       }),
@@ -85,6 +92,11 @@ export async function listExperienceProducts(): Promise<ExperienceProduct[]> {
   } catch {
     return experienceSeed;
   }
+}
+
+export async function listIndexableExperienceProducts(): Promise<ExperienceProduct[]> {
+  const products = await listExperienceProducts();
+  return products.filter(isExperienceProductIndexable);
 }
 
 export async function getExperienceProduct(slug: string): Promise<ExperienceProduct | null> {
