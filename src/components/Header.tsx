@@ -8,6 +8,7 @@ export function Header() {
         <Logo />
         <nav className="main-nav" aria-label="Primary navigation">
           <Link href="/experience">Experience</Link>
+          <Link href="/models">Models</Link>
           <Link href="/decoder">Decoder</Link>
           <Link href="/reset">Reset</Link>
           <Link href="/error-codes">Error codes</Link>
@@ -29,6 +30,7 @@ export function Header() {
             <summary aria-label="Open navigation"><span aria-hidden="true">☰</span></summary>
             <nav aria-label="Mobile navigation">
               <Link href="/experience">Real-world experience</Link>
+              <Link href="/models">Community model pages</Link>
               <Link href="/decoder">Error code decoder</Link>
               <Link href="/reset">Reset assistant</Link>
               <Link href="/model-number">Find a model number</Link>

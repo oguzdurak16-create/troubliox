@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import styles from "./ProblemExperiencePrompt.module.css";
 
@@ -18,10 +19,20 @@ type Props = {
   solutions: string[];
 };
 
+function normalizeKey(value: string) {
+  return value
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
 export function ProblemExperiencePrompt({ slug, title, brand, device, solutions }: Props) {
   const storageKey = `troublio-problem-experience:${slug}`;
+  const modelPathKey = `${storageKey}:model-path`;
   const [stage, setStage] = useState<"ask" | "details" | "done" | "dismissed">("ask");
   const [model, setModel] = useState("");
+  const [modelPath, setModelPath] = useState("");
   const [status, setStatus] = useState("");
   const [saving, setSaving] = useState(false);
   const [aggregate, setAggregate] = useState<Aggregate | null>(null);
@@ -35,12 +46,13 @@ export function ProblemExperiencePrompt({ slug, title, brand, device, solutions 
     const stored = window.localStorage.getItem(storageKey);
     if (stored === "done") setStage("done");
     if (stored === "dismissed") setStage("dismissed");
+    setModelPath(window.localStorage.getItem(modelPathKey) || "");
 
     fetch(`/api/problem-experience?slug=${encodeURIComponent(slug)}`)
       .then(async (response) => response.ok ? ((await response.json()) as Aggregate) : null)
       .then((data) => data && setAggregate(data))
       .catch(() => undefined);
-  }, [slug, storageKey]);
+  }, [slug, storageKey, modelPathKey]);
 
   function start() {
     setStage("details");
@@ -85,6 +97,16 @@ export function ProblemExperiencePrompt({ slug, title, brand, device, solutions 
         return;
       }
 
+      if (brand && model.trim()) {
+        const brandKey = normalizeKey(brand);
+        const modelKey = normalizeKey(model);
+        if (brandKey && modelKey) {
+          const nextModelPath = `/models/${brandKey}/${modelKey}`;
+          window.localStorage.setItem(modelPathKey, nextModelPath);
+          setModelPath(nextModelPath);
+        }
+      }
+
       window.localStorage.setItem(storageKey, "done");
       setStage("done");
       window.gtag?.("event", "experience_submitted", {
@@ -114,6 +136,7 @@ export function ProblemExperiencePrompt({ slug, title, brand, device, solutions 
         <div className={styles.done}>
           <strong>Your real-world result is now part of Troublio.</strong>
           <span>{status || "It will improve the answer for the next person with the same problem."}</span>
+          {modelPath ? <Link className={styles.modelLink} href={modelPath}>Open this model&apos;s community page →</Link> : null}
         </div>
       ) : (
         <>

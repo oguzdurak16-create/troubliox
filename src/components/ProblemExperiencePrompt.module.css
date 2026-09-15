@@ -139,6 +139,17 @@
   font-size: 0.84rem;
 }
 
+.modelLink {
+  width: fit-content;
+  margin-top: 5px;
+  color: #0d6967;
+  font-size: 0.86rem;
+  font-weight: 850;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
 @media (max-width: 700px) {
   .topline {
     display: grid;

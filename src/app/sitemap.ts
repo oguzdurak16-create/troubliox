@@ -5,6 +5,7 @@ import { deviceHubs, issueHubs } from "@/data/hubs";
 import { errorCodeClusters } from "@/data/errorCodeClusters";
 import { modelNumberGuides } from "@/data/modelNumberGuides";
 import { resetGuides } from "@/data/resetGuides";
+import { listIndexableModelExperiences } from "@/lib/modelExperience";
 import { SITE_URL } from "@/lib/site";
 
 function addEnglishAlternates(entry: MetadataRoute.Sitemap[number]): MetadataRoute.Sitemap[number] {
@@ -19,8 +20,10 @@ function addEnglishAlternates(entry: MetadataRoute.Sitemap[number]): MetadataRou
   };
 }
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const updated = new Date("2026-09-06");
+  const modelDirectoryUpdated = new Date("2026-09-15");
+  const communityModels = await listIndexableModelExperiences(5000).catch(() => []);
   const pages = [
     "",
     "/decoder",
@@ -58,6 +61,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: path === "" || highPriorityPages.includes(path) || path.startsWith("/error-codes") || path.startsWith("/symptoms") ? "weekly" as const : "monthly" as const,
       priority: path === "" ? 1 : highPriorityPages.includes(path) ? 0.95 : path.startsWith("/error-codes") || path.startsWith("/symptoms") ? 0.9 : 0.6,
     })),
+    { url: `${SITE_URL}/models`, lastModified: modelDirectoryUpdated, changeFrequency: "daily" as const, priority: 0.88 },
     ...errorCodeClusters.map((cluster) => ({ url: `${SITE_URL}/error-codes/brands/${cluster.slug}`, lastModified: new Date(cluster.updated), changeFrequency: "weekly" as const, priority: 0.92 })),
     ...resetGuides.map((guide) => ({ url: `${SITE_URL}/reset/${guide.slug}`, lastModified: updated, changeFrequency: "monthly" as const, priority: 0.84 })),
     ...modelNumberGuides.map((guide) => ({ url: `${SITE_URL}/model-number/${guide.slug}`, lastModified: updated, changeFrequency: "monthly" as const, priority: 0.82 })),
@@ -73,6 +77,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
         changeFrequency: "monthly" as const,
         priority: problem.featured ? 0.9 : problem.contentKind === "error-code" ? 0.82 : 0.78,
       })),
+    ...communityModels.map((model) => ({
+      url: `${SITE_URL}/models/${model.brandKey}/${model.modelKey}`,
+      lastModified: new Date(model.updatedAt),
+      changeFrequency: "weekly" as const,
+      priority: 0.76,
+    })),
   ];
 
   return entries.map(addEnglishAlternates);
