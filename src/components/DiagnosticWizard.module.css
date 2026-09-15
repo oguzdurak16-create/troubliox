@@ -1,0 +1,88 @@
+.microFeedback {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: -2px 0 10px 42px;
+  padding: 10px 12px;
+  border: 1px solid rgba(13, 105, 103, 0.14);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.74);
+}
+
+.microCopy {
+  display: grid;
+  gap: 2px;
+}
+
+.microCopy strong {
+  color: #073f40;
+  font-size: 0.82rem;
+}
+
+.microCopy span {
+  color: #607071;
+  font-size: 0.76rem;
+  line-height: 1.4;
+}
+
+.microActions {
+  display: flex;
+  gap: 7px;
+  flex: 0 0 auto;
+}
+
+.microButton {
+  border: 1px solid #aebdb6;
+  border-radius: 9px;
+  padding: 7px 10px;
+  background: #fff;
+  color: #294b4d;
+  font: inherit;
+  font-size: 0.76rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.microButtonPrimary {
+  border-color: #073f40;
+  background: #073f40;
+  color: #fff;
+}
+
+.microButton:disabled {
+  cursor: default;
+  opacity: 0.58;
+}
+
+.microResult {
+  margin-left: auto;
+  color: #365a5b;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.microError {
+  color: #8b3f34;
+}
+
+@media (max-width: 700px) {
+  .microFeedback {
+    display: grid;
+    margin-left: 0;
+  }
+
+  .microActions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .microButton {
+    width: 100%;
+  }
+
+  .microResult {
+    margin-left: 0;
+  }
+}
