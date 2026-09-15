@@ -1,9 +1,10 @@
 import { ImageResponse } from "next/og";
 import { getProblem } from "@/data/problems";
+import { getPublishedDemandProblem } from "@/lib/publishedDemandProblems";
 
 export async function GET(_request: Request, { params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const problem = getProblem(slug);
+  const problem = getProblem(slug) || await getPublishedDemandProblem(slug);
   const title = problem?.title || "Find what’s wrong. Know what to do.";
   const label = problem?.errorCode || problem?.category || "Troubleshooting guide";
   const brand = problem?.brand || problem?.device || "Troublio";
