@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import { submitContribution } from "@/lib/contributionClient";
 import styles from "./ProblemExperiencePrompt.module.css";
 
 type Aggregate = {
@@ -20,11 +21,7 @@ type Props = {
 };
 
 function normalizeKey(value: string) {
-  return value
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
+  return value.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 }
 
 export function ProblemExperiencePrompt({ slug, title, brand, device, solutions }: Props) {
@@ -74,25 +71,15 @@ export function ProblemExperiencePrompt({ slug, title, brand, device, solutions 
     setStatus("");
 
     try {
-      const response = await fetch("/api/problem-experience", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          slug,
-          model,
-          resolved,
-          solutionLabel: resolved ? solutionLabel : undefined,
-        }),
+      const { response, result } = await submitContribution({
+        kind: "problem",
+        slug,
+        model,
+        resolved,
+        solutionLabel: resolved ? solutionLabel : undefined,
       });
-      const result = (await response.json().catch(() => ({}))) as { error?: string };
 
       if (!response.ok) {
-        if (response.status === 409) {
-          window.localStorage.setItem(storageKey, "done");
-          setStage("done");
-          setStatus("Already recorded for this issue today.");
-          return;
-        }
         setStatus(result.error || "Could not save your experience.");
         return;
       }
@@ -109,12 +96,14 @@ export function ProblemExperiencePrompt({ slug, title, brand, device, solutions 
 
       window.localStorage.setItem(storageKey, "done");
       setStage("done");
+      setStatus(result.updated ? "Your earlier result was updated with the latest outcome." : result.duplicate ? "This result is already recorded for today." : "");
       window.gtag?.("event", "experience_submitted", {
         guide_slug: slug,
         guide_title: title,
         resolved,
         solution: solutionLabel || "not_fixed",
         model_provided: Boolean(model.trim()),
+        updated: Boolean(result.updated),
       });
 
       const refreshed = await fetch(`/api/problem-experience?slug=${encodeURIComponent(slug)}&t=${Date.now()}`, { cache: "no-store" });
@@ -127,7 +116,6 @@ export function ProblemExperiencePrompt({ slug, title, brand, device, solutions 
   }
 
   if (stage === "dismissed") return null;
-
   const showCommunity = aggregate && aggregate.experienceCount >= 3;
 
   return (
@@ -160,7 +148,7 @@ export function ProblemExperiencePrompt({ slug, title, brand, device, solutions 
                 <input
                   id={`experience-model-${slug}`}
                   value={model}
-                  onChange={(event) => setModel(event.target.value.slice(0, 160))}
+                  onChange={(event) => setModel(event.target.value.slice(0, 80))}
                   placeholder="e.g. WAN28281GB, UE55AU8000, iPhone 15 Pro"
                   autoComplete="off"
                 />
@@ -170,13 +158,9 @@ export function ProblemExperiencePrompt({ slug, title, brand, device, solutions 
                 <div className={styles.solutionTitle}>What actually fixed it?</div>
                 <div className={styles.solutionGrid}>
                   {choices.map((choice) => (
-                    <button className={styles.solutionButton} type="button" disabled={saving} key={choice} onClick={() => submit(true, choice)}>
-                      {choice}
-                    </button>
+                    <button className={styles.solutionButton} type="button" disabled={saving} key={choice} onClick={() => submit(true, choice)}>{choice}</button>
                   ))}
-                  <button className={`${styles.solutionButton} ${styles.notFixed}`} type="button" disabled={saving} onClick={() => submit(false)}>
-                    Not fixed yet
-                  </button>
+                  <button className={`${styles.solutionButton} ${styles.notFixed}`} type="button" disabled={saving} onClick={() => submit(false)}>Not fixed yet</button>
                 </div>
               </div>
               {status ? <p className={styles.status} role="status">{status}</p> : null}
