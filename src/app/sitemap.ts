@@ -6,6 +6,7 @@ import { errorCodeClusters } from "@/data/errorCodeClusters";
 import { modelNumberGuides } from "@/data/modelNumberGuides";
 import { resetGuides } from "@/data/resetGuides";
 import { listIndexableModelExperiences } from "@/lib/modelExperience";
+import { listIndexableExperienceProducts } from "@/lib/experienceProducts";
 import { listPublishedDemandProblems, mergePublishedProblems } from "@/lib/publishedDemandProblems";
 import { SITE_URL } from "@/lib/site";
 
@@ -26,8 +27,9 @@ function addEnglishAlternates(entry: MetadataRoute.Sitemap[number]): MetadataRou
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const updated = new Date("2026-09-06");
   const modelDirectoryUpdated = new Date("2026-09-15");
-  const [communityModels, publishedDemand] = await Promise.all([
+  const [communityModels, experienceProducts, publishedDemand] = await Promise.all([
     listIndexableModelExperiences(5000).catch(() => []),
+    listIndexableExperienceProducts().catch(() => []),
     listPublishedDemandProblems(),
   ]);
   const allProblems = mergePublishedProblems(problems, publishedDemand);
@@ -89,6 +91,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(model.updatedAt),
       changeFrequency: "weekly" as const,
       priority: 0.76,
+    })),
+    ...experienceProducts.map((product) => ({
+      url: `${SITE_URL}/experience/${product.slug}`,
+      lastModified: product.updatedAt ? new Date(product.updatedAt) : modelDirectoryUpdated,
+      changeFrequency: "weekly" as const,
+      priority: 0.72,
     })),
   ];
 
