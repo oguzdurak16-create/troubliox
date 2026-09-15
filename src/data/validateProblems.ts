@@ -1,4 +1,5 @@
 import type { Problem } from "./problems";
+import { demandProblems } from "./demandProblems";
 import { mergeGscOpportunityProblems } from "./gscOpportunityProblems";
 import { mergeGscRecoveryProblems } from "./gscRecoveryProblems";
 import { applyProblemContentOverrides } from "./problemContentOverrides";
@@ -18,6 +19,7 @@ function invariant(condition: unknown, message: string): asserts condition {
 }
 
 export function validateProblems(items: Problem[]): Problem[] {
+  const demandAwareItems = [...demandProblems, ...items];
   const mergedItems = applyProblemSourceOverrides(
     applySamsungSystemDoorProblemContentOverrides(
       applySamsungProblemContentOverrides(
@@ -29,7 +31,7 @@ export function validateProblems(items: Problem[]): Problem[] {
                   applyWhirlpoolDrainProblemContentOverrides(
                     applyWhirlpoolSupplyProblemContentOverrides(
                       applyProblemContentOverrides(
-                        mergeGscRecoveryProblems(mergeGscOpportunityProblems(items)),
+                        mergeGscRecoveryProblems(mergeGscOpportunityProblems(demandAwareItems)),
                       ),
                     ),
                   ),
