@@ -37,8 +37,8 @@ export default async function ModelsPage() {
             <>
               <div className={styles.early}>
                 {matureCount > 0
-                  ? `${matureCount} model ${matureCount === 1 ? "page has" : "pages have"} enough independent reports to qualify for search indexing. Early pages remain visible to contributors but stay out of search results.`
-                  : "The first model pages are still collecting independent reports. Early pages remain visible to contributors but stay out of search results until the data is strong enough."}
+                  ? `${matureCount} model ${matureCount === 1 ? "page has" : "pages have"} enough structured reports to qualify for search indexing. Early pages remain visible to contributors but stay out of search results.`
+                  : "The first model pages are still collecting structured reports. Early pages remain visible to contributors but stay out of search results until the data is strong enough."}
               </div>
               <div className={styles.grid} style={{ marginTop: 18 }}>
                 {models.map((model) => (
