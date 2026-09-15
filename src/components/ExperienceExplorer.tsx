@@ -36,6 +36,24 @@ const PRODUCT_CATEGORIES = [
   "Other",
 ] as const;
 
+function sampleLabel(product: ExperienceProduct, stats: LiveStats, backendLive: boolean) {
+  if (product.demo && !backendLive) return "Seed aggregate · demo only";
+  const count = stats.ownershipCount;
+  if (count <= 0) return "No owner data yet";
+  if (count < 10) return `Early community data · ${count} reports`;
+  if (count < 50) return `Community data · ${count} reports`;
+  return `Stronger sample · ${count} reports`;
+}
+
+function sampleNote(product: ExperienceProduct, stats: LiveStats, backendLive: boolean) {
+  if (product.demo && !backendLive) return "These seed values are UI-only and are never used to unlock search indexing.";
+  const count = stats.ownershipCount;
+  if (count <= 0) return "No first-hand owner report has been recorded for this product yet.";
+  if (count < 10) return "Treat percentages as early signals. This page stays out of search indexing until 10 deduplicated owner reports are available.";
+  if (count < 50) return "The sample is large enough for a public data page, but percentages can still move materially as new owners contribute.";
+  return "This is a larger community sample, but it still represents reported experiences rather than a controlled reliability study.";
+}
+
 export function ExperienceExplorer({ initialSlug, products = experienceSeed }: ExperienceExplorerProps = {}) {
   const [query, setQuery] = useState("");
   const [selectedSlug, setSelectedSlug] = useState(initialSlug || products[0]?.slug || "");
@@ -118,6 +136,8 @@ export function ExperienceExplorer({ initialSlug, products = experienceSeed }: E
   if (!selected) return null;
 
   const visibleStats: LiveStats = liveStats || selected;
+  const confidenceLabel = sampleLabel(selected, visibleStats, backendLive);
+  const confidenceNote = sampleNote(selected, visibleStats, backendLive);
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -236,15 +256,17 @@ export function ExperienceExplorer({ initialSlug, products = experienceSeed }: E
             <h2>{selected.brand} {selected.model}</h2>
             <p><Link href={`/experience/${selected.slug}`}>Open the permanent model page →</Link></p>
           </div>
-          <span className={styles.demoBadge}>{backendLive || !selected.demo ? "Live user data" : "Seed aggregate"}</span>
+          <span className={styles.demoBadge}>{confidenceLabel}</span>
         </div>
 
         <div className={styles.stats}>
-          <div className={styles.stat}><strong>{visibleStats.ownershipCount}</strong><span>owner experiences</span></div>
+          <div className={styles.stat}><strong>{visibleStats.ownershipCount}</strong><span>deduplicated owner reports</span></div>
           <div className={styles.stat}><strong>{visibleStats.medianMonths} mo</strong><span>median reported ownership</span></div>
           <div className={styles.stat}><strong>{visibleStats.issueRate}%</strong><span>reported at least one problem</span></div>
           <div className={styles.stat}><strong>{visibleStats.wouldBuyAgain}%</strong><span>would buy again</span></div>
         </div>
+
+        <div className={styles.notice}>{confidenceNote}</div>
 
         <div className={styles.issueList}>
           {visibleStats.commonIssues.length ? visibleStats.commonIssues.map((issue) => (
