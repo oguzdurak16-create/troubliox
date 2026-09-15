@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { submitContribution } from "@/lib/contributionClient";
 import styles from "./ModelContributionPrompt.module.css";
 
 type IssueOption = {
@@ -30,38 +31,34 @@ export function ModelContributionPrompt({ brand, model, issues }: Props) {
     setStatus("");
 
     try {
-      const response = await fetch("/api/problem-experience", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          slug: selected.slug,
-          model,
-          resolved,
-          solutionLabel: resolved ? solutionLabel : undefined,
-        }),
+      const { response, result } = await submitContribution({
+        kind: "problem",
+        slug: selected.slug,
+        model,
+        resolved,
+        solutionLabel: resolved ? solutionLabel : undefined,
       });
 
-      const payload = (await response.json().catch(() => ({}))) as { error?: string };
       if (response.ok) {
         window.localStorage.setItem(`troublio-problem-experience:${selected.slug}`, "done");
         setDone(true);
+        setStatus(result.updated
+          ? "Your earlier result was updated with the latest outcome."
+          : result.duplicate
+            ? "This result is already recorded for today."
+            : "");
         window.gtag?.("event", "model_page_experience_submitted", {
           brand,
           model,
           guide_slug: selected.slug,
           resolved,
           solution: solutionLabel || "not_fixed",
+          updated: Boolean(result.updated),
         });
         return;
       }
 
-      if (response.status === 409) {
-        setDone(true);
-        setStatus("This issue was already recorded from this connection today.");
-        return;
-      }
-
-      setStatus(payload.error || "Could not save your experience.");
+      setStatus(result.error || "Could not save your experience.");
     } catch {
       setStatus("Could not save your experience.");
     } finally {
@@ -75,7 +72,7 @@ export function ModelContributionPrompt({ brand, model, issues }: Props) {
     return (
       <section className={styles.card} aria-label="Add model experience">
         <div className={styles.done} role="status">
-          <strong>Your experience is now part of this model's dataset.</strong>
+          <strong>Your experience is now part of this model&apos;s dataset.</strong>
           <span>{status || "It will be included in the community aggregates for future visitors."}</span>
         </div>
         <Link className={styles.link} href={`/problems/${selected?.slug}`}>Open the full troubleshooting guide →</Link>

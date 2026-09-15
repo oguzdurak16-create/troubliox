@@ -1,4 +1,3 @@
-import { createHash } from "node:crypto";
 import { NextRequest, NextResponse } from "next/server";
 import { getProblem } from "@/data/problems";
 
@@ -69,56 +68,9 @@ export async function GET(request: NextRequest) {
   });
 }
 
-export async function POST(request: NextRequest) {
-  const body = (await request.json().catch(() => null)) as Record<string, unknown> | null;
-  if (!body) return NextResponse.json({ error: "Invalid request." }, { status: 400 });
-
-  const slug = cleanText(body.slug, 180);
-  const modelText = cleanText(body.model, 160) || null;
-  const resolved = body.resolved === true;
-  const solutionLabel = resolved ? cleanText(body.solutionLabel, 160) : "";
-  const problem = getProblem(slug);
-
-  if (!problem) return NextResponse.json({ error: "Unknown problem." }, { status: 404 });
-
-  const allowedSolutions = new Set([
-    ...problem.quickChecks.map((item) => item.title),
-    "Other / service repair",
-  ]);
-  if (resolved && (!solutionLabel || !allowedSolutions.has(solutionLabel))) {
-    return NextResponse.json({ error: "Choose one of the available solution paths." }, { status: 400 });
-  }
-
-  const forwardedFor = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
-  const day = new Date().toISOString().slice(0, 10);
-  const submissionKey = createHash("sha256")
-    .update(`${forwardedFor}|${slug}|${day}|troublio-problem-v1`)
-    .digest("hex");
-
-  const insertResponse = await fetch(`${SUPABASE_URL}/rest/v1/troublio_problem_experiences`, {
-    method: "POST",
-    headers: { ...headers(), Prefer: "return=minimal" },
-    cache: "no-store",
-    body: JSON.stringify({
-      problem_slug: slug,
-      brand: problem.brand || null,
-      device: problem.device || null,
-      model_text: modelText,
-      resolved,
-      solution_label: resolved ? solutionLabel : null,
-      submission_key: submissionKey,
-    }),
-  });
-
-  if (insertResponse.status === 409) {
-    return NextResponse.json({ error: "Your experience for this issue was already recorded today." }, { status: 409 });
-  }
-  if (!insertResponse.ok) {
-    return NextResponse.json({ error: "Experience could not be saved." }, { status: 502 });
-  }
-
-  return NextResponse.json({ ok: true }, {
-    status: 201,
-    headers: { "Cache-Control": "no-store" },
-  });
+export async function POST() {
+  return NextResponse.json(
+    { error: "Direct contribution writes have moved to the protected contribution gateway." },
+    { status: 410, headers: { "Cache-Control": "no-store" } },
+  );
 }
