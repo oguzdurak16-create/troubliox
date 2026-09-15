@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { experienceSeed, type ExperienceProduct } from "@/data/experienceSeed";
+import { submitContribution } from "@/lib/contributionClient";
 import styles from "@/app/experience/experience.module.css";
 
 type LiveStats = Pick<ExperienceProduct, "ownershipCount" | "medianMonths" | "issueRate" | "wouldBuyAgain" | "commonIssues">;
@@ -24,7 +25,6 @@ export function ExperienceExplorer({ initialSlug }: ExperienceExplorerProps = {}
   const [submitting, setSubmitting] = useState(false);
   const [liveStats, setLiveStats] = useState<LiveStats | null>(null);
   const [backendLive, setBackendLive] = useState(false);
-  const [localAdds, setLocalAdds] = useState<Record<string, number>>({});
 
   const filtered = useMemo(() => {
     const needle = query.trim().toLowerCase();
@@ -62,11 +62,7 @@ export function ExperienceExplorer({ initialSlug }: ExperienceExplorerProps = {}
 
   if (!selected) return null;
 
-  const baseStats: LiveStats = liveStats || selected;
-  const visibleStats: LiveStats = {
-    ...baseStats,
-    ownershipCount: baseStats.ownershipCount + (backendLive ? 0 : (localAdds[selected.slug] || 0)),
-  };
+  const visibleStats: LiveStats = liveStats || selected;
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -75,6 +71,7 @@ export function ExperienceExplorer({ initialSlug }: ExperienceExplorerProps = {}
 
     const form = new FormData(event.currentTarget);
     const payload = {
+      kind: "product",
       productSlug: selected.slug,
       useMonths: Number(form.get("useMonths")),
       stillUsing: form.get("stillUsing") === "on",
@@ -86,33 +83,21 @@ export function ExperienceExplorer({ initialSlug }: ExperienceExplorerProps = {}
     };
 
     try {
-      const response = await fetch("/api/experience", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      const { response, result } = await submitContribution(payload);
 
-      const result = (await response.json().catch(() => ({}))) as { error?: string };
       if (response.ok) {
-        setStatus("Contribution added to the shared experience graph.");
+        setStatus(result.updated
+          ? "Your earlier contribution for today was updated."
+          : result.duplicate
+            ? "This contribution is already recorded for today."
+            : "Contribution added to the shared experience graph.");
         event.currentTarget.reset();
         setHadProblem(false);
-        const refreshed = await fetch(`/api/experience?slug=${encodeURIComponent(selected.slug)}`, { cache: "no-store" });
+        const refreshed = await fetch(`/api/experience?slug=${encodeURIComponent(selected.slug)}&t=${Date.now()}`, { cache: "no-store" });
         if (refreshed.ok) {
           const refreshedPayload = (await refreshed.json()) as ApiStatsResponse;
           if (refreshedPayload.stats) setLiveStats(refreshedPayload.stats);
         }
-        return;
-      }
-
-      if (response.status === 503) {
-        const key = `troublio-experience-pilot:${selected.slug}`;
-        const existing = Number(window.localStorage.getItem(key) || "0");
-        window.localStorage.setItem(key, String(existing + 1));
-        setLocalAdds((current) => ({ ...current, [selected.slug]: (current[selected.slug] || 0) + 1 }));
-        setStatus("Pilot contribution saved on this device. Shared storage is not connected yet.");
-        event.currentTarget.reset();
-        setHadProblem(false);
         return;
       }
 
@@ -127,7 +112,7 @@ export function ExperienceExplorer({ initialSlug }: ExperienceExplorerProps = {}
   return (
     <div className={styles.shell}>
       <div className={styles.notice}>
-        This is a private pilot. Until the shared database is connected, the visible aggregate values are clearly marked demo data and this route is excluded from search indexing.
+        Live pilot: owner reports are stored as structured aggregate data. Individual free-text reviews are not published.
       </div>
 
       <input
@@ -165,7 +150,7 @@ export function ExperienceExplorer({ initialSlug }: ExperienceExplorerProps = {}
             <h2>{selected.brand} {selected.model}</h2>
             <p><Link href={`/experience/${selected.slug}`}>Open the permanent model page →</Link></p>
           </div>
-          <span className={styles.demoBadge}>{backendLive ? "Live user data" : "Demo aggregate"}</span>
+          <span className={styles.demoBadge}>{backendLive ? "Live user data" : "Seed aggregate"}</span>
         </div>
 
         <div className={styles.stats}>
