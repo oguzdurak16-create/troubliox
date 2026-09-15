@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import { submitContribution } from "@/lib/contributionClient";
 import styles from "./SeedModelContribution.module.css";
 
 type Option = {
@@ -28,7 +29,10 @@ export function SeedModelContribution() {
   const [status, setStatus] = useState("");
   const [done, setDone] = useState(false);
 
-  const validModel = useMemo(() => model.trim().length >= 2, [model]);
+  const validModel = useMemo(() => {
+    const value = model.trim();
+    return /^[A-Za-z0-9][A-Za-z0-9 ._/+()-]{1,79}$/.test(value);
+  }, [model]);
 
   useEffect(() => {
     const needle = query.trim();
@@ -59,20 +63,21 @@ export function SeedModelContribution() {
     setStatus("");
 
     try {
-      const response = await fetch("/api/problem-experience", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          slug: selected.slug,
-          model: model.trim(),
-          resolved,
-          solutionLabel: resolved ? solutionLabel : undefined,
-        }),
+      const { response, result } = await submitContribution({
+        kind: "problem",
+        slug: selected.slug,
+        model: model.trim(),
+        resolved,
+        solutionLabel: resolved ? solutionLabel : undefined,
       });
-      const payload = (await response.json().catch(() => ({}))) as { error?: string };
 
       if (response.ok) {
         setDone(true);
+        setStatus(result.updated
+          ? "Your earlier report was updated with the latest outcome."
+          : result.duplicate
+            ? "This result is already recorded for today."
+            : "");
         window.localStorage.setItem(`troublio-problem-experience:${selected.slug}`, "done");
         window.gtag?.("event", "first_model_report_submitted", {
           guide_slug: selected.slug,
@@ -80,17 +85,12 @@ export function SeedModelContribution() {
           model: model.trim(),
           resolved,
           solution: solutionLabel || "not_fixed",
+          updated: Boolean(result.updated),
         });
         return;
       }
 
-      if (response.status === 409) {
-        setDone(true);
-        setStatus("This issue was already recorded from this connection today.");
-        return;
-      }
-
-      setStatus(payload.error || "Could not save this report.");
+      setStatus(result.error || "Could not save this report.");
     } catch {
       setStatus("Could not save this report.");
     } finally {
@@ -125,7 +125,7 @@ export function SeedModelContribution() {
           <input
             id="seed-model"
             value={model}
-            maxLength={160}
+            maxLength={80}
             onChange={(event) => setModel(event.target.value)}
             placeholder="e.g. WAN28281GB"
             autoComplete="off"
@@ -147,7 +147,7 @@ export function SeedModelContribution() {
         </div>
       </div>
 
-      {!validModel && model.length ? <span className={styles.help}>Use the full model number from the product label when possible.</span> : null}
+      {!validModel && model.length ? <span className={styles.help}>Use the full model number from the product label. Letters, numbers, spaces and . _ / + ( ) - are supported.</span> : null}
       {loading ? <span className={styles.help}>Searching known troubleshooting guides…</span> : null}
 
       {options.length ? (
