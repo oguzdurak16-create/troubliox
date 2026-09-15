@@ -14,21 +14,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { brand, model } = await params;
   const aggregate = await getModelExperience(brand, model);
   if (!aggregate) {
-    return { title: `Model experience | ${SITE_NAME}`, robots: { index: false, follow: true } };
+    return { title: "Model experience", robots: { index: false, follow: true } };
   }
 
   const indexable = isModelIndexEligible(aggregate);
-  const title = `${aggregate.brand} ${aggregate.model}: Real-World Problems & Fixes | ${SITE_NAME}`;
+  const pageTitle = `${aggregate.brand} ${aggregate.model}: Real-World Problems & Fixes`;
   const description = `${aggregate.reportCount} real-world Troublio reports for ${aggregate.brand} ${aggregate.model}. See recurring problems, reported fixes and community resolution data.`;
 
   return {
-    title,
+    title: pageTitle,
     description,
     alternates: { canonical: `/models/${aggregate.brandKey}/${aggregate.modelKey}` },
     robots: { index: indexable, follow: true },
     openGraph: {
       type: "website",
-      title,
+      title: `${pageTitle} | ${SITE_NAME}`,
       description,
       url: `/models/${aggregate.brandKey}/${aggregate.modelKey}`,
     },
