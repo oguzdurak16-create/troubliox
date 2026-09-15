@@ -14,7 +14,8 @@ type PublishedProblemRow = {
 function headers() {
   return {
     apikey: SUPABASE_PUBLISHABLE_KEY,
-    "Content-Type": "application/json",
+    Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
+    Accept: "application/json",
   };
 }
 
@@ -65,20 +66,18 @@ function isPublishedProblem(value: unknown): value is Problem {
   return true;
 }
 
-async function callRpc(name: string, body: Record<string, unknown>): Promise<PublishedProblemRow[]> {
-  const response = await fetch(`${SUPABASE_URL}/rest/v1/rpc/${name}`, {
-    method: "POST",
-    headers: headers(),
-    body: JSON.stringify(body),
-    next: { revalidate: REVALIDATE_SECONDS },
-  });
+async function fetchPublishedRows(query = ""): Promise<PublishedProblemRow[]> {
+  const response = await fetch(
+    `${SUPABASE_URL}/rest/v1/troublio_published_problems?select=slug,problem_json,published_at${query}`,
+    { headers: headers(), next: { revalidate: REVALIDATE_SECONDS } },
+  );
   if (!response.ok) throw new Error(`Published Troublio content lookup failed (${response.status}).`);
   return (await response.json()) as PublishedProblemRow[];
 }
 
 export async function listPublishedDemandProblems(): Promise<Problem[]> {
   try {
-    const rows = await callRpc("troublio_get_published_problems", {});
+    const rows = await fetchPublishedRows("&order=published_at.desc");
     const seen = new Set<string>();
     const valid: Problem[] = [];
     for (const row of rows) {
@@ -95,7 +94,7 @@ export async function listPublishedDemandProblems(): Promise<Problem[]> {
 export async function getPublishedDemandProblem(slug: string): Promise<Problem | null> {
   if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) return null;
   try {
-    const rows = await callRpc("troublio_get_published_problem", { p_slug: slug });
+    const rows = await fetchPublishedRows(`&slug=eq.${encodeURIComponent(slug)}&limit=1`);
     const row = rows[0];
     return row && row.slug === slug && isPublishedProblem(row.problem_json) && row.problem_json.slug === slug
       ? row.problem_json
