@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { SeedModelContribution } from "@/components/SeedModelContribution";
 import { isModelIndexEligible, listModelExperiences } from "@/lib/modelExperience";
 import styles from "./models.module.css";
 
@@ -33,6 +34,8 @@ export default async function ModelsPage() {
 
       <section className="section-tight">
         <div className="container">
+          <SeedModelContribution />
+
           {models.length ? (
             <>
               <div className={styles.early}>
@@ -52,7 +55,7 @@ export default async function ModelsPage() {
             </>
           ) : (
             <div className={styles.empty}>
-              No model-specific reports yet. Model pages will appear automatically as people contribute from troubleshooting guides.
+              No model-specific reports yet. The form above can create the first one from a real troubleshooting experience.
             </div>
           )}
         </div>
