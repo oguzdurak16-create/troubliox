@@ -4,6 +4,7 @@ import Link from "next/link";
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { experienceSeed, type ExperienceProduct } from "@/data/experienceSeed";
 import { submitContribution } from "@/lib/contributionClient";
+import { submitProductDemand } from "@/lib/productDemandClient";
 import styles from "@/app/experience/experience.module.css";
 
 type LiveStats = Pick<ExperienceProduct, "ownershipCount" | "medianMonths" | "issueRate" | "wouldBuyAgain" | "commonIssues">;
@@ -15,26 +16,45 @@ type ApiStatsResponse = {
 
 type ExperienceExplorerProps = {
   initialSlug?: string;
+  products?: ExperienceProduct[];
 };
 
-export function ExperienceExplorer({ initialSlug }: ExperienceExplorerProps = {}) {
+const PRODUCT_CATEGORIES = [
+  "Cordless vacuum",
+  "Robot vacuum",
+  "Washing machine",
+  "Dishwasher",
+  "Refrigerator",
+  "Dryer",
+  "Printer",
+  "Power tool",
+  "TV / streaming",
+  "Headphones / earbuds",
+  "Phone / tablet",
+  "Computer",
+  "Other",
+] as const;
+
+export function ExperienceExplorer({ initialSlug, products = experienceSeed }: ExperienceExplorerProps = {}) {
   const [query, setQuery] = useState("");
-  const [selectedSlug, setSelectedSlug] = useState(initialSlug || experienceSeed[0]?.slug || "");
+  const [selectedSlug, setSelectedSlug] = useState(initialSlug || products[0]?.slug || "");
   const [hadProblem, setHadProblem] = useState(false);
   const [status, setStatus] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [requestStatus, setRequestStatus] = useState("");
+  const [requesting, setRequesting] = useState(false);
   const [liveStats, setLiveStats] = useState<LiveStats | null>(null);
   const [backendLive, setBackendLive] = useState(false);
 
   const filtered = useMemo(() => {
     const needle = query.trim().toLowerCase();
-    if (!needle) return experienceSeed;
-    return experienceSeed.filter((product) =>
+    if (!needle) return products;
+    return products.filter((product) =>
       `${product.brand} ${product.model} ${product.category}`.toLowerCase().includes(needle),
     );
-  }, [query]);
+  }, [products, query]);
 
-  const selected = experienceSeed.find((product) => product.slug === selectedSlug) || filtered[0] || experienceSeed[0];
+  const selected = products.find((product) => product.slug === selectedSlug) || filtered[0] || products[0];
 
   useEffect(() => {
     if (!selected) return;
@@ -59,6 +79,40 @@ export function ExperienceExplorer({ initialSlug }: ExperienceExplorerProps = {}
       cancelled = true;
     };
   }, [selected?.slug]);
+
+  async function requestProduct(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setRequesting(true);
+    setRequestStatus("");
+
+    const form = new FormData(event.currentTarget);
+    const payload = {
+      brand: String(form.get("brand") || "").trim(),
+      model: String(form.get("model") || "").trim(),
+      category: String(form.get("category") || "Other"),
+    };
+
+    try {
+      const { response, result } = await submitProductDemand(payload);
+      if (response.ok) {
+        if (result.exists && result.slug) {
+          setRequestStatus("That exact product is already in Troublio. Opening it…");
+          window.location.assign(`/experience/${result.slug}`);
+          return;
+        }
+        setRequestStatus(result.duplicate
+          ? "You already requested this product today. The signal is saved."
+          : "Product request saved. Repeated requests promote it into the catalog review queue.");
+        if (!result.duplicate) event.currentTarget.reset();
+        return;
+      }
+      setRequestStatus(result.error || "Product request could not be saved.");
+    } catch {
+      setRequestStatus("Product request could not be saved.");
+    } finally {
+      setRequesting(false);
+    }
+  }
 
   if (!selected) return null;
 
@@ -119,9 +173,12 @@ export function ExperienceExplorer({ initialSlug }: ExperienceExplorerProps = {}
         className={styles.search}
         type="search"
         value={query}
-        onChange={(event) => setQuery(event.target.value)}
+        onChange={(event) => {
+          setQuery(event.target.value);
+          setRequestStatus("");
+        }}
         placeholder="Search a brand, model or product type"
-        aria-label="Search pilot products"
+        aria-label="Search products"
       />
 
       {filtered.length ? (
@@ -140,7 +197,33 @@ export function ExperienceExplorer({ initialSlug }: ExperienceExplorerProps = {}
           ))}
         </div>
       ) : (
-        <div className={styles.empty}>No pilot product matches that search yet.</div>
+        <form className={styles.formCard} onSubmit={requestProduct}>
+          <div>
+            <span className={styles.kicker}>Missing product</span>
+            <h3>Put this model on Troublio’s radar.</h3>
+            <p>No catalog match for “{query.trim()}”. Add the exact brand and model from the product label. Repeated requests become a catalog candidate.</p>
+          </div>
+          <div className={styles.formGrid}>
+            <div className={styles.field}>
+              <label htmlFor="request-brand">Brand</label>
+              <input id="request-brand" name="brand" maxLength={100} required placeholder="Philips" />
+            </div>
+            <div className={styles.field}>
+              <label htmlFor="request-model">Exact model</label>
+              <input id="request-model" name="model" maxLength={160} required placeholder="XC7057/01" />
+            </div>
+            <div className={`${styles.field} ${styles.fieldFull}`}>
+              <label htmlFor="request-category">Product type</label>
+              <select id="request-category" name="category" defaultValue="Other">
+                {PRODUCT_CATEGORIES.map((category) => <option value={category} key={category}>{category}</option>)}
+              </select>
+            </div>
+          </div>
+          <div className={styles.actions}>
+            <button className={styles.submit} type="submit" disabled={requesting}>{requesting ? "Saving…" : "Request this product"}</button>
+            {requestStatus ? <p className={styles.status} role="status">{requestStatus}</p> : null}
+          </div>
+        </form>
       )}
 
       <section className={styles.panel} aria-live="polite">
@@ -150,7 +233,7 @@ export function ExperienceExplorer({ initialSlug }: ExperienceExplorerProps = {}
             <h2>{selected.brand} {selected.model}</h2>
             <p><Link href={`/experience/${selected.slug}`}>Open the permanent model page →</Link></p>
           </div>
-          <span className={styles.demoBadge}>{backendLive ? "Live user data" : "Seed aggregate"}</span>
+          <span className={styles.demoBadge}>{backendLive || !selected.demo ? "Live user data" : "Seed aggregate"}</span>
         </div>
 
         <div className={styles.stats}>
@@ -161,11 +244,11 @@ export function ExperienceExplorer({ initialSlug }: ExperienceExplorerProps = {}
         </div>
 
         <div className={styles.issueList}>
-          {visibleStats.commonIssues.map((issue) => (
+          {visibleStats.commonIssues.length ? visibleStats.commonIssues.map((issue) => (
             <div className={styles.issueRow} key={issue.label}>
               <span>{issue.label}</span><span>{issue.reports} reports</span>
             </div>
-          ))}
+          )) : <div className={styles.empty}>No recurring issue has enough reports yet.</div>}
         </div>
       </section>
 

@@ -1,16 +1,20 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ExperienceExplorer } from "@/components/ExperienceExplorer";
-import { experienceSeed } from "@/data/experienceSeed";
+import { getExperienceProduct, listExperienceProducts } from "@/lib/experienceProducts";
 import styles from "../experience.module.css";
 
-export function generateStaticParams() {
-  return experienceSeed.map((product) => ({ slug: product.slug }));
+export const revalidate = 300;
+export const dynamicParams = true;
+
+export async function generateStaticParams() {
+  const products = await listExperienceProducts();
+  return products.map((product) => ({ slug: product.slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const product = experienceSeed.find((item) => item.slug === slug);
+  const product = await getExperienceProduct(slug);
 
   if (!product) {
     return { title: "Product experience | Troublio", robots: { index: false, follow: false } };
@@ -26,7 +30,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function ProductExperiencePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const product = experienceSeed.find((item) => item.slug === slug);
+  const products = await listExperienceProducts();
+  const product = products.find((item) => item.slug === slug);
   if (!product) notFound();
 
   return (
@@ -45,7 +50,7 @@ export default async function ProductExperiencePage({ params }: { params: Promis
       </section>
       <section className="section-tight">
         <div className="container">
-          <ExperienceExplorer initialSlug={product.slug} />
+          <ExperienceExplorer initialSlug={product.slug} products={products} />
         </div>
       </section>
     </>
