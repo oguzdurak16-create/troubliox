@@ -10,6 +10,7 @@ import { ProblemCard } from "@/components/ProblemCard";
 import { getErrorCodeClusterForProblem } from "@/data/errorCodeClusters";
 import { getProblem, problems } from "@/data/problems";
 import { deviceHubs, issueHubs } from "@/data/hubs";
+import { getPublishedDemandProblem, listPublishedDemandProblems, mergePublishedProblems } from "@/lib/publishedDemandProblems";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -84,13 +85,16 @@ const SEO_OPPORTUNITY_OVERRIDES: Record<string, OpportunitySeoOverride> = {
   },
 };
 
-export function generateStaticParams() {
-  return problems.map((problem) => ({ slug: problem.slug }));
+export const revalidate = 300;
+
+export async function generateStaticParams() {
+  const published = await listPublishedDemandProblems();
+  return mergePublishedProblems(problems, published).map((problem) => ({ slug: problem.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const problem = getProblem(slug);
+  const problem = getProblem(slug) || await getPublishedDemandProblem(slug);
   if (!problem) return {};
 
   const opportunitySeo = SEO_OPPORTUNITY_OVERRIDES[problem.slug];
@@ -128,11 +132,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProblemPage({ params }: Props) {
   const { slug } = await params;
-  const problem = getProblem(slug);
+  const staticProblem = getProblem(slug);
+  const problem = staticProblem || await getPublishedDemandProblem(slug);
   if (!problem) notFound();
 
+  const allProblems = staticProblem
+    ? problems
+    : mergePublishedProblems(problems, await listPublishedDemandProblems());
   const opportunitySeo = SEO_OPPORTUNITY_OVERRIDES[problem.slug];
-  const related = problems
+  const related = allProblems
     .filter((item) => item.slug !== problem.slug)
     .map((item) => ({
       item,
@@ -239,7 +247,7 @@ export default async function ProblemPage({ params }: Props) {
 
       {(opportunitySeo?.priorityLinks.length || errorCodeCluster || matchingDeviceHubs.length || matchingIssueHubs.length) ? <section className="section-tight topic-links-section"><div className="container topic-links-card"><div><span className="eyebrow">Explore the problem space</span><h2>Browse related code, device, and symptom hubs.</h2></div><div className="topic-link-pills">{opportunitySeo?.priorityLinks.map((item) => <Link href={item.href} key={item.href}>{item.label}</Link>)}{errorCodeCluster ? <Link href={`/error-codes/brands/${errorCodeCluster.slug}`}>All {errorCodeCluster.brand} {errorCodeCluster.device.toLowerCase()} codes</Link> : null}{matchingDeviceHubs.map((hub) => <Link href={`/devices/${hub.slug}`} key={`device-${hub.slug}`}>{hub.name}</Link>)}{matchingIssueHubs.map((hub) => <Link href={`/issues/${hub.slug}`} key={`issue-${hub.slug}`}>{hub.name}</Link>)}</div></div></section> : null}
 
-      {related.length ? <section className="section-tight"><div className="container"><div className="section-heading"><div><span className="eyebrow">Keep diagnosing</span><h2>Related troubleshooting guides</h2></div><Link className="text-link" href={problem.brandSlug ? `/brands/${problem.brandSlug}` : `/categories/${problem.categorySlug}`}>View more →</Link></div><div className="problem-grid">{related.map((item) => <ProblemCard key={item.slug} problem={item} />)}</div></div></section> : null}
+      {related.length ? <section className="section-tight"><div className="container"><div className="section-heading"><div><span className="eyebrow">Keep diagnosing</span><h2>Related troubleshooting guides</h2></div><Link className="text-link" href={staticProblem && problem.brandSlug ? `/brands/${problem.brandSlug}` : "/guides"}>View more →</Link></div><div className="problem-grid">{related.map((item) => <ProblemCard key={item.slug} problem={item} />)}</div></div></section> : null}
     </>
   );
 }

@@ -6,7 +6,10 @@ import { errorCodeClusters } from "@/data/errorCodeClusters";
 import { modelNumberGuides } from "@/data/modelNumberGuides";
 import { resetGuides } from "@/data/resetGuides";
 import { listIndexableModelExperiences } from "@/lib/modelExperience";
+import { listPublishedDemandProblems, mergePublishedProblems } from "@/lib/publishedDemandProblems";
 import { SITE_URL } from "@/lib/site";
+
+export const revalidate = 300;
 
 function addEnglishAlternates(entry: MetadataRoute.Sitemap[number]): MetadataRoute.Sitemap[number] {
   return {
@@ -23,7 +26,11 @@ function addEnglishAlternates(entry: MetadataRoute.Sitemap[number]): MetadataRou
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const updated = new Date("2026-09-06");
   const modelDirectoryUpdated = new Date("2026-09-15");
-  const communityModels = await listIndexableModelExperiences(5000).catch(() => []);
+  const [communityModels, publishedDemand] = await Promise.all([
+    listIndexableModelExperiences(5000).catch(() => []),
+    listPublishedDemandProblems(),
+  ]);
+  const allProblems = mergePublishedProblems(problems, publishedDemand);
   const pages = [
     "",
     "/decoder",
@@ -69,7 +76,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...issueHubs.map((hub) => ({ url: `${SITE_URL}/issues/${hub.slug}`, lastModified: updated, changeFrequency: "weekly" as const, priority: 0.85 })),
     ...categories.map((category) => ({ url: `${SITE_URL}/categories/${category.slug}`, lastModified: updated, changeFrequency: "weekly" as const, priority: 0.75 })),
     ...brands.map((brand) => ({ url: `${SITE_URL}/brands/${brand.slug}`, lastModified: updated, changeFrequency: "weekly" as const, priority: 0.8 })),
-    ...problems
+    ...allProblems
       .filter((problem) => !redirectedProblemSlugs.has(problem.slug))
       .map((problem) => ({
         url: `${SITE_URL}/problems/${problem.slug}`,
