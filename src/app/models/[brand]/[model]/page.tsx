@@ -76,7 +76,7 @@ export default async function ModelExperiencePage({ params }: Props) {
         <div className="container">
           {!indexable ? (
             <div className={styles.early}>
-              Early data: this model currently has {aggregate.reportCount} independent {aggregate.reportCount === 1 ? "report" : "reports"}.
+              Early data: this model currently has {aggregate.reportCount} structured {aggregate.reportCount === 1 ? "report" : "reports"}.
               Troublio keeps early model pages out of search indexing until at least 3 reports support the page.
             </div>
           ) : null}
