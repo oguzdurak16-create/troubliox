@@ -14,11 +14,11 @@ export type ExperienceProduct = {
   wouldBuyAgain: number;
   commonIssues: ExperienceIssue[];
   demo: boolean;
+  updatedAt?: string;
 };
 
-// UI-only seed data for the private pilot. The /experience route stays noindex
-// until the shared database is connected and these values are replaced by
-// real, aggregated user submissions.
+// UI-only seed data for the private pilot. Seed/demo values must never unlock
+// indexing; only live aggregated owner reports can make a product indexable.
 export const experienceSeed: ExperienceProduct[] = [
   {
     slug: "philips-xc7057-01",
