@@ -3,6 +3,7 @@
 import { useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
 import { ProblemCard } from "@/components/ProblemCard";
 import { rankSearch, type SearchIndexItem } from "@/lib/search-index";
+import { submitContribution } from "@/lib/contributionClient";
 
 export function SearchResults({ initialQuery }: { initialQuery: string }) {
   const [index, setIndex] = useState<SearchIndexItem[]>([]);
@@ -44,24 +45,42 @@ export function SearchResults({ initialQuery }: { initialQuery: string }) {
     [index],
   );
 
-  const results = useMemo(() => index
-    .filter((problem) => !category || problem.categorySlug === category)
-    .filter((problem) => !brand || problem.brandSlug === brand)
-    .filter((problem) => !kind || problem.contentKind === kind)
+  const rankedResults = useMemo(() => index
     .map((problem) => ({ problem, score: rankSearch(deferredQuery, problem) }))
     .filter((item) => item.score > 0)
     .sort((a, b) => b.score - a.score || a.problem.title.localeCompare(b.problem.title))
-    .map((item) => item.problem), [brand, category, deferredQuery, index, kind]);
+    .map((item) => item.problem), [deferredQuery, index]);
+
+  const results = useMemo(() => rankedResults
+    .filter((problem) => !category || problem.categorySlug === category)
+    .filter((problem) => !brand || problem.brandSlug === brand)
+    .filter((problem) => !kind || problem.contentKind === kind), [brand, category, kind, rankedResults]);
 
   useEffect(() => {
-    const normalized = deferredQuery.toLowerCase().trim();
-    if (loading || normalized.length < 3 || results.length > 0 || lastTrackedQuery.current === normalized) return;
+    const value = deferredQuery.trim();
+    const normalized = value.toLowerCase().replace(/\s+/g, " ");
+    if (
+      loading ||
+      loadError ||
+      index.length === 0 ||
+      normalized.length < 3 ||
+      rankedResults.length > 0 ||
+      lastTrackedQuery.current === normalized
+    ) return;
+
     const timer = window.setTimeout(() => {
-      window.gtag?.("event", "search_no_results", { search_term: deferredQuery.trim() });
       lastTrackedQuery.current = normalized;
-    }, 900);
+      window.gtag?.("event", "search_no_results", { search_term: value });
+      void submitContribution({ kind: "demand", query: value })
+        .then(({ response, result }) => {
+          if (!response.ok || result.duplicate) return;
+          window.gtag?.("event", "search_demand_recorded", { search_term: value });
+        })
+        .catch(() => undefined);
+    }, 1200);
+
     return () => window.clearTimeout(timer);
-  }, [deferredQuery, loading, results.length]);
+  }, [deferredQuery, index.length, loadError, loading, rankedResults.length]);
 
   function resetFilters() {
     setCategory("");
@@ -112,8 +131,10 @@ export function SearchResults({ initialQuery }: { initialQuery: string }) {
             <div className="empty-state">
               <span aria-hidden="true">?</span>
               <h2>No exact guide yet</h2>
-              <p>Try the visible symptom, brand, and exact code with or without spaces, or submit the problem so it can be added.</p>
-              <a className="button button-primary" href={`/submit-problem?problem=${encodeURIComponent(query)}`}>Submit this problem</a>
+              <p>{rankedResults.length > 0
+                ? "Matching guides exist, but the current filters hide them. Clear the filters or submit the exact problem if none fits."
+                : "Try the visible symptom, brand, and exact code with or without spaces. This missing search is also helping Troublio learn which guide should be added next."}</p>
+              {filtered && rankedResults.length > 0 ? <button className="button button-primary" type="button" onClick={resetFilters}>Clear filters</button> : <a className="button button-primary" href={`/submit-problem?problem=${encodeURIComponent(query)}`}>Submit this problem</a>}
             </div>
           )}
         </>
