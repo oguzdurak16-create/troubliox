@@ -4,7 +4,7 @@ import { listExperienceProducts } from "@/lib/experienceProducts";
 import styles from "./experience.module.css";
 
 export const metadata: Metadata = {
-  title: "Real-World Product Experience Pilot | Troublio",
+  title: "Real-World Product Experience Pilot",
   description: "A private Troublio pilot for structured, aggregated product ownership, reliability and repair experience data.",
   alternates: { canonical: "/experience" },
   robots: { index: false, follow: false },
