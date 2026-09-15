@@ -4,7 +4,7 @@ import { isModelIndexEligible, listModelExperiences } from "@/lib/modelExperienc
 import styles from "./models.module.css";
 
 export const metadata: Metadata = {
-  title: "Real-World Product Models | Troublio",
+  title: "Real-World Product Models",
   description: "Browse product models that Troublio users have reported in real troubleshooting sessions. See recurring issues and what actually fixed them.",
   alternates: { canonical: "/models" },
   robots: { index: true, follow: true },
