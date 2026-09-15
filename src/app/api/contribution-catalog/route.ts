@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getProblem } from "@/data/problems";
+import { getPublishedDemandProblem } from "@/lib/publishedDemandProblems";
 
 function cleanSlug(value: string) {
   return value.trim().toLowerCase().slice(0, 180);
@@ -11,7 +12,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Invalid problem slug." }, { status: 400 });
   }
 
-  const problem = getProblem(slug);
+  const problem = getProblem(slug) || await getPublishedDemandProblem(slug);
   if (!problem) {
     return NextResponse.json({ error: "Problem not found." }, { status: 404 });
   }
@@ -27,6 +28,6 @@ export async function GET(request: NextRequest) {
     allowedSteps,
     allowedSolutions: allowedSteps,
   }, {
-    headers: { "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400" },
+    headers: { "Cache-Control": "public, s-maxage=300, stale-while-revalidate=3600" },
   });
 }
