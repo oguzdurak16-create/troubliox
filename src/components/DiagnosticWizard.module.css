@@ -1,3 +1,37 @@
+.communityOrder {
+  display: grid;
+  gap: 3px;
+  margin-bottom: 10px;
+  padding: 10px 12px;
+  border: 1px solid rgba(13, 105, 103, 0.14);
+  border-radius: 12px;
+  background: rgba(13, 105, 103, 0.05);
+}
+
+.communityOrder strong {
+  color: #073f40;
+  font-size: 0.82rem;
+}
+
+.communityOrder span {
+  color: #607071;
+  font-size: 0.76rem;
+  line-height: 1.45;
+}
+
+.communityRate {
+  display: block;
+  width: fit-content;
+  margin-top: 5px;
+  padding: 3px 7px;
+  border-radius: 999px;
+  background: rgba(13, 105, 103, 0.08);
+  color: #0d6967;
+  font-size: 0.7rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
 .microFeedback {
   grid-column: 1 / -1;
   display: flex;
