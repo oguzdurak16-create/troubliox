@@ -9,6 +9,8 @@ import { listIndexableModelExperiences } from "@/lib/modelExperience";
 import { listPublishedDemandProblems, mergePublishedProblems } from "@/lib/publishedDemandProblems";
 import { SITE_URL } from "@/lib/site";
 
+export const revalidate = 300;
+
 function addEnglishAlternates(entry: MetadataRoute.Sitemap[number]): MetadataRoute.Sitemap[number] {
   return {
     ...entry,
