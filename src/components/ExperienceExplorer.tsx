@@ -4,6 +4,7 @@ import Link from "next/link";
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { experienceSeed, type ExperienceProduct } from "@/data/experienceSeed";
 import { submitContribution } from "@/lib/contributionClient";
+import { getContributorId } from "@/lib/contributorId";
 import { submitProductDemand } from "@/lib/productDemandClient";
 import styles from "@/app/experience/experience.module.css";
 
@@ -124,9 +125,11 @@ export function ExperienceExplorer({ initialSlug, products = experienceSeed }: E
     setStatus("");
 
     const form = new FormData(event.currentTarget);
+    const contributorId = getContributorId();
     const payload = {
       kind: "product",
       productSlug: selected.slug,
+      contributorId: contributorId || undefined,
       useMonths: Number(form.get("useMonths")),
       stillUsing: form.get("stillUsing") === "on",
       hadProblem,
@@ -141,9 +144,9 @@ export function ExperienceExplorer({ initialSlug, products = experienceSeed }: E
 
       if (response.ok) {
         setStatus(result.updated
-          ? "Your earlier contribution for today was updated."
+          ? "Your earlier contribution for this product was updated."
           : result.duplicate
-            ? "This contribution is already recorded for today."
+            ? "This contribution is already recorded."
             : "Contribution added to the shared experience graph.");
         event.currentTarget.reset();
         setHadProblem(false);
