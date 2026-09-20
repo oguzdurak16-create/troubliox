@@ -47,6 +47,42 @@ const SEO_OPPORTUNITY_OVERRIDES: Record<string, OpportunitySeoOverride> = {
       { href: "/error-codes/brands/bosch-washing-machine", label: "All Bosch washer error codes" },
     ],
   },
+  "samsung-washer-5c-5e-error": {
+    title: "Samsung Washer 5C / 5E Error: Drain Filter, Hose & Pump Checks",
+    description:
+      "Samsung washer showing 5C or 5E? It means the machine is not draining in time. Check the drain hose, user-accessible filter and pump symptoms in this safe order.",
+    quickAnswer:
+      "Samsung 5C / 5E usually means the washer could not drain within the expected time. Start with the drain hose and user-accessible filter, then listen for whether the drain pump runs. Stop before internal pump, wiring or control-board work.",
+    priorityLinks: [
+      { href: "/problems/samsung-washer-5d-error", label: "Samsung 5D / Sd suds error" },
+      { href: "/problems/samsung-washer-4c-4e-error", label: "Samsung 4C / 4E water error" },
+      { href: "/error-codes/brands/samsung-washing-machine", label: "All Samsung washer error codes" },
+    ],
+  },
+  "samsung-washer-dc-de-error": {
+    title: "Samsung Washer dC / dE Error: Door, Latch & Lock Checks",
+    description:
+      "Samsung washer showing dC or dE? Check whether the door or lid is fully closed, fabric is trapped, or the latch is misaligned before considering lock or control faults.",
+    quickAnswer:
+      "Samsung dC / dE usually means the washer cannot confirm that the door or lid is safely closed. Remove trapped fabric, close the door normally and inspect the visible latch area. Do not force the lock or bypass the safety switch.",
+    priorityLinks: [
+      { href: "/problems/samsung-washer-5c-5e-error", label: "Samsung 5C / 5E drain error" },
+      { href: "/problems/samsung-washer-4c-4e-error", label: "Samsung 4C / 4E water error" },
+      { href: "/error-codes/brands/samsung-washing-machine", label: "All Samsung washer error codes" },
+    ],
+  },
+  "samsung-washer-4c2-error": {
+    title: "Samsung Washer 4C2 Error: Hot Water Supply Too Hot",
+    description:
+      "Samsung washer showing 4C2? The supplied water is too hot on supported models. Check hot/cold hose connections, inlet temperature and the exact model manual.",
+    quickAnswer:
+      "Samsung 4C2 generally points to water entering hotter than expected on supported washers. Check that hot and cold inlet hoses are connected correctly and that the supply temperature matches the model manual before considering internal faults.",
+    priorityLinks: [
+      { href: "/problems/samsung-washer-4c-4e-error", label: "Samsung 4C / 4E water error" },
+      { href: "/problems/samsung-washer-5c-5e-error", label: "Samsung 5C / 5E drain error" },
+      { href: "/error-codes/brands/samsung-washing-machine", label: "All Samsung washer error codes" },
+    ],
+  },
   "netflix-black-screen-with-sound": {
     title: "Netflix Black Screen With Sound: TV and HDMI Fixes",
     description:
