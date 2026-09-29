@@ -21,7 +21,7 @@ export function SourceTrustPanel({ problem }: { problem: Problem }) {
           <span className="source-trust-mark" aria-hidden="true">✓</span>
           <div>
             <strong>{sourceCount ? "Source-backed guide" : "General troubleshooting guide"}</strong>
-            <span>Reviewed by the Troublio editorial desk</span>
+            <span>Reviewed under Troublio&apos;s editorial policy</span>
           </div>
         </div>
         <dl>
@@ -30,7 +30,7 @@ export function SourceTrustPanel({ problem }: { problem: Problem }) {
           <div><dt>Guide type</dt><dd>{problem.contentKind === "error-code" ? "Error-code diagnosis" : problem.contentKind === "symptom" ? "Symptom diagnosis" : "Troubleshooting guide"}</dd></div>
         </dl>
         {hosts.length ? <p>Checked against: {hosts.join(", ")}</p> : <p>Use the product manual as the deciding reference for model-specific instructions.</p>}
-        <Link href="/editorial-policy">How Troublio reviews guides →</Link>
+        <div className="source-trust-links"><Link href="/editorial-policy">How Troublio reviews guides →</Link><Link href="/about">What “reviewed” means →</Link></div>
       </aside>
 
       <ProblemExperiencePrompt
