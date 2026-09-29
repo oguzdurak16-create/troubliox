@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "pnpm run typecheck && pnpm run validate:content && pnpm run audit:repo && next build",
+    "build": "pnpm run typecheck && pnpm run validate:content && pnpm run audit:repo && pnpm run audit:similarity && next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "audit:repo": "node scripts/audit-repository.mjs --strict",
