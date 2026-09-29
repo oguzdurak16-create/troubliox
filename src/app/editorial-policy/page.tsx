@@ -14,6 +14,10 @@ export default function EditorialPolicyPage() {
         <p>Error-code guides require an official reference and a warning that meanings can vary by model, region, firmware, or product family. Symptom guides display whether official sources were checked or whether the page is general safety-first guidance.</p>
         <h2>Page structure</h2>
         <p>Each guide should identify the likely meaning, list observable causes, order checks from lower risk to higher complexity, compare outcomes, and state when the user should stop.</p>
+        <h2>Review identity and claims</h2>
+        <p>A review date means the page was checked under this editorial policy and its cited references were re-evaluated. Troublio does not imply a named technician, engineer, or manufacturer reviewed a guide unless that reviewer is explicitly identified on the page.</p>
+        <h2>Similarity and programmatic quality</h2>
+        <p>Shared page structure is allowed, but diagnoses should not be created by changing only the brand, model, or code inside generic text. Error-code content is checked for unusually high similarity, and new pages should add model-specific evidence, display distinctions, observations, or stop conditions that materially help the reader.</p>
         <h2>Safety</h2>
         <p>Guides do not instruct unqualified users to open mains-powered equipment, handle refrigerant, bypass interlocks, work near live circuits, or continue when heat, smoke, leaks, swelling, chemical smell, or structural damage is present.</p>
         <h2>Updates and corrections</h2>
