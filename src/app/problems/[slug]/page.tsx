@@ -48,11 +48,11 @@ const SEO_OPPORTUNITY_OVERRIDES: Record<string, OpportunitySeoOverride> = {
     ],
   },
   "samsung-washer-5c-5e-error": {
-    title: "Samsung Washer 5C / 5E Error: Drain Filter, Hose & Pump Checks",
+    title: "Samsung Washer 5E / 5C Error: Not Draining — Hose & Filter Checks",
     description:
-      "Samsung washer showing 5C or 5E? It means the machine is not draining in time. Check the drain hose, user-accessible filter and pump symptoms in this safe order.",
+      "Samsung washer showing 5E or 5C? It is a drainage error. Check the drain hose, installation and model-specific debris filter safely, including top-loader differences.",
     quickAnswer:
-      "Samsung 5C / 5E usually means the washer could not drain within the expected time. Start with the drain hose and user-accessible filter, then listen for whether the drain pump runs. Stop before internal pump, wiring or control-board work.",
+      "Samsung 5E / 5C means the washer is not draining correctly on supported models. Start with the drain hose and its installation, then clean only the debris or pump filter your exact model makes user-accessible. Top-load models can use the same code but may not share front-loader filter access.",
     priorityLinks: [
       { href: "/problems/samsung-washer-5d-error", label: "Samsung 5D / Sd suds error" },
       { href: "/problems/samsung-washer-4c-4e-error", label: "Samsung 4C / 4E water error" },
@@ -60,11 +60,11 @@ const SEO_OPPORTUNITY_OVERRIDES: Record<string, OpportunitySeoOverride> = {
     ],
   },
   "samsung-washer-dc-de-error": {
-    title: "Samsung Washer dC / dE Error: Door, Latch & Lock Checks",
+    title: "Samsung Washer dE / dC Error: Door or Lid Not Closed",
     description:
-      "Samsung washer showing dC or dE? Check whether the door or lid is fully closed, fabric is trapped, or the latch is misaligned before considering lock or control faults.",
+      "Samsung washer showing dE or dC? Remove trapped laundry, reduce overloading and close the door or lid securely. Do not bypass the safety lock if the code returns.",
     quickAnswer:
-      "Samsung dC / dE usually means the washer cannot confirm that the door or lid is safely closed. Remove trapped fabric, close the door normally and inspect the visible latch area. Do not force the lock or bypass the safety switch.",
+      "Samsung dE / dC means the washer detects the door or lid as open or not securely closed on supported models. Remove trapped laundry, reduce an overloaded drum and close it normally. If the code returns with normal closure, stop before lock or wiring work.",
     priorityLinks: [
       { href: "/problems/samsung-washer-5c-5e-error", label: "Samsung 5C / 5E drain error" },
       { href: "/problems/samsung-washer-4c-4e-error", label: "Samsung 4C / 4E water error" },
@@ -72,11 +72,11 @@ const SEO_OPPORTUNITY_OVERRIDES: Record<string, OpportunitySeoOverride> = {
     ],
   },
   "samsung-washer-4c2-error": {
-    title: "Samsung Washer 4C2 Error: Hot Water Supply Too Hot",
+    title: "Samsung Washer 4C2 Error: Check Hot/Cold Hoses First",
     description:
-      "Samsung washer showing 4C2? The supplied water is too hot on supported models. Check hot/cold hose connections, inlet temperature and the exact model manual.",
+      "Samsung washer showing 4C2? Samsung treats this as a hot/cold supply error. Check for swapped inlet hoses and verify the cold line is actually cold before considering service.",
     quickAnswer:
-      "Samsung 4C2 generally points to water entering hotter than expected on supported washers. Check that hot and cold inlet hoses are connected correctly and that the supply temperature matches the model manual before considering internal faults.",
+      "Samsung groups 4C2 with hot/cold supply errors. The first check is whether the hot and cold hoses are connected to the correct washer inlets; Samsung notes that this condition normally does not require service when the supply connections are the cause.",
     priorityLinks: [
       { href: "/problems/samsung-washer-4c-4e-error", label: "Samsung 4C / 4E water error" },
       { href: "/problems/samsung-washer-5c-5e-error", label: "Samsung 5C / 5E drain error" },
@@ -104,6 +104,18 @@ const SEO_OPPORTUNITY_OVERRIDES: Record<string, OpportunitySeoOverride> = {
     priorityLinks: [
       { href: "/problems/bosch-dishwasher-e10-error", label: "Bosch dishwasher E10 error" },
       { href: "/problems/bosch-dishwasher-e26-error", label: "Bosch dishwasher E26 error" },
+      { href: "/error-codes/brands/bosch-dishwasher", label: "All Bosch dishwasher error codes" },
+    ],
+  },
+  "bosch-dishwasher-e31-error": {
+    title: "Bosch Dishwasher E31 / F31 Error: Drying-System Fault",
+    description:
+      "Bosch dishwasher showing E31 or F31? Confirm the exact code and E-Nr. E31/F31 is a drying-system fault on supported models and is not the same as E31-00/E3100.",
+    quickAnswer:
+      "On supported Bosch dishwasher families, E31 / F31 belongs to the drying-system fault path. Photograph the complete display and record the E-Nr before service. Do not confuse E31 / F31 with E31-00 / E3100, which Bosch uses for a different water-protection condition.",
+    priorityLinks: [
+      { href: "/problems/bosch-dishwasher-e15-error", label: "Bosch dishwasher E15 leak-protection error" },
+      { href: "/problems/bosch-dishwasher-e25-error", label: "Bosch dishwasher E25 drain-pump error" },
       { href: "/error-codes/brands/bosch-dishwasher", label: "All Bosch dishwasher error codes" },
     ],
   },
@@ -202,8 +214,9 @@ export default async function ProblemPage({ params }: Props) {
     dateModified: problem.updated,
     datePublished: problem.updated,
     mainEntityOfPage: `${SITE_URL}/problems/${problem.slug}`,
-    author: { "@type": "Organization", name: SITE_NAME },
+    author: { "@type": "Organization", name: SITE_NAME, url: `${SITE_URL}/about` },
     publisher: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
+    publishingPrinciples: `${SITE_URL}/editorial-policy`,
     about: problem.tags,
     inLanguage: "en",
     articleSection: problem.category,
