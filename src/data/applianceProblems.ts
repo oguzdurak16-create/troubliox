@@ -108,76 +108,76 @@ export const applianceProblems: Problem[] = [
   },
   {
     "slug": "samsung-washer-4c2-error",
-    "title": "Samsung washer 4C2 error: the supplied water temperature is too high",
-    "shortTitle": "Samsung washer 4C2 error",
-    "summary": "The 4C2 display on many Samsung washing machines indicates that the supplied water temperature is too high. Codes can vary by model, so match the full model number to the official manual before ordering parts.",
+    "title": "Samsung washer 4C2 error: hot and cold water supply problem",
+    "shortTitle": "Samsung washer 4C2 hot/cold error",
+    "summary": "Samsung groups 4C2 with hot/cold supply errors such as 4E2, CE, 14C2, and nF1. On supported models the cold inlet is receiving water that is too hot, most commonly because the hot and cold supply hoses are connected to the wrong inlets.",
     "category": "Home appliances",
     "categorySlug": "home-appliances",
     "brand": "Samsung",
     "brandSlug": "samsung",
     "device": "Washing machine",
-    "updated": "2026-07-16",
+    "updated": "2026-09-29",
     "readTime": 4,
     "likelyCauses": [
-      "Heater is not reaching expected temperature",
-      "Temperature sensor is inaccurate",
-      "Scale or poor water flow affects heating",
-      "Heater relay, wiring, or control is faulty"
+      "The hot and cold inlet hoses are connected to the opposite washer inlets",
+      "The household cold-water line is supplying unexpectedly hot water",
+      "The inlet connections were changed during installation or recent plumbing work",
+      "The exact model uses a related regional hot/cold supply code"
     ],
     "quickChecks": [
       {
-        "title": "Record the cycle stage",
-        "detail": "Note whether the code appears during washing or drying.",
+        "title": "Stop the washer and check the inlet labels",
+        "detail": "Turn the washer off. Confirm the cold supply hose goes to the washer's cold inlet and the hot hose goes to the hot inlet.",
         "level": "safe"
       },
       {
-        "title": "Check supply temperature",
-        "detail": "Confirm installation meets the manual.",
-        "level": "safe"
-      },
-      {
-        "title": "Use approved descaling only",
-        "detail": "Do not mix cleaning chemicals.",
+        "title": "Correct swapped hot and cold hoses",
+        "detail": "Close the water taps before changing hose connections. Match the appliance inlet markings rather than relying only on hose color.",
         "level": "caution"
       },
       {
-        "title": "Stop before electrical heater tests",
-        "detail": "Resistance and voltage tests need qualified service.",
-        "level": "stop"
+        "title": "Verify the cold tap actually runs cold",
+        "detail": "If the hoses are connected correctly, check the household supply. A plumbing crossover can send hot water to the cold line.",
+        "level": "safe"
+      },
+      {
+        "title": "Use the model manual if 4C2 returns",
+        "detail": "Samsung states hot/cold errors are normally installation or supply issues. If the connections are correct and the code remains, confirm the exact model and regional guidance before further work.",
+        "level": "caution"
       }
     ],
-    "decisionTitle": "What happens when 4C2 appears?",
+    "decisionTitle": "What do the inlet connections show?",
     "observations": [
       {
-        "label": "Water stays cold",
-        "advice": "Heater, sensor, relay, or power path may be faulty."
+        "label": "Hot and cold hoses are reversed",
+        "advice": "Reconnect them to the matching hot and cold inlets with the water supply shut off."
       },
       {
-        "label": "Appliance overheats",
-        "advice": "Disconnect power and stop using it."
+        "label": "Hoses are correct but the cold line runs hot",
+        "advice": "The household plumbing or mixing path needs attention rather than a washer part."
       },
       {
-        "label": "Only drying is affected",
-        "advice": "Focus on drying heat, airflow, fan, or temperature sensing."
+        "label": "Connections and water temperature are correct",
+        "advice": "Confirm the full model number and Samsung's regional code table before assuming an internal fault."
       }
     ],
     "whenToStop": [
-      "Burning smell, smoke, or excessive heat",
-      "Breaker trips repeatedly",
-      "Heater wiring must be tested"
+      "A hose, valve, or inlet connection is leaking",
+      "The washer cannot be moved or accessed safely",
+      "The household cold-water line remains hot and needs plumbing diagnosis"
     ],
     "faq": [
       {
         "question": "What does 4C2 mean on a Samsung washer?",
-        "answer": "On many model families, 4C2 indicates that the supplied water temperature is too high. Confirm the exact model and region because the same display can be used differently."
+        "answer": "On Samsung's current US guidance, 4C2 is a hot/cold supply error. The cold inlet is receiving water that is too hot, commonly because the hot and cold hoses are swapped."
       },
       {
-        "question": "Can I clear 4C2 by unplugging the washer?",
-        "answer": "A short power reset may clear a temporary state, but it will not fix a blocked hose, leak, failed sensor, motor, heater, or wiring fault. Stop if the code returns."
+        "question": "Does Samsung 4C2 mean the heater is broken?",
+        "answer": "Not on Samsung's current US error-code guidance. It points first to the incoming hot/cold water connections, not to an internal heater failure."
       },
       {
-        "question": "Should I replace a part based only on the code?",
-        "answer": "No. A code identifies a system or condition, not always the failed component. Complete safe external checks and use the model-specific manual or qualified service."
+        "question": "Do I need service for Samsung 4C2?",
+        "answer": "Samsung says service is normally not required for a hot/cold connection error. Correct the hose or household supply issue first, then use model-specific support if the code remains."
       }
     ],
     "tags": [
@@ -185,129 +185,137 @@ export const applianceProblems: Problem[] = [
       "washing machine",
       "washer",
       "4c2",
-      "the supplied water temperature is too high",
-      "temperature",
-      "4c2"
+      "4e2",
+      "hot cold error",
+      "swapped hoses",
+      "water temperature"
     ],
     "featured": true,
     "errorCode": "4C2",
     "aliases": [
-      "4C2"
+      "4C2",
+      "4E2",
+      "14C2",
+      "nF1"
     ],
-    "appliesTo": "Selected Samsung washing machine model families",
-    "modelNote": "Error codes can differ by model, market, and production year. Match the full model number to the official manual before using service procedures.",
+    "appliesTo": "Samsung washing machine models that use the 4C2 / hot-cold supply code family",
+    "modelNote": "Samsung groups several displays under the hot/cold supply condition. Confirm the exact model and regional manual because code labels vary.",
     "sources": [
       {
-        "label": "Samsung Support",
-        "url": "https://www.samsung.com/us/support/"
+        "label": "Samsung US: Water fill issues with washing machines",
+        "url": "https://www.samsung.com/us/support/troubleshoot/TSG10007295/"
       },
       {
-        "label": "Samsung manuals and downloads",
-        "url": "https://www.samsung.com/us/support/downloads/"
+        "label": "Samsung US: Washing machine information and error codes",
+        "url": "https://www.samsung.com/us/support/troubleshoot/TSG10000997/"
       }
     ],
     "contentKind": "error-code"
   },
   {
     "slug": "samsung-washer-5c-5e-error",
-    "title": "Samsung washer 5C / 5E error: the washer cannot drain in time",
-    "shortTitle": "Samsung washer 5C / 5E error",
-    "summary": "The 5C / 5E display on many Samsung washing machines indicates that the washer cannot drain in time. Codes can vary by model, so match the full model number to the official manual before ordering parts.",
+    "title": "Samsung washer 5C / 5E error: the washer is not draining",
+    "shortTitle": "Samsung washer 5C / 5E no-drain error",
+    "summary": "Samsung uses 5C / 5E for a drainage problem on supported washing machines. The first checks are the drain hose, its installation, and the user-accessible debris or pump filter where the model provides one.",
     "category": "Home appliances",
     "categorySlug": "home-appliances",
     "brand": "Samsung",
     "brandSlug": "samsung",
     "device": "Washing machine",
-    "updated": "2026-07-16",
-    "readTime": 4,
+    "updated": "2026-09-29",
+    "readTime": 5,
     "likelyCauses": [
-      "Drain hose is kinked or blocked",
-      "Filter or sump contains debris",
-      "Drain pump is jammed or not running",
-      "Level sensing still detects retained water"
+      "The drain hose is kinked, frozen, blocked, or installed incorrectly",
+      "The user-accessible debris or drain-pump filter is clogged",
+      "The washer cannot move water out at the expected rate",
+      "A drain pump or related electrical fault remains after external blockages are ruled out"
     ],
     "quickChecks": [
       {
-        "title": "Run one drain attempt",
-        "detail": "Listen for the pump and note whether any water moves.",
+        "title": "Check the drain hose before resetting",
+        "detail": "Straighten kinks, look for freezing or blockage, and confirm the hose is installed at the height required by the model manual.",
         "level": "safe"
       },
       {
-        "title": "Inspect the drain hose",
-        "detail": "Straighten kinks and check the sink or standpipe connection.",
-        "level": "safe"
-      },
-      {
-        "title": "Clean the user-accessible filter",
-        "detail": "Disconnect power and prepare for retained water.",
+        "title": "Drain retained water safely",
+        "detail": "If your model has an emergency drain hose or user procedure, unplug the washer and follow the manual before opening a filter.",
         "level": "caution"
       },
       {
-        "title": "Stop before pump or wiring work",
-        "detail": "Internal pump and control diagnosis requires service.",
+        "title": "Clean the user-accessible debris filter if fitted",
+        "detail": "Some front-load models provide a front filter access point. Do not assume a top-loader or another model has the same access; follow the exact model manual.",
+        "level": "caution"
+      },
+      {
+        "title": "Stop before internal pump or wiring work",
+        "detail": "If the hose and accessible filter are clear but 5C / 5E returns, internal pump or electrical diagnosis requires qualified service.",
         "level": "stop"
       }
     ],
-    "decisionTitle": "What happens when 5C / 5E appears?",
+    "decisionTitle": "What happens when the washer tries to drain?",
     "observations": [
       {
-        "label": "Pump hums but water does not move",
-        "advice": "A blockage, jam, or restricted hose is likely."
+        "label": "Pump runs but little or no water leaves",
+        "advice": "A blocked hose, filter, or drain connection is the first place to look."
       },
       {
-        "label": "Pump is silent",
-        "advice": "The pump, wiring, control, or interlock may need diagnosis."
+        "label": "Water drains slowly",
+        "advice": "Check hose routing, standpipe or spigot installation, and the accessible filter."
       },
       {
-        "label": "Draining is slow",
-        "advice": "Check the filter, hose, sink connection, and installation height."
+        "label": "No drain-pump sound",
+        "advice": "After external checks, the pump, wiring, or control may need qualified diagnosis."
       }
     ],
     "whenToStop": [
-      "Water reaches electrical parts",
-      "The pump smells burned",
-      "Internal disassembly is needed"
+      "Water is reaching electrical parts or the floor",
+      "The pump smells burned or the washer trips a breaker",
+      "The next step requires opening the washer or electrical testing"
     ],
     "faq": [
       {
-        "question": "What does 5C / 5E mean on a Samsung washer?",
-        "answer": "On many model families, 5C / 5E indicates that the washer cannot drain in time. Confirm the exact model and region because the same display can be used differently."
+        "question": "What does 5E or 5C mean on a Samsung washing machine?",
+        "answer": "Samsung defines 5E / 5C as a drainage issue on supported models. A blocked or kinked drain hose and a clogged debris filter are common first checks."
       },
       {
-        "question": "Can I clear 5C / 5E by unplugging the washer?",
-        "answer": "A short power reset may clear a temporary state, but it will not fix a blocked hose, leak, failed sensor, motor, heater, or wiring fault. Stop if the code returns."
+        "question": "How do I fix 5E on a Samsung top-load washer?",
+        "answer": "Start with the drain hose and its installation. Samsung also uses 5C in top-load diagnostics, but filter access differs by model, so do not copy front-loader filter instructions unless your manual shows that access."
       },
       {
-        "question": "Should I replace a part based only on the code?",
-        "answer": "No. A code identifies a system or condition, not always the failed component. Complete safe external checks and use the model-specific manual or qualified service."
+        "question": "Is Samsung 5E the same as 5D or Sd?",
+        "answer": "No. 5E / 5C is a no-drain code family, while 5D / Sd / SUD is used for excessive suds on supported models."
       }
     ],
     "tags": [
       "samsung",
       "washing machine",
       "washer",
-      "5c / 5e",
-      "the washer cannot drain in time",
-      "drain",
       "5c",
-      "5e"
+      "5e",
+      "no drain",
+      "drain hose",
+      "drain filter",
+      "top loader"
     ],
     "featured": true,
     "errorCode": "5C / 5E",
     "aliases": [
       "5C",
-      "5E"
+      "5E",
+      "SC",
+      "SE",
+      "1 5C"
     ],
-    "appliesTo": "Selected Samsung washing machine model families",
-    "modelNote": "Error codes can differ by model, market, and production year. Match the full model number to the official manual before using service procedures.",
+    "appliesTo": "Samsung front-load and top-load model families that use the 5C / 5E no-drain code family",
+    "modelNote": "Drain-filter access and hose installation details vary by model. Use the exact model manual before removing covers or assuming a front-loader procedure applies.",
     "sources": [
       {
-        "label": "Samsung Support",
-        "url": "https://www.samsung.com/us/support/"
+        "label": "Samsung UK: Resolve a 5E or 5C washing-machine error",
+        "url": "https://www.samsung.com/uk/support/home-appliances/how-to-resolve-a-5e-or-5c-error-code-on-a-washing-machine/"
       },
       {
-        "label": "Samsung manuals and downloads",
-        "url": "https://www.samsung.com/us/support/downloads/"
+        "label": "Samsung US: Washing machine information and error codes",
+        "url": "https://www.samsung.com/us/support/troubleshoot/TSG10000997/"
       }
     ],
     "contentKind": "error-code"
@@ -418,104 +426,106 @@ export const applianceProblems: Problem[] = [
   },
   {
     "slug": "samsung-washer-dc-de-error",
-    "title": "Samsung washer dC / dE error: the door is open or not locking",
-    "shortTitle": "Samsung washer dC / dE error",
-    "summary": "The dC / dE display on many Samsung washing machines indicates that the door is open or not locking. Codes can vary by model, so match the full model number to the official manual before ordering parts.",
+    "title": "Samsung washer dE / dC error: door or lid is not securely closed",
+    "shortTitle": "Samsung washer dE / dC door error",
+    "summary": "Samsung uses dE / dC on supported washing machines when the door or lid is open, obstructed, overloaded, or cannot be confirmed as securely closed.",
     "category": "Home appliances",
     "categorySlug": "home-appliances",
     "brand": "Samsung",
     "brandSlug": "samsung",
     "device": "Washing machine",
-    "updated": "2026-07-16",
+    "updated": "2026-09-29",
     "readTime": 4,
     "likelyCauses": [
-      "Door or lid is not fully closed",
-      "Laundry or debris is trapped at the latch",
-      "Hinge or latch alignment is off",
-      "Lock switch or control cannot confirm closure"
+      "The door or lid is not completely closed",
+      "Laundry is trapped between the door and cabinet",
+      "An overloaded drum prevents normal closure",
+      "The latch area is dirty, misaligned, damaged, or cannot confirm the closed position"
     ],
     "quickChecks": [
       {
-        "title": "Open and close firmly",
-        "detail": "Remove trapped fabric and close without slamming.",
+        "title": "Remove trapped laundry and close the door normally",
+        "detail": "Open the door or lid, move clothing away from the seal and latch, then close it without slamming.",
         "level": "safe"
       },
       {
-        "title": "Clean accessible latch surfaces",
-        "detail": "Remove detergent residue and debris.",
+        "title": "Reduce an overloaded load",
+        "detail": "If the drum is packed tightly, remove items so the door or lid can reach its normal closed position.",
         "level": "safe"
       },
       {
-        "title": "Wait for safety unlock",
-        "detail": "Allow water level and temperature to fall before retrying.",
+        "title": "Inspect only the visible latch and seal area",
+        "detail": "Clean accessible debris or detergent residue. Do not force, bypass, or disassemble the safety lock.",
         "level": "safe"
       },
       {
-        "title": "Do not force the lock",
-        "detail": "Broken handles, locks, and internal circuits need service.",
+        "title": "Stop if the code returns with normal closure",
+        "detail": "A damaged latch, lock switch, wiring, or control path requires model-specific service diagnosis.",
         "level": "stop"
       }
     ],
-    "decisionTitle": "What happens when dC / dE appears?",
+    "decisionTitle": "What happens when the door or lid closes?",
     "observations": [
       {
-        "label": "Door closes but cycle will not start",
-        "advice": "The latch may not reach or confirm the locked position."
+        "label": "The door will not physically close",
+        "advice": "Look for trapped laundry, overloading, hinge alignment, or visible latch damage."
       },
       {
-        "label": "Door is physically jammed",
-        "advice": "Water, heat, or a failed lock may prevent release."
+        "label": "The door closes but the cycle will not start",
+        "advice": "The washer may not be confirming the locked position; do not bypass the interlock."
       },
       {
-        "label": "Code is intermittent",
-        "advice": "Check alignment, hinge movement, vibration, and debris."
+        "label": "The code appears only with large loads",
+        "advice": "Reduce the load and make sure fabric is not pushing against the door or caught at the seal."
       }
     ],
     "whenToStop": [
-      "Door or latch is cracked",
-      "Water is above the opening",
-      "The lock smells hot or is visibly damaged"
+      "The door, lid, hinge, handle, or latch is cracked or damaged",
+      "Water is above the door opening or leaking",
+      "The next step would require bypassing or electrically testing the safety lock"
     ],
     "faq": [
       {
-        "question": "What does dC / dE mean on a Samsung washer?",
-        "answer": "On many model families, dC / dE indicates that the door is open or not locking. Confirm the exact model and region because the same display can be used differently."
+        "question": "What does dE mean on a Samsung washing machine?",
+        "answer": "On supported Samsung models, dE / dC means the washer detects the door or lid as open or not securely closed."
       },
       {
-        "question": "Can I clear dC / dE by unplugging the washer?",
-        "answer": "A short power reset may clear a temporary state, but it will not fix a blocked hose, leak, failed sensor, motor, heater, or wiring fault. Stop if the code returns."
+        "question": "Can trapped clothes cause Samsung dE or dC?",
+        "answer": "Yes. Samsung specifically recommends checking that laundry is not caught in the door and that the door is properly closed."
       },
       {
-        "question": "Should I replace a part based only on the code?",
-        "answer": "No. A code identifies a system or condition, not always the failed component. Complete safe external checks and use the model-specific manual or qualified service."
+        "question": "Should I bypass the door lock to clear dE?",
+        "answer": "No. The lock is a safety interlock. If the door closes normally and the code remains, use the model-specific manual or qualified service."
       }
     ],
     "tags": [
       "samsung",
       "washing machine",
       "washer",
-      "dc / de",
-      "the door is open or not locking",
-      "door",
+      "de",
       "dc",
-      "de"
+      "door error",
+      "door not closed",
+      "lid error"
     ],
     "featured": true,
-    "errorCode": "dC / dE",
+    "errorCode": "dE / dC",
     "aliases": [
+      "dE",
       "dC",
-      "dE"
+      "DE",
+      "DC"
     ],
-    "appliesTo": "Selected Samsung washing machine model families",
-    "modelNote": "Error codes can differ by model, market, and production year. Match the full model number to the official manual before using service procedures.",
+    "appliesTo": "Selected Samsung front-load and top-load washing machine families",
+    "modelNote": "Door and lid designs differ by model. Follow the exact model manual and never bypass a safety interlock.",
     "sources": [
       {
-        "label": "Samsung Support",
-        "url": "https://www.samsung.com/us/support/"
+        "label": "Samsung Gulf: Fix a DE or DC error on a Samsung washer",
+        "url": "https://www.samsung.com/ae/support/home-appliances/how-to-fix-de-dc-error-in-samsung-washing-machine/"
       },
       {
-        "label": "Samsung manuals and downloads",
-        "url": "https://www.samsung.com/us/support/downloads/"
+        "label": "Samsung IE: Washing machine information codes",
+        "url": "https://www.samsung.com/ie/support/home-appliances/check-out-the-information-codes-on-my-washing-machine/"
       }
     ],
     "contentKind": "error-code"
@@ -13518,102 +13528,104 @@ export const applianceProblems: Problem[] = [
   },
   {
     "slug": "bosch-dishwasher-e31-error",
-    "title": "Bosch dishwasher E31 error: the drying system is abnormal",
-    "shortTitle": "Bosch dishwasher E31 error",
-    "summary": "The E31 display on many Bosch dishwashers indicates that the drying system is abnormal. Codes can vary by model, so match the full model number to the official manual before ordering parts.",
+    "title": "Bosch dishwasher E31 / F31 error: drying-system fault on supported models",
+    "shortTitle": "Bosch dishwasher E31 / F31 error",
+    "summary": "Bosch support lists E31 / F31 for dishwasher model families in some regions. On the supported BSH platform it is a drying-system fault that can leave the machine operating without normal heating or drying. Do not confuse E31 / F31 with E31-00 / E3100, which is a different water-protection code.",
     "category": "Home appliances",
     "categorySlug": "home-appliances",
     "brand": "Bosch",
     "brandSlug": "bosch",
     "device": "Dishwasher",
-    "updated": "2026-07-16",
-    "readTime": 4,
+    "updated": "2026-09-29",
+    "readTime": 5,
     "likelyCauses": [
-      "Heater is not reaching expected temperature",
-      "Temperature sensor is inaccurate",
-      "Scale or poor water flow affects heating",
-      "Heater relay, wiring, or control is faulty"
+      "A fault is present in the dishwasher drying system on a model that supports E31 / F31",
+      "The dishwasher may stop heating normally and leave dishes wet",
+      "The displayed code may actually be E31-00 / E3100, which belongs to a different water-protection fault family",
+      "Model, market, and generation differences require the full E-Nr before parts or service procedures are chosen"
     ],
     "quickChecks": [
       {
-        "title": "Record the cycle stage",
-        "detail": "Note whether the code appears during washing or drying.",
+        "title": "Photograph the complete code before resetting",
+        "detail": "Confirm whether the display says E31, F31, E31-00, or E3100. The suffix changes the diagnosis.",
         "level": "safe"
       },
       {
-        "title": "Check supply temperature",
-        "detail": "Confirm installation meets the manual.",
+        "title": "Record the full Bosch E-Nr",
+        "detail": "Use the rating label on the door edge and match the complete model and suffix to Bosch support.",
         "level": "safe"
       },
       {
-        "title": "Use approved descaling only",
-        "detail": "Do not mix cleaning chemicals.",
-        "level": "caution"
+        "title": "Treat E31 / F31 as a service-level drying fault",
+        "detail": "Do not open the drying module, heater, wiring, or Zeolith system. Bosch lists E31 / F31 on supported dishwasher families and internal drying-system work is not a user repair.",
+        "level": "stop"
       },
       {
-        "title": "Stop before electrical heater tests",
-        "detail": "Resistance and voltage tests need qualified service.",
+        "title": "If the code is E31-00 / E3100, switch paths",
+        "detail": "That code is associated with activated water protection on current Bosch guidance. Shut off the water supply and use Bosch service rather than following an E31 drying-system path.",
         "level": "stop"
       }
     ],
-    "decisionTitle": "What happens when E31 appears?",
+    "decisionTitle": "Which exact E31-format code is on the display?",
     "observations": [
       {
-        "label": "Water stays cold",
-        "advice": "Heater, sensor, relay, or power path may be faulty."
+        "label": "E31 or F31 without -00",
+        "advice": "Use the model-specific Bosch support path for the drying-system fault and arrange service."
       },
       {
-        "label": "Appliance overheats",
-        "advice": "Disconnect power and stop using it."
+        "label": "E31-00 or E3100",
+        "advice": "Do not treat this as the same code. Current Bosch guidance associates E3100 / E31-00 with activated water protection."
       },
       {
-        "label": "Only drying is affected",
-        "advice": "Focus on drying heat, airflow, fan, or temperature sensing."
+        "label": "There is visible water or a flashing water-tap indicator",
+        "advice": "Shut off the water supply and stop troubleshooting until the exact code and leak-protection state are confirmed."
       }
     ],
     "whenToStop": [
-      "Burning smell, smoke, or excessive heat",
-      "Breaker trips repeatedly",
-      "Heater wiring must be tested"
+      "The display is E31 / F31 and internal drying-system access would be required",
+      "The display is E31-00 / E3100 or water is present in the base area",
+      "There is a burning smell, breaker trip, leak, or exposed electrical damage"
     ],
     "faq": [
       {
         "question": "What does E31 mean on a Bosch dishwasher?",
-        "answer": "On many model families, E31 indicates that the drying system is abnormal. Confirm the exact model and region because the same display can be used differently."
+        "answer": "On supported Bosch dishwasher families in regions where E31 / F31 is listed, it is associated with the drying system. Confirm the full E-Nr because Bosch code sets differ by market and generation."
       },
       {
-        "question": "Can I clear E31 by unplugging the dishwasher?",
-        "answer": "A short power reset may clear a temporary state, but it will not fix a blocked hose, leak, failed sensor, motor, heater, or wiring fault. Stop if the code returns."
+        "question": "Is Bosch E31 the same as E31-00 or E3100?",
+        "answer": "No. Keep the exact display format. Current Bosch guidance uses E3100 / E31-00 for an activated water-protection condition, so it should not be diagnosed as the same fault as E31 / F31."
       },
       {
-        "question": "Should I replace a part based only on the code?",
-        "answer": "No. A code identifies a system or condition, not always the failed component. Complete safe external checks and use the model-specific manual or qualified service."
+        "question": "Can I repair Bosch E31 myself?",
+        "answer": "The drying-system path involves internal components and is not a normal user-level repair. Record the E-Nr and exact display, then use Bosch service guidance."
       }
     ],
     "tags": [
       "bosch",
       "dishwasher",
-      "dishwasher",
       "e31",
-      "the drying system is abnormal",
-      "heater",
-      "e31"
+      "f31",
+      "drying system",
+      "e31-00",
+      "e3100",
+      "zeolith"
     ],
     "featured": false,
-    "errorCode": "E31",
+    "errorCode": "E31 / F31",
     "aliases": [
-      "E31"
+      "E31",
+      "F31"
     ],
-    "appliesTo": "Selected Bosch dishwasher model families",
-    "modelNote": "Error codes can differ by model, market, and production year. Match the full model number to the official manual before using service procedures.",
+    "appliesTo": "Bosch dishwasher model families and markets that list E31 / F31",
+    "modelNote": "Do not collapse E31 / F31 and E31-00 / E3100 into one diagnosis. Confirm the complete display and full E-Nr first.",
     "sources": [
       {
-        "label": "Bosch Owner Support",
-        "url": "https://www.bosch-home.com/us/owner-support"
+        "label": "Bosch Germany: Dishwasher E31 / F31 support",
+        "url": "https://www.bosch-home.com/de/service/hilfe-und-unterstuetzung/geschirrspueler/36345702923"
       },
       {
-        "label": "Bosch owner manuals",
-        "url": "https://www.bosch-home.com/us/owner-support/owner-manuals"
+        "label": "Bosch US: Dishwasher error codes and E3100 distinction",
+        "url": "https://www.bosch-home.com/us/owner-support/error-codes/dishwashers"
       }
     ],
     "contentKind": "error-code"
