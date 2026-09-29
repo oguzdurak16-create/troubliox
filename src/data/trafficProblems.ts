@@ -2445,79 +2445,105 @@ export const trafficProblems: Problem[] = [
   },
   {
     "slug": "fiber-router-los-light-red",
-    "title": "Fiber modem LOS light is red",
+    "title": "Fiber modem or ONT red LOS light: loss of optical signal",
     "shortTitle": "Red LOS light on fiber modem",
-    "summary": "A red LOS light means loss of optical signal on many fiber ONTs or gateways. The fiber path, connector, provider network, or optical terminal is not receiving usable light.",
+    "summary": "A red or flashing LOS light on many fiber ONTs means the optical link is missing or too weak. Nokia documentation identifies red alarm/PON-off states with LOS/LOF, while TP-Link describes red LOS as an optical-signal failure. Check only safe external cable routing and then involve the fiber provider if the light remains red.",
     "category": "Internet & Wi-Fi",
     "categorySlug": "internet-wifi",
     "device": "Fiber ONT or gateway",
-    "updated": "2026-07-17",
+    "updated": "2026-09-29",
     "readTime": 4,
     "likelyCauses": [
-      "The provider fiber signal is absent",
-      "The fiber cable is sharply bent, disconnected, or damaged",
-      "A connector is contaminated or disturbed",
-      "The ONT or provider equipment has failed"
+      "The provider optical signal is absent or below the ONT's usable range",
+      "The fiber cable is sharply bent, crushed, disconnected, or damaged somewhere in the path",
+      "A connector, splitter, outside drop, OLT port, or provider-side fiber path has a fault",
+      "The ONT is not ranging or authenticating after an optical-link interruption"
     ],
     "quickChecks": [
       {
-        "title": "Do not look into or touch the fiber end",
-        "detail": "Fiber light can be invisible and connectors are easily contaminated.",
+        "title": "Do not look into, unplug, or clean the fiber connector",
+        "detail": "Optical light can be invisible and fiber connectors are easy to contaminate or damage. Keep the connector seated unless your provider explicitly instructs otherwise.",
         "level": "safe"
       },
       {
-        "title": "Check only visible cable routing",
-        "detail": "Look for a loose external connector or sharp bend without unplugging it.",
+        "title": "Inspect only the visible fiber route",
+        "detail": "Look for a crushed section, sharp bend, loose wall box, or obvious physical damage without pulling on the cable or opening provider equipment.",
         "level": "safe"
       },
       {
-        "title": "Restart the ONT only if the provider permits",
-        "detail": "Wait for the full optical registration sequence.",
+        "title": "Restart the ONT once only if your provider permits it",
+        "detail": "Power-cycle the ONT normally and allow several minutes for PON ranging and authentication. Do not factory-reset it.",
         "level": "safe"
       },
       {
-        "title": "Contact the fiber provider",
-        "detail": "Optical power and line faults require provider testing.",
+        "title": "Contact the fiber provider if LOS stays red",
+        "detail": "The provider can measure optical power and test the OLT, splitter, drop fiber, and ONT. Persistent LOS is not normally fixed by changing Wi-Fi settings.",
         "level": "stop"
       }
     ],
-    "decisionTitle": "Which optical lights are on?",
+    "decisionTitle": "What do the optical indicators show?",
     "observations": [
       {
-        "label": "LOS red and PON off",
-        "advice": "The ONT is not receiving or registering optical service."
+        "label": "LOS or Alarm is red and PON is off",
+        "advice": "This strongly points to an optical-link problem. Nokia documents PON-off with fiber not connected or link failure (LOS/LOF)."
       },
       {
-        "label": "LOS flashes intermittently",
-        "advice": "The signal may be marginal or the fiber path unstable."
+        "label": "LOS flashes red",
+        "advice": "On supported TP-Link GPON terminals, flashing red LOS means no optical signal is received or the received signal is too weak."
       },
       {
-        "label": "PON is normal but internet is down",
-        "advice": "The optical link may be fine; router, account, or service routing is next."
+        "label": "PON is normal but internet is still down",
+        "advice": "The optical link may be established; move the diagnosis to router WAN, account/session, DNS, or provider routing rather than the fiber light."
       }
     ],
     "whenToStop": [
-      "The fiber connector would need to be unplugged or cleaned",
-      "The cable is crushed, cut, or sharply kinked"
+      "The next step would require disconnecting, cleaning, cutting, bending, or inspecting the fiber end",
+      "The cable is crushed, cut, sharply kinked, or the wall/ONT optical connector is damaged",
+      "The provider needs an optical-power reading or outside-line test"
     ],
     "faq": [
       {
-        "question": "What does LOS stand for?",
-        "answer": "It commonly means Loss Of Signal."
+        "question": "What does LOS mean on a fiber modem or ONT?",
+        "answer": "LOS commonly means Loss Of Signal. On supported ONTs, a red LOS or alarm state indicates that the expected optical signal is missing or outside the usable range."
       },
       {
-        "question": "Can rebooting fix red LOS?",
-        "answer": "It may recover a temporary ONT state, but it cannot repair a missing or weak optical signal."
+        "question": "Can restarting the router fix a red LOS light?",
+        "answer": "A restart can recover a temporary ONT state, but it cannot repair a broken, disconnected, contaminated, or weak optical path. If LOS remains red after one permitted restart, contact the provider."
+      },
+      {
+        "question": "Should I unplug and clean the fiber connector?",
+        "answer": "Not as a normal user check. Fiber connectors are contamination-sensitive and the optical signal can be invisible. Leave the connector seated and let the provider test or clean the optical path."
       }
     ],
     "tags": [
       "fiber",
       "los red",
+      "red los light",
+      "loss of signal",
       "ont",
-      "no internet"
+      "pon",
+      "no internet",
+      "optical signal"
     ],
     "contentKind": "symptom",
-    "modelNote": "Indicator names differ by provider equipment. Follow the ONT label and provider guide."
+    "aliases": [
+      "red LOS light",
+      "LOS blinking red",
+      "fiber LOS",
+      "ONT LOS",
+      "loss of signal"
+    ],
+    "sources": [
+      {
+        "label": "Nokia ONT G-010G-R quick reference: LOS/LOF LED states",
+        "url": "https://www.nokia.com/asset/f/210820/"
+      },
+      {
+        "label": "TP-Link GPON terminal LED rules: LOS optical signal",
+        "url": "https://service-provider.tp-link.com/nordic/faq/583/"
+      }
+    ],
+    "modelNote": "LED names and colors vary by ONT and provider. Match the labels on the exact device, but persistent LOS/LOF is an optical-link condition rather than a normal Wi-Fi configuration problem."
   },
   {
     "slug": "wifi-keeps-disconnecting",
