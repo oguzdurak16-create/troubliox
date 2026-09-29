@@ -4801,6 +4801,7 @@ export const trafficProblems: Problem[] = [
     "brandSlug": "microsoft",
     "device": "Windows printer",
     "updated": "2026-09-29",
+    "published": "2026-09-29",
     "readTime": 5,
     "likelyCauses": [
       "The shared printer is not configured correctly on the host Windows PC",
@@ -4913,6 +4914,7 @@ export const trafficProblems: Problem[] = [
     "brandSlug": "microsoft",
     "device": "Windows printer",
     "updated": "2026-09-29",
+    "published": "2026-09-29",
     "readTime": 5,
     "likelyCauses": [
       "The PC is still on an affected Windows build that contains the documented USB Print / IPP over USB issue",
