@@ -283,6 +283,33 @@
   color: #5f6979;
 }
 
+.emptyData {
+  display: grid;
+  gap: 10px;
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  padding: 22px;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.emptyData h3,
+.emptyData p {
+  margin: 0;
+}
+
+.emptyData p {
+  max-width: 680px;
+  color: #aeb7c6;
+  line-height: 1.6;
+}
+
+.emptyData a {
+  width: fit-content;
+  color: #f7f8fb;
+  font-weight: 800;
+  text-underline-offset: 3px;
+}
+
 @media (max-width: 760px) {
   .grid,
   .formGrid,
