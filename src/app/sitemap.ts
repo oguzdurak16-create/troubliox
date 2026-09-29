@@ -26,7 +26,6 @@ function addEnglishAlternates(entry: MetadataRoute.Sitemap[number]): MetadataRou
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const updated = new Date("2026-09-06");
-  const issueHubUpdated = new Date("2026-09-29");
   const modelDirectoryUpdated = new Date("2026-09-15");
   const [communityModels, experienceProducts, publishedDemand] = await Promise.all([
     listIndexableModelExperiences(5000).catch(() => []),
@@ -34,6 +33,33 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     listPublishedDemandProblems(),
   ]);
   const allProblems = mergePublishedProblems(problems, publishedDemand);
+  const latestProblemDate = allProblems.reduce(
+    (latest, problem) => problem.updated > latest ? problem.updated : latest,
+    "2026-09-06",
+  );
+  const latestProblemUpdated = new Date(latestProblemDate);
+  const aggregatePages = new Set([
+    "",
+    "/guides",
+    "/recent",
+    "/devices",
+    "/issues",
+    "/error-codes",
+    "/error-codes/brands",
+    "/error-codes/washing-machines",
+    "/error-codes/dishwashers",
+    "/error-codes/windows",
+    "/error-codes/printers",
+    "/error-codes/browser-web",
+    "/symptoms",
+    "/symptoms/washing-machines",
+    "/symptoms/dishwashers",
+    "/categories",
+    "/brands",
+  ]);
+  const latestFor = (items: typeof allProblems) => new Date(
+    items.reduce((latest, problem) => problem.updated > latest ? problem.updated : latest, "2026-09-06"),
+  );
   const pages = [
     "",
     "/decoder",
@@ -67,7 +93,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const entries: MetadataRoute.Sitemap = [
     ...pages.map((path) => ({
       url: `${SITE_URL}${path}`,
-      lastModified: updated,
+      lastModified: aggregatePages.has(path) ? latestProblemUpdated : updated,
       changeFrequency: path === "" || highPriorityPages.includes(path) || path.startsWith("/error-codes") || path.startsWith("/symptoms") ? "weekly" as const : "monthly" as const,
       priority: path === "" ? 1 : highPriorityPages.includes(path) ? 0.95 : path.startsWith("/error-codes") || path.startsWith("/symptoms") ? 0.9 : 0.6,
     })),
@@ -75,10 +101,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...errorCodeClusters.map((cluster) => ({ url: `${SITE_URL}/error-codes/brands/${cluster.slug}`, lastModified: new Date(cluster.updated), changeFrequency: "weekly" as const, priority: 0.92 })),
     ...resetGuides.map((guide) => ({ url: `${SITE_URL}/reset/${guide.slug}`, lastModified: updated, changeFrequency: "monthly" as const, priority: 0.84 })),
     ...modelNumberGuides.map((guide) => ({ url: `${SITE_URL}/model-number/${guide.slug}`, lastModified: updated, changeFrequency: "monthly" as const, priority: 0.82 })),
-    ...deviceHubs.map((hub) => ({ url: `${SITE_URL}/devices/${hub.slug}`, lastModified: updated, changeFrequency: "weekly" as const, priority: 0.9 })),
-    ...issueHubs.map((hub) => ({ url: `${SITE_URL}/issues/${hub.slug}`, lastModified: hub.slug === "not-connecting" ? issueHubUpdated : updated, changeFrequency: "weekly" as const, priority: 0.85 })),
-    ...categories.map((category) => ({ url: `${SITE_URL}/categories/${category.slug}`, lastModified: updated, changeFrequency: "weekly" as const, priority: 0.75 })),
-    ...brands.map((brand) => ({ url: `${SITE_URL}/brands/${brand.slug}`, lastModified: updated, changeFrequency: "weekly" as const, priority: 0.8 })),
+    ...deviceHubs.map((hub) => ({ url: `${SITE_URL}/devices/${hub.slug}`, lastModified: latestFor(allProblems.filter(hub.match)), changeFrequency: "weekly" as const, priority: 0.9 })),
+    ...issueHubs.map((hub) => ({ url: `${SITE_URL}/issues/${hub.slug}`, lastModified: latestFor(allProblems.filter(hub.match)), changeFrequency: "weekly" as const, priority: 0.85 })),
+    ...categories.map((category) => ({ url: `${SITE_URL}/categories/${category.slug}`, lastModified: latestFor(allProblems.filter((problem) => problem.categorySlug === category.slug)), changeFrequency: "weekly" as const, priority: 0.75 })),
+    ...brands.map((brand) => ({ url: `${SITE_URL}/brands/${brand.slug}`, lastModified: latestFor(allProblems.filter((problem) => problem.brandSlug === brand.slug)), changeFrequency: "weekly" as const, priority: 0.8 })),
     ...allProblems
       .filter((problem) => !redirectedProblemSlugs.has(problem.slug))
       .map((problem) => ({
