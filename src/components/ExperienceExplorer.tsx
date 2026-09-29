@@ -138,6 +138,7 @@ export function ExperienceExplorer({ initialSlug, products = experienceSeed }: E
   const visibleStats: LiveStats = liveStats || selected;
   const confidenceLabel = sampleLabel(selected, visibleStats, backendLive);
   const confidenceNote = sampleNote(selected, visibleStats, backendLive);
+  const hasOwnerData = visibleStats.ownershipCount > 0;
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -259,25 +260,36 @@ export function ExperienceExplorer({ initialSlug, products = experienceSeed }: E
           <span className={styles.demoBadge}>{confidenceLabel}</span>
         </div>
 
-        <div className={styles.stats}>
-          <div className={styles.stat}><strong>{visibleStats.ownershipCount}</strong><span>deduplicated owner reports</span></div>
-          <div className={styles.stat}><strong>{visibleStats.medianMonths} mo</strong><span>median reported ownership</span></div>
-          <div className={styles.stat}><strong>{visibleStats.issueRate}%</strong><span>reported at least one problem</span></div>
-          <div className={styles.stat}><strong>{visibleStats.wouldBuyAgain}%</strong><span>would buy again</span></div>
-        </div>
-
-        <div className={styles.notice}>{confidenceNote}</div>
-
-        <div className={styles.issueList}>
-          {visibleStats.commonIssues.length ? visibleStats.commonIssues.map((issue) => (
-            <div className={styles.issueRow} key={issue.label}>
-              <span>{issue.label}</span><span>{issue.reports} reports</span>
+        {hasOwnerData ? (
+          <>
+            <div className={styles.stats}>
+              <div className={styles.stat}><strong>{visibleStats.ownershipCount}</strong><span>deduplicated owner reports</span></div>
+              <div className={styles.stat}><strong>{visibleStats.medianMonths} mo</strong><span>median reported ownership</span></div>
+              <div className={styles.stat}><strong>{visibleStats.issueRate}%</strong><span>reported at least one problem</span></div>
+              <div className={styles.stat}><strong>{visibleStats.wouldBuyAgain}%</strong><span>would buy again</span></div>
             </div>
-          )) : <div className={styles.empty}>No recurring issue has enough reports yet.</div>}
-        </div>
+
+            <div className={styles.notice}>{confidenceNote}</div>
+
+            <div className={styles.issueList}>
+              {visibleStats.commonIssues.length ? visibleStats.commonIssues.map((issue) => (
+                <div className={styles.issueRow} key={issue.label}>
+                  <span>{issue.label}</span><span>{issue.reports} reports</span>
+                </div>
+              )) : <div className={styles.empty}>No recurring issue has enough reports yet.</div>}
+            </div>
+          </>
+        ) : (
+          <div className={styles.emptyData}>
+            <span className={styles.kicker}>Waiting for first-hand data</span>
+            <h3>No owner statistics yet.</h3>
+            <p>Percentages are hidden until at least one deduplicated owner report exists, so an empty sample is never presented as a 0% result.</p>
+            <a href="#add-experience">Add the first owner report ↓</a>
+          </div>
+        )}
       </section>
 
-      <form className={styles.formCard} onSubmit={submit}>
+      <form id="add-experience" className={styles.formCard} onSubmit={submit}>
         <div>
           <span className={styles.kicker}>Add one data point</span>
           <h3>Your normal use becomes useful data.</h3>
