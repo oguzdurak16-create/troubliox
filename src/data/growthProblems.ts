@@ -1393,84 +1393,119 @@ export const growthProblems: Problem[] = [
   },
   {
     "slug": "tv-hdmi-no-signal",
-    "title": "TV says HDMI no signal",
-    "shortTitle": "HDMI no signal on TV",
-    "summary": "The TV is on an HDMI input but does not detect usable video. A wrong input, sleeping source, cable fault, port issue, resolution mismatch, receiver, or handshake problem can cause the message.",
+    "title": "TV HDMI no signal or unsupported signal: input, cable and format checks",
+    "shortTitle": "HDMI no signal / unsupported signal",
+    "summary": "“No Signal”, “Unsupported Signal”, “Invalid Format”, and similar HDMI messages mean the TV is not receiving a video format it can display from the selected input. Check the source, cable, direct connection, resolution and refresh-rate path before assuming the TV input has failed.",
     "category": "TV & entertainment",
     "categorySlug": "tv-entertainment",
     "device": "Television HDMI input",
-    "updated": "2026-07-17",
-    "readTime": 4,
+    "updated": "2026-09-29",
+    "readTime": 5,
     "likelyCauses": [
-      "The wrong HDMI input is selected",
-      "The source device is off, asleep, or not outputting video",
-      "The HDMI cable, port, receiver, or adapter is failing",
-      "The source resolution or HDCP handshake is incompatible"
+      "The TV is set to a different HDMI input from the physical port being used",
+      "The source device is off, asleep, or has not completed its HDMI handshake",
+      "The HDMI cable, adapter, receiver, switch, or port is interrupting the signal path",
+      "The source is outputting a resolution, refresh rate, color mode, or HDMI format the TV or intermediate device does not support"
     ],
     "quickChecks": [
       {
-        "title": "Confirm the exact input number",
-        "detail": "Match the TV input to the physical port used by the cable.",
+        "title": "Match the selected input to the physical HDMI port",
+        "detail": "If the cable is in HDMI 2, select HDMI 2 on the TV and confirm the source device is powered on rather than asleep.",
         "level": "safe"
       },
       {
-        "title": "Wake and restart the source device",
-        "detail": "Power-cycle both the TV and source, then connect directly.",
+        "title": "Power-cycle both ends to renew the HDMI handshake",
+        "detail": "Turn off the TV and source, disconnect power briefly, then start the TV before the external device. This is a standard first check in current manufacturer guidance.",
         "level": "safe"
       },
       {
-        "title": "Test another HDMI cable and port",
-        "detail": "Bypass receivers, switches, and adapters for one test.",
+        "title": "Connect the source directly to the TV",
+        "detail": "Temporarily bypass an AV receiver, HDMI switch, capture device, dock, splitter, or adapter. If direct connection works, the intermediate device or its supported formats are the focus.",
         "level": "safe"
       },
       {
-        "title": "Reset source video output",
-        "detail": "Use the source device’s safe-mode or low-resolution procedure if the screen stays blank.",
+        "title": "Test another known-good HDMI cable and port",
+        "detail": "Keep the same source and output format while changing one variable at a time. High-bandwidth 4K/120 Hz modes require a cable and ports that support that mode.",
+        "level": "safe"
+      },
+      {
+        "title": "Lower the source video format if the TV says unsupported or invalid",
+        "detail": "Use the source device's safe-mode or display settings to select a resolution and refresh rate supported by the TV. Manufacturer guidance specifically links invalid or unsupported-format messages to incompatible source output.",
         "level": "caution"
       }
     ],
-    "decisionTitle": "What does the TV detect?",
+    "decisionTitle": "Which HDMI message or behavior do you see?",
     "observations": [
       {
-        "label": "The source appears briefly, then disappears",
-        "advice": "A cable, handshake, resolution, or power issue is likely."
+        "label": "TV says No Signal",
+        "advice": "Start with power, the selected input, cable seating, and direct connection. The TV may simply be receiving no usable signal."
       },
       {
-        "label": "Another source works on the same port",
-        "advice": "Focus on the original source device and its output settings."
+        "label": "TV says Unsupported Signal, Mode Not Supported, or Invalid Format",
+        "advice": "Focus on the source output resolution, refresh rate, HDMI format, and any receiver or adapter between the source and TV."
       },
       {
-        "label": "No device works on any HDMI port",
-        "advice": "The TV input board, settings, or power state may require service."
+        "label": "Picture appears directly but not through a receiver or switch",
+        "advice": "The intermediate device may not pass the source format, HDCP state, or required bandwidth."
+      },
+      {
+        "label": "Another source works on the same cable and port",
+        "advice": "The original source device and its video-output configuration are the stronger suspects."
       }
     ],
     "whenToStop": [
-      "A port is bent, burned, loose, or unusually hot",
-      "Opening the TV or source device would expose internal power sections"
+      "An HDMI port is bent, burned, loose, sparking, or unusually hot",
+      "The only remaining step requires opening the TV, receiver, or source device",
+      "A firmware or video-mode change cannot be completed with a stable visible picture"
     ],
     "faq": [
       {
-        "question": "Can an HDMI cable fail while still looking normal?",
-        "answer": "Yes. Internal conductors or shielding can fail without visible external damage."
+        "question": "What does Unsupported Signal or Invalid Format mean on a TV?",
+        "answer": "It usually means the source is sending a video format the TV cannot display on that input. Sony specifically documents INVALID FORMAT when a computer output resolution is unsupported, while Samsung recommends using an output resolution supported by both devices."
       },
       {
-        "question": "Why does no signal appear after changing resolution?",
-        "answer": "The source may be outputting a format the TV or receiver cannot display. Start the source in a safe or low-resolution mode."
+        "question": "Why does HDMI say No Signal even though the cable is connected?",
+        "answer": "A connected cable does not prove the source is awake, the correct input is selected, or a valid HDMI handshake completed. Test source power, input selection, direct connection, cable and port in that order."
+      },
+      {
+        "question": "What does HDMI connection not permitted mean?",
+        "answer": "Wording varies by device, but it can indicate the current HDMI video or protection handshake is not accepted somewhere in the chain. Bypass receivers or adapters for one test and use a video mode supported by both the source and TV before changing hardware."
       }
     ],
     "tags": [
       "tv",
       "hdmi",
       "no signal",
+      "unsupported signal",
+      "unsupported signal format",
+      "invalid format",
+      "hdmi connection not permitted",
+      "mode not supported",
       "input"
     ],
     "contentKind": "symptom",
     "brand": "HDMI",
     "brandSlug": "hdmi",
+    "aliases": [
+      "HDMI no signal",
+      "unsupported signal",
+      "unsupported signal format",
+      "invalid format",
+      "mode not supported",
+      "HDMI connection not permitted"
+    ],
     "sources": [
       {
-        "label": "HDMI Licensing Administrator: HDMI technology",
-        "url": "https://www.hdmi.org/"
+        "label": "Samsung Support: TV or projector HDMI error messages",
+        "url": "https://www.samsung.com/us/support/troubleshoot/TSG10002333/"
+      },
+      {
+        "label": "Sony Support: No picture when using HDMI",
+        "url": "https://www.sony.com/electronics/support/televisions-projectors-lcd-tvs-android-/kd-43x85j/articles/00407938"
+      },
+      {
+        "label": "Sony Support: Invalid Format from unsupported computer resolution",
+        "url": "https://www.sony.com/electronics/support/televisions-projectors-lcd-tvs/kdl-37l5000/articles/00022102"
       }
     ],
     "featured": true
