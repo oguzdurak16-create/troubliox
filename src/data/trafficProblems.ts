@@ -4875,5 +4875,118 @@ export const trafficProblems: Problem[] = [
       }
     ],
     "contentKind": "error-code"
+  },
+  {
+    "slug": "windows-printer-ipp-post-random-pages",
+    "title": "Windows printer randomly prints POST /ipp/print HTTP/1.1 or Keep-Alive pages",
+    "shortTitle": "Printer prints POST /ipp/print pages",
+    "summary": "Microsoft documented a Windows issue where some USB-connected dual-mode printers that support both USB Print and IPP over USB unexpectedly printed raw IPP headers and random characters. Pages often began with POST /ipp/print HTTP/1.1, Connection: Keep-Alive, or Windows Internet Print Provider. Microsoft resolved the known issue in later Windows updates.",
+    "category": "Computers & printers",
+    "categorySlug": "computers-printers",
+    "brand": "Microsoft",
+    "brandSlug": "microsoft",
+    "device": "Windows printer",
+    "updated": "2026-09-29",
+    "readTime": 5,
+    "likelyCauses": [
+      "The PC is still on an affected Windows build that contains the documented USB Print / IPP over USB issue",
+      "A dual-mode USB printer is receiving IPP protocol data as printable content instead of handling it as protocol traffic",
+      "Windows Update is incomplete, paused, managed, or missing the later fix that contains Microsoft's resolution",
+      "If the PC is already fully current, a separate driver, queue, port, spooler, or printer-firmware problem may be producing similar output"
+    ],
+    "quickChecks": [
+      {
+        "title": "Match the printed header before changing printer settings",
+        "detail": "If the unwanted page begins with POST /ipp/print HTTP/1.1, Connection: Keep-Alive, Content-Type: application/ipp, Windows Internet Print Provider, or Host: localhost, it matches the symptom Microsoft documented.",
+        "level": "safe"
+      },
+      {
+        "title": "Install current Windows updates",
+        "detail": "Microsoft resolved the known Windows 11 issue in updates released from KB5053657 onward. Install the latest cumulative update offered for your supported Windows version rather than removing security updates as a first-line fix.",
+        "level": "safe"
+      },
+      {
+        "title": "Restart Windows and power-cycle the printer once",
+        "detail": "After Windows Update completes, restart the PC fully, turn the printer off, reconnect it normally, and check whether the unsolicited pages return.",
+        "level": "safe"
+      },
+      {
+        "title": "If fully updated, inspect the printer queue and driver path",
+        "detail": "Confirm the printer uses the correct current manufacturer driver or supported Windows class driver and that there is not a duplicate or stale queue using an unexpected IPP port.",
+        "level": "caution"
+      },
+      {
+        "title": "Do not weaken print security or uninstall current updates blindly",
+        "detail": "Old forum workarounds can target historical builds and may remove security fixes. On managed PCs, use the organization's Windows Update and printer-management policy instead.",
+        "level": "stop"
+      }
+    ],
+    "decisionTitle": "Does the printed page match the historical Windows IPP bug?",
+    "observations": [
+      {
+        "label": "The page starts with POST /ipp/print and Windows Internet Print Provider",
+        "advice": "Check Windows Update history and install the latest supported cumulative update. This closely matches Microsoft's documented symptom."
+      },
+      {
+        "label": "The PC is fully updated but the raw pages continue",
+        "advice": "Do not assume the old Windows bug is still the cause. Inspect duplicate queues, port type, driver choice, printer firmware, and whether another PC reproduces it."
+      },
+      {
+        "label": "Only one managed PC or print server is affected",
+        "advice": "Compare its update level, printer queue, driver package, and print policy with a working device before changing organization-wide settings."
+      }
+    ],
+    "whenToStop": [
+      "The proposed fix requires removing current security updates or weakening Point and Print policy without administrator approval",
+      "The printer is managed by an organization and driver or Windows Update changes are centrally controlled",
+      "The printer starts producing abnormal heat, electrical odor, repeated hardware faults, or other symptoms unrelated to the documented IPP text issue"
+    ],
+    "faq": [
+      {
+        "question": "Why is my printer printing POST /ipp/print HTTP/1.1 and Keep-Alive text?",
+        "answer": "Microsoft documented a Windows issue affecting some USB-connected dual-mode printers where IPP protocol data was printed as raw text. The output could include POST /ipp/print HTTP/1.1, Connection: Keep-Alive, Content-Type: application/ipp, Windows Internet Print Provider, and Host: localhost."
+      },
+      {
+        "question": "Was the Windows Internet Print Provider random-page problem fixed?",
+        "answer": "Yes. Microsoft marked the known Windows 11 issue resolved in KB5053657, released March 25, 2025, and says later Windows updates include the resolution. The corresponding Windows 10 issue was also addressed in later servicing updates."
+      },
+      {
+        "question": "Should I roll back Windows to stop the random printer pages?",
+        "answer": "Not as the default fix now. Historical forum posts discussed rollbacks while the bug was active, but Microsoft's documented resolution is to install the later update containing the fix. If a current fully patched PC still has the symptom, investigate the queue, port, driver, and printer separately."
+      }
+    ],
+    "tags": [
+      "windows",
+      "printer",
+      "windows internet print provider",
+      "keep alive",
+      "post ipp print",
+      "application ipp",
+      "host localhost",
+      "random pages",
+      "usb printer",
+      "ipp over usb"
+    ],
+    "featured": true,
+    "aliases": [
+      "Windows Internet Print Provider Keep-Alive",
+      "POST /ipp/print HTTP/1.1",
+      "Connection Keep-Alive",
+      "Content-Type application/ipp",
+      "Host localhost printer",
+      "printer prints random IPP text"
+    ],
+    "appliesTo": "Windows PCs with USB-connected dual-mode printers; the documented Microsoft issue affected specific 2025 Windows update builds",
+    "sources": [
+      {
+        "label": "Microsoft Support: KB5053602 USB printer issue and resolution",
+        "url": "https://support.microsoft.com/en-us/servicing/os/windows-11/2025/03/march-11-2025-kb5053602-os-builds-22621-5039-and-22631-5039"
+      },
+      {
+        "label": "Microsoft Support: KB5053657 printer fix",
+        "url": "https://support.microsoft.com/en-us/servicing/os/windows-11/2025/03/march-25-2025-kb5053657-os-builds-22621-5126-and-22631-5126-preview"
+      }
+    ],
+    "contentKind": "symptom"
   }
 ];
