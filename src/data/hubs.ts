@@ -7,6 +7,7 @@ export type ContentHub = {
   title: string;
   description: string;
   intro: string;
+  diagnosticQuestions?: { question: string; answer: string }[];
   match: (problem: Problem) => boolean;
 };
 
@@ -120,9 +121,27 @@ export const issueHubs: ContentHub[] = [
   {
     slug: "not-connecting",
     name: "Not connecting",
-    title: "Problems that will not connect",
-    description: "Troubleshoot devices, apps, Wi-Fi, Bluetooth, printers, routers, and accounts that will not connect.",
-    intro: "Identify which link fails: device to accessory, device to router, router to provider, app to server, or account to verification service.",
+    title: "Device or app will not connect",
+    description: "Diagnose connection failures by separating the local device link, Wi-Fi or Bluetooth, router or internet path, app server, and account state.",
+    intro: "Do not treat every “failed to connect” message as the same fault. First identify which link fails: accessory pairing, local network, internet access, remote service, or account authentication.",
+    diagnosticQuestions: [
+      {
+        question: "Does the problem affect one device or every device?",
+        answer: "If every device fails on the same network, start with the router, modem, provider, or upstream service. If only one device fails, focus on that device's saved network, adapter, permissions, or app state.",
+      },
+      {
+        question: "Is the device connected locally but missing internet access?",
+        answer: "A Wi-Fi or Ethernet connection only proves the local link. Test another website or device before resetting the client because DNS, the router WAN, VPN, captive portal, or provider can still be failing.",
+      },
+      {
+        question: "Does only one app or website fail?",
+        answer: "The remote service, account session, DNS path, VPN, filtering, or app state becomes more likely than a full network outage. Preserve login and backup data before reinstalling.",
+      },
+      {
+        question: "Should I factory-reset the device first?",
+        answer: "No. Compare another device, network, app, or browser first. Use the smallest reversible reset that matches the failed layer before erasing settings.",
+      },
+    ],
     match: (problem) => containsAny(problem, ["not connect", "not connecting", "connected no internet", "offline", "not found", "stuck on connecting", "network path"]),
   },
   {
