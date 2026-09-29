@@ -26,6 +26,7 @@ function addEnglishAlternates(entry: MetadataRoute.Sitemap[number]): MetadataRou
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const updated = new Date("2026-09-06");
+  const issueHubUpdated = new Date("2026-09-29");
   const modelDirectoryUpdated = new Date("2026-09-15");
   const [communityModels, experienceProducts, publishedDemand] = await Promise.all([
     listIndexableModelExperiences(5000).catch(() => []),
@@ -75,7 +76,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...resetGuides.map((guide) => ({ url: `${SITE_URL}/reset/${guide.slug}`, lastModified: updated, changeFrequency: "monthly" as const, priority: 0.84 })),
     ...modelNumberGuides.map((guide) => ({ url: `${SITE_URL}/model-number/${guide.slug}`, lastModified: updated, changeFrequency: "monthly" as const, priority: 0.82 })),
     ...deviceHubs.map((hub) => ({ url: `${SITE_URL}/devices/${hub.slug}`, lastModified: updated, changeFrequency: "weekly" as const, priority: 0.9 })),
-    ...issueHubs.map((hub) => ({ url: `${SITE_URL}/issues/${hub.slug}`, lastModified: updated, changeFrequency: "weekly" as const, priority: 0.85 })),
+    ...issueHubs.map((hub) => ({ url: `${SITE_URL}/issues/${hub.slug}`, lastModified: hub.slug === "not-connecting" ? issueHubUpdated : updated, changeFrequency: "weekly" as const, priority: 0.85 })),
     ...categories.map((category) => ({ url: `${SITE_URL}/categories/${category.slug}`, lastModified: updated, changeFrequency: "weekly" as const, priority: 0.75 })),
     ...brands.map((brand) => ({ url: `${SITE_URL}/brands/${brand.slug}`, lastModified: updated, changeFrequency: "weekly" as const, priority: 0.8 })),
     ...allProblems
