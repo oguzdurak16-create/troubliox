@@ -260,7 +260,7 @@ export default async function ProblemPage({ params }: Props) {
     headline: opportunitySeo?.title || problem.title,
     description: opportunitySeo?.description || problem.summary,
     dateModified: problem.updated,
-    datePublished: problem.updated,
+    ...(problem.published ? { datePublished: problem.published } : {}),
     mainEntityOfPage: `${SITE_URL}/problems/${problem.slug}`,
     author: { "@type": "Organization", name: SITE_NAME, url: `${SITE_URL}/about` },
     publisher: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
