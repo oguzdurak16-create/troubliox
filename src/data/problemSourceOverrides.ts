@@ -33,7 +33,7 @@ function addSource(problem: Problem, source: { label: string; url: string }): Pr
   if ((problem.sources || []).some((existing) => existing.url === source.url)) return problem;
   return {
     ...problem,
-    updated: "2026-09-03",
+    updated: problem.updated >= "2026-09-03" ? problem.updated : "2026-09-03",
     sources: [...(problem.sources || []), source],
   };
 }
