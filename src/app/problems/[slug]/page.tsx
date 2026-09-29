@@ -96,11 +96,11 @@ const SEO_OPPORTUNITY_OVERRIDES: Record<string, OpportunitySeoOverride> = {
     ],
   },
   "bosch-dishwasher-e90-error": {
-    title: "Bosch Dishwasher E90 Error: Meaning, Reset and Safe Checks",
+    title: "Bosch Dishwasher E90 Error: Verify the Model Before Diagnosing",
     description:
-      "Bosch dishwasher showing E90? Learn what the control-electronics fault can mean, which safe reset and external checks to try, and when to stop and call service.",
+      "Bosch dishwasher showing E90? Do not assume a universal meaning. Confirm the full E-Nr, exact display and model-specific Bosch documentation before resetting or ordering parts.",
     quickAnswer:
-      "Bosch dishwasher E90 generally points to a control-electronics fault on supported models. Power the dishwasher off, leave it disconnected briefly, then restart once. If E90 returns, avoid internal electrical work and verify the exact E-Nr with the Bosch manual or service guidance.",
+      "Do not assign a universal Bosch dishwasher meaning to E90 without the full E-Nr. Bosch error codes can vary by product family and region, and E90 is not consistently defined across dishwasher documentation. Record the full model/E-Nr, confirm the display really reads E90, try only a normal power restart, then use the model-specific manual or Bosch support if it returns.",
     priorityLinks: [
       { href: "/problems/bosch-dishwasher-e10-error", label: "Bosch dishwasher E10 error" },
       { href: "/problems/bosch-dishwasher-e26-error", label: "Bosch dishwasher E26 error" },
