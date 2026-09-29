@@ -28,7 +28,7 @@ const SEO_OPPORTUNITY_OVERRIDES: Record<string, OpportunitySeoOverride> = {
     description:
       "Windows shows printer error 0x00000214? Check the shared printer path, host reachability and correct driver before using registry or security-policy workarounds.",
     quickAnswer:
-      "When 0x00000214 appears while connecting to a shared Windows printer, first confirm the printer works on the host PC, verify the \\computer_name\\printer_name share path, and install the correct current driver. On managed networks, stop before registry or Point and Print policy bypasses and involve the administrator.",
+      "When 0x00000214 appears while connecting to a shared Windows printer, first confirm the printer works on the host PC, verify the \\\\computer_name\\printer_name share path, and install the correct current driver. On managed networks, stop before registry or Point and Print policy bypasses and involve the administrator.",
     priorityLinks: [
       { href: "/devices/printers", label: "All printer troubleshooting guides" },
       { href: "/issues/not-printing", label: "Printer not printing" },
