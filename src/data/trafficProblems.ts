@@ -4763,5 +4763,117 @@ export const trafficProblems: Problem[] = [
       "cellular"
     ],
     "contentKind": "symptom"
+  },
+  {
+    "slug": "windows-printer-error-0x00000214",
+    "title": "Windows printer error 0x00000214: cannot connect to a shared printer",
+    "shortTitle": "Windows printer error 0x00000214",
+    "summary": "When 0x00000214 appears while adding a shared or network printer, the failure is commonly in the printer connection or driver-install path. Confirm the printer share and network first, then reinstall it using current Windows printer guidance instead of applying registry workarounds.",
+    "category": "Computers & printers",
+    "categorySlug": "computers-printers",
+    "brand": "Microsoft",
+    "brandSlug": "microsoft",
+    "device": "Windows printer",
+    "updated": "2026-09-29",
+    "readTime": 5,
+    "likelyCauses": [
+      "The shared printer is not configured correctly on the host Windows PC",
+      "The client cannot reach the host by computer name or IP address",
+      "Windows cannot find or install a suitable printer driver package",
+      "A managed-network policy, credentials requirement, or print-server configuration blocks the connection"
+    ],
+    "quickChecks": [
+      {
+        "title": "Confirm the printer works on the host PC",
+        "detail": "Before troubleshooting the client, make sure the printer is installed, online, and able to print from the Windows PC that shares it.",
+        "level": "safe"
+      },
+      {
+        "title": "Verify sharing and the network profile",
+        "detail": "On a trusted home or office network, confirm printer sharing and network discovery are enabled as required by Microsoft guidance.",
+        "level": "safe"
+      },
+      {
+        "title": "Add the shared printer manually",
+        "detail": "Use Windows Settings and enter the shared path such as \\computer_name\\printer_name. Microsoft also recommends trying the host IP address if the computer name fails.",
+        "level": "safe"
+      },
+      {
+        "title": "Install or refresh the correct printer driver",
+        "detail": "Use Windows Update or the printer manufacturer's current driver guidance. Do not install an unrelated architecture or model driver just to bypass the error.",
+        "level": "caution"
+      },
+      {
+        "title": "Stop before policy or registry bypasses",
+        "detail": "On work, school, or print-server environments, administrator policies may control Point and Print. Escalate to the administrator rather than weakening printer security settings.",
+        "level": "stop"
+      }
+    ],
+    "decisionTitle": "Where does 0x00000214 occur?",
+    "observations": [
+      {
+        "label": "The printer works on the host but not the client",
+        "advice": "Focus on the share path, client driver, credentials, and Windows printer installation."
+      },
+      {
+        "label": "The host cannot print either",
+        "advice": "Fix the printer or host installation first; the shared connection is not the primary problem."
+      },
+      {
+        "label": "Several managed PCs fail",
+        "advice": "A print-server driver package or administrator policy is more likely than a single-PC fault."
+      }
+    ],
+    "whenToStop": [
+      "The network is managed by an organization and policy changes require administrator approval",
+      "A proposed fix requires disabling security controls or installing an untrusted driver",
+      "The printer driver package is unsigned, unknown, or does not match the printer architecture"
+    ],
+    "faq": [
+      {
+        "question": "What is Windows printer error 0x00000214?",
+        "answer": "In printer-connection reports hosted by Microsoft, 0x00000214 appears when Windows cannot complete a shared-printer connection, often around driver discovery or installation. Treat the context of the error as important rather than assuming the numeric code identifies one failed part."
+      },
+      {
+        "question": "Should I edit the registry to fix 0x00000214?",
+        "answer": "Not as a first step. Current Microsoft guidance starts with the printer share, network reachability, manual printer installation, and correct driver path. Managed Point and Print policy changes belong with an administrator."
+      },
+      {
+        "question": "Can I add the printer by IP instead?",
+        "answer": "For supported network printers, Windows can add printers manually and Microsoft recommends trying the host IP address when a shared printer name does not resolve. Follow the printer manufacturer's connection method for the exact model."
+      }
+    ],
+    "tags": [
+      "windows",
+      "printer",
+      "0x00000214",
+      "shared printer",
+      "network printer",
+      "cannot connect to printer",
+      "printer driver"
+    ],
+    "featured": false,
+    "errorCode": "0x00000214",
+    "aliases": [
+      "0x00000214",
+      "operation failed with error 0x00000214"
+    ],
+    "appliesTo": "Windows 11 and Windows 10 shared or network-printer connection scenarios",
+    "modelNote": "This guide is scoped to 0x00000214 shown while adding or connecting to a Windows printer. The same hexadecimal value can appear in unrelated software contexts.",
+    "sources": [
+      {
+        "label": "Microsoft Support: Fix shared printer connection problems in Windows",
+        "url": "https://support.microsoft.com/en-us/windows/hardware/printer/fix-shared-printer-connection-problems-in-windows"
+      },
+      {
+        "label": "Microsoft Support: Add or install a printer in Windows",
+        "url": "https://support.microsoft.com/en-us/windows/hardware/printer/add-or-install-a-printer-in-windows"
+      },
+      {
+        "label": "Microsoft Q&A: Printer connection error 0x00000214",
+        "url": "https://learn.microsoft.com/en-us/answers/questions/2689207/problem-with-printer-connection-error-0x00000214"
+      }
+    ],
+    "contentKind": "error-code"
   }
 ];
