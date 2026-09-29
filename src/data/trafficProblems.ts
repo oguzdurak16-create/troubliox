@@ -4795,7 +4795,7 @@ export const trafficProblems: Problem[] = [
       },
       {
         "title": "Add the shared printer manually",
-        "detail": "Use Windows Settings and enter the shared path such as \\computer_name\\printer_name. Microsoft also recommends trying the host IP address if the computer name fails.",
+        "detail": "Use Windows Settings and enter the shared path such as \\\\computer_name\\printer_name. Microsoft also recommends trying the host IP address if the computer name fails.",
         "level": "safe"
       },
       {
