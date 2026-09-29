@@ -60,6 +60,10 @@ export function validateProblems(items: Problem[]): Problem[] {
     invariant(problem.whenToStop.length >= 2, `${problem.slug}: at least 2 stop conditions are required`);
     invariant(problem.faq.length >= 2, `${problem.slug}: at least 2 FAQ entries are required`);
     invariant(/^\d{4}-\d{2}-\d{2}$/.test(problem.updated), `${problem.slug}: invalid updated date`);
+    if (problem.published) {
+      invariant(/^\d{4}-\d{2}-\d{2}$/.test(problem.published), `${problem.slug}: invalid published date`);
+      invariant(problem.published <= problem.updated, `${problem.slug}: published date cannot be after updated date`);
+    }
 
     if (problem.contentKind === "error-code") {
       invariant(Boolean(problem.errorCode), `${problem.slug}: error-code guide is missing errorCode`);
