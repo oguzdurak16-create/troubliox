@@ -23,6 +23,18 @@ type OpportunitySeoOverride = {
 };
 
 const SEO_OPPORTUNITY_OVERRIDES: Record<string, OpportunitySeoOverride> = {
+  "windows-printer-ipp-post-random-pages": {
+    title: "Printer Prints POST /ipp/print or Keep-Alive Pages: Windows Fix",
+    description:
+      "Printer randomly prints POST /ipp/print HTTP/1.1, Keep-Alive or Windows Internet Print Provider text? Microsoft documented and fixed this Windows USB/IPP issue.",
+    quickAnswer:
+      "If the unwanted page begins with POST /ipp/print HTTP/1.1, Connection: Keep-Alive, Content-Type: application/ipp, Windows Internet Print Provider, or Host: localhost, it matches a Windows USB/IPP symptom Microsoft documented. Install current Windows updates first; the known issue was resolved in later servicing updates. If a fully updated PC still does it, then check the queue, port and driver rather than assuming the historical bug remains.",
+    priorityLinks: [
+      { href: "/devices/printers", label: "All printer troubleshooting guides" },
+      { href: "/issues/not-printing", label: "Printer not printing" },
+      { href: "/problems/windows-printer-error-0x00000214", label: "Windows printer error 0x00000214" },
+    ],
+  },
   "windows-printer-error-0x00000214": {
     title: "Windows Printer Error 0x00000214: Cannot Connect to Shared Printer",
     description:
