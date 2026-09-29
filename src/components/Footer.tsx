@@ -30,6 +30,8 @@ export function Footer() {
           <Link href="/error-codes">Error codes</Link>
           <Link href="/categories">Categories</Link>
           <Link href="/brands">Brands</Link>
+          <Link href="/experience">Product experience</Link>
+          <Link href="/models">Community model pages</Link>
           <a href="/feed.xml">RSS updates</a>
         </div>
         <div>
