@@ -107,6 +107,30 @@ const SEO_OPPORTUNITY_OVERRIDES: Record<string, OpportunitySeoOverride> = {
       { href: "/error-codes/brands/samsung-washing-machine", label: "All Samsung washer error codes" },
     ],
   },
+  "fiber-router-los-light-red": {
+    title: "Red LOS Light on Fiber Modem / ONT: What It Means",
+    description:
+      "Red or blinking LOS on a fiber modem or ONT usually means loss of optical signal. Check visible cable routing safely, avoid touching the fiber end, and know when to call the provider.",
+    quickAnswer:
+      "A red or flashing LOS light usually means the ONT is not receiving a usable optical signal. Do not change Wi-Fi settings or unplug the fiber connector first. Check only the visible cable route, restart the ONT once if your provider permits it, and contact the provider if LOS remains red.",
+    priorityLinks: [
+      { href: "/devices/routers-wifi", label: "Router and Wi-Fi troubleshooting" },
+      { href: "/issues/not-connecting", label: "Connection problems" },
+      { href: "/problems/wifi-connected-no-internet", label: "Wi-Fi connected but no internet" },
+    ],
+  },
+  "dishwasher-not-draining": {
+    title: "Dishwasher Not Draining: Filter, Hose & Pump Checks",
+    description:
+      "Dishwasher has water left in the bottom? Check the drain cycle, removable filter, hose, air gap or disposer connection before assuming the drain pump has failed.",
+    quickAnswer:
+      "If a dishwasher will not drain, first run one cancel/drain attempt and listen for the pump. Then check the removable filter and visible drain path. A humming pump with no water movement points more toward a blockage or restriction; a silent pump after safe external checks may need service.",
+    priorityLinks: [
+      { href: "/issues/not-draining", label: "All not-draining guides" },
+      { href: "/devices/dishwashers", label: "Dishwasher troubleshooting" },
+      { href: "/error-codes/dishwashers", label: "Dishwasher error codes" },
+    ],
+  },
   "netflix-black-screen-with-sound": {
     title: "Netflix Black Screen With Sound: TV and HDMI Fixes",
     description:
