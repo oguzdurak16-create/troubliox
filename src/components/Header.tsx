@@ -7,8 +7,6 @@ export function Header() {
       <div className="container header-inner">
         <Logo />
         <nav className="main-nav" aria-label="Primary navigation">
-          <Link href="/experience">Experience</Link>
-          <Link href="/models">Models</Link>
           <Link href="/decoder">Decoder</Link>
           <Link href="/reset">Reset</Link>
           <Link href="/error-codes">Error codes</Link>
