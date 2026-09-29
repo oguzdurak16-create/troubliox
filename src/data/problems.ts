@@ -20,6 +20,7 @@ export type Problem = {
   brandSlug?: string;
   device: string;
   updated: string;
+  published?: string;
   readTime: number;
   likelyCauses: string[];
   quickChecks: Step[];
