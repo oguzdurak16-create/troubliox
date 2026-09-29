@@ -19,12 +19,12 @@ export default function HomePage() {
   const washerCodes = errorCodes.filter((problem) => problem.device === "Washing machine").length;
   const dishwasherCodes = errorCodes.filter((problem) => problem.device === "Dishwasher").length;
   const searchDemandPriority = [
-    "bosch-dishwasher-e90-error",
-    "whirlpool-washer-rl-error",
-    "bosch-washer-e29-f29-error",
-    "samsung-washer-5d-error",
-    "netflix-black-screen-with-sound",
-    "lg-washer-ff-error",
+    "samsung-washer-5c-5e-error",
+    "samsung-washer-dc-de-error",
+    "samsung-washer-4c2-error",
+    "bosch-dishwasher-e31-error",
+    "fiber-router-los-light-red",
+    "chrome-dns-probe-finished-nxdomain",
   ];
   const searchDemandGuides = problems
     .filter((problem) => searchDemandPriority.includes(problem.slug))
@@ -85,7 +85,7 @@ export default function HomePage() {
 
       <section className="section-tight"><div className="container"><div className="section-heading"><div><span className="eyebrow">Free troubleshooting tools</span><h2>Use the fastest route to the correct guide.</h2></div><p>Decode the display, find the exact model, or choose the least destructive reset before changing parts or erasing settings.</p></div><div className="home-tool-grid"><Link className="home-tool-card" href="/decoder"><span>Exact code lookup</span><h3>Error code decoder</h3><p>Filter by brand and device, then prioritize an exact display-code match.</p><strong>Decode a code →</strong></Link><Link className="home-tool-card" href="/model-number"><span>Product identification</span><h3>Model number finder</h3><p>Locate model, product-code, and hardware-revision labels without exposing private serial data.</p><strong>Find the label →</strong></Link><Link className="home-tool-card" href="/reset"><span>Data-loss prevention</span><h3>Reset assistant</h3><p>Choose between restart, power cycle, network reset, settings reset, and factory reset.</p><strong>Choose a safe reset →</strong></Link></div></div></section>
 
-      <section className="section section-dark"><div className="container"><div className="section-heading"><div><span className="eyebrow">Current search demand</span><h2>Exact appliance codes people are searching now.</h2></div><p>These pages answer the full query directly, distinguish easily confused displays, and link back to official manufacturer support.</p></div><div className="problem-grid">{searchDemandGuides.map((problem) => <ProblemCard key={problem.slug} problem={problem} />)}</div></div></section>
+      <section className="section section-dark"><div className="container"><div className="section-heading"><div><span className="eyebrow">Current search demand</span><h2>Troubleshooting pages already earning search visibility.</h2></div><p>These pages are prioritized from current Search Console visibility, then strengthened with exact-code distinctions and official support sources.</p></div><div className="problem-grid">{searchDemandGuides.map((problem) => <ProblemCard key={problem.slug} problem={problem} />)}</div></div></section>
 
       <section className="section"><div className="container"><div className="section-heading"><div><span className="eyebrow">Troubleshooting library</span><h2>{problemStats.total} guides across appliances, Windows, printers, Wi-Fi, phones, and apps.</h2></div><p>Search exact error codes or start from a visible symptom. Every guide prioritizes a direct answer, safe checks, and clear stop conditions.</p></div><div className="error-hub-grid hub-grid-three"><Link className="error-hub-card" href="/error-codes/washing-machines"><span className="error-hub-count">{washerCodes}</span><h3>Washing machine codes</h3><p>Water, drain, load balance, doors, motors, heaters, sensors, and controls.</p><strong>Browse washer codes →</strong></Link><Link className="error-hub-card" href="/error-codes/dishwashers"><span className="error-hub-count">{dishwasherCodes}</span><h3>Dishwasher codes</h3><p>Filling, draining, leaks, circulation, heating, drying, and control faults.</p><strong>Browse dishwasher codes →</strong></Link><Link className="error-hub-card" href="/symptoms"><span className="error-hub-count">{problemStats.symptoms}</span><h3>Symptom guides</h3><p>No error display? Diagnose by sound, timing, water movement, startup, leaks, and visible behavior.</p><strong>Browse symptoms →</strong></Link></div></div></section>
 
