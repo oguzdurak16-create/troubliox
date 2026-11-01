@@ -32,6 +32,7 @@ export function SearchBox({ compact = false, initialValue = "" }: { compact?: bo
   const [activeIndex, setActiveIndex] = useState(-1);
   const router = useRouter();
   const rootRef = useRef<HTMLFormElement>(null);
+  const [popup, setPopup] = useState({ above: false, maxHeight: 480 });
 
   useEffect(() => {
     function closeOnOutsideClick(event: MouseEvent) {
@@ -56,6 +57,36 @@ export function SearchBox({ compact = false, initialValue = "" }: { compact?: bo
       .slice(0, compact ? 5 : 6)
       .map((item) => item.problem);
   }, [compact, index, query]);
+
+  useEffect(() => {
+    if (!open || !suggestions.length) return;
+    const viewport = window.visualViewport;
+    let frame = 0;
+    const measure = () => {
+      const rect = rootRef.current?.getBoundingClientRect();
+      if (!rect) return;
+      const top = viewport?.offsetTop || 0;
+      const headerBottom = document.querySelector('header')?.getBoundingClientRect().bottom || 0;
+      const below = Math.max(48, top + (viewport?.height || innerHeight) - rect.bottom - 12);
+      const above = Math.max(0, rect.top - Math.max(top, headerBottom) - 12);
+      const opensAbove = below < 140 && above > below;
+      const maxHeight = Math.floor(Math.min(480, opensAbove ? above : below));
+      setPopup((previous) => previous.above === opensAbove && previous.maxHeight === maxHeight ? previous : { above: opensAbove, maxHeight });
+    };
+    const schedule = () => { cancelAnimationFrame(frame); frame = requestAnimationFrame(measure); };
+    measure();
+    viewport?.addEventListener('resize', schedule);
+    viewport?.addEventListener('scroll', schedule);
+    window.addEventListener('resize', schedule);
+    window.addEventListener('scroll', schedule, true);
+    return () => {
+      cancelAnimationFrame(frame);
+      viewport?.removeEventListener('resize', schedule);
+      viewport?.removeEventListener('scroll', schedule);
+      window.removeEventListener('resize', schedule);
+      window.removeEventListener('scroll', schedule, true);
+    };
+  }, [open, suggestions.length]);
 
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -107,7 +138,7 @@ export function SearchBox({ compact = false, initialValue = "" }: { compact?: bo
       />
       <button type="submit">Find the cause</button>
       {open && suggestions.length ? (
-        <div className="search-autocomplete" id={compact ? "search-suggestions-compact" : "search-suggestions"} role="listbox">
+        <div style={{ maxHeight: popup.maxHeight }} data-placement={popup.above ? 'above' : 'below'} className="search-autocomplete" id={compact ? "search-suggestions-compact" : "search-suggestions"} role="listbox">
           {suggestions.map((item, itemIndex) => (
             <Link
               id={`search-suggestion-${compact ? "compact-" : ""}${itemIndex}`}

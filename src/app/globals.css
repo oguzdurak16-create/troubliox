@@ -658,3 +658,13 @@ img, svg { max-width: 100%; }
  .consent-actions { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 6px; }
  .consent-actions .button { min-height: 44px; padding: 8px 6px; font-size: 11px; white-space: normal; text-align: center; }
 }
+
+html { -webkit-text-size-adjust:100%; text-size-adjust:100%; }
+.mobile-menu nav { max-height:calc(var(--visual-viewport-height,100dvh) - 100px); }
+@media(max-width:720px) and (max-height:450px) {
+ .hero { padding-top:18px; }
+ .hero-copy h1 { font-size:32px; margin:12px 0; }
+ .hero-copy > p { font-size:15px; margin-bottom:16px; }
+ .consent-banner { max-height:calc(var(--visual-viewport-height,100dvh) - 80px); }
+}
+.search-autocomplete[data-placement='above'] { top:auto; bottom:calc(100% + 9px); }

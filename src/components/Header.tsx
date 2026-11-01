@@ -1,10 +1,12 @@
 "use client";
 
+import { useViewportMetrics } from '@/lib/useViewportMetrics';
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { Logo } from "@/components/Logo";
 
 export function Header() {
+  useViewportMetrics();
   const menuRef = useRef<HTMLDetailsElement>(null);
   useEffect(() => {
     const dismiss = (event: PointerEvent) => {
