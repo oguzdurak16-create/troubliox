@@ -93,7 +93,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const entries: MetadataRoute.Sitemap = [
     ...pages.map((path) => ({
       url: `${SITE_URL}${path}`,
-      lastModified: aggregatePages.has(path) ? latestProblemUpdated : updated,
+      lastModified: path === "/editorial-policy" ? new Date("2026-11-01") : aggregatePages.has(path) ? latestProblemUpdated : updated,
       changeFrequency: path === "" || highPriorityPages.includes(path) || path.startsWith("/error-codes") || path.startsWith("/symptoms") ? "weekly" as const : "monthly" as const,
       priority: path === "" ? 1 : highPriorityPages.includes(path) ? 0.95 : path.startsWith("/error-codes") || path.startsWith("/symptoms") ? 0.9 : 0.6,
     })),

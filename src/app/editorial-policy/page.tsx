@@ -22,6 +22,9 @@ export default function EditorialPolicyPage() {
         <p>Guides do not instruct unqualified users to open mains-powered equipment, handle refrigerant, bypass interlocks, work near live circuits, or continue when heat, smoke, leaks, swelling, chemical smell, or structural damage is present.</p>
         <h2>Updates and corrections</h2>
         <p>Pages include a review date. Material changes to the diagnosis, safety path, sources, structured data, or internal links count as significant updates. Corrections should be made promptly and should not preserve outdated advice for traffic reasons.</p>
+        <h2>Evergreen guides and version scope</h2>
+        <p>A recurring problem keeps one canonical guide instead of getting a new page for each year. The exact model, region, firmware or operating-system version defines where advice applies. A historical software incident must be labelled with its affected versions and resolution; its old workaround must not be presented as a universal current fix.</p>
+        <p>Publication and review dates describe real editorial work. They must not be advanced merely to make a guide appear fresh. New official documentation, safety notices or evidence that a diagnostic step fails are reasons to re-evaluate the relevant guide.</p>
         <div className="callout"><strong>Found a problem?</strong><p>Use the problem submission page and include the exact guide title, model context, and the official document that conflicts with the page.</p><Link href="/submit-problem">Submit a correction or missing problem →</Link></div>
         <h2>User feedback</h2>
         <p>Helpful and not-yet-helpful votes are collected as aggregate analytics after consent. They are prioritization signals, not proof that a diagnosis is correct for every model.</p>
