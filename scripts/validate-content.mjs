@@ -1,3 +1,4 @@
+import assert from 'node:assert/strict';
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -59,6 +60,30 @@ try {
   const modelData = require(path.join(outputDirectory, "modelNumberGuides.js"));
   const resetData = require(path.join(outputDirectory, "resetGuides.js"));
   const problems = data.problems;
+  // Independent facts from the GE WBVH6240-family service table, pp. 53–55.
+  // These prevent the old door-lock template from returning on drive codes.
+  const reviewedGeMeanings = {
+    e22: /fill timeout/i, e23: /flood.protect/i,
+    e30: /pump.*feedback/i, e31: /drain timeout/i,
+    e38: /dispenser.*selection/i, e39: /dispenser.*timeout/i,
+    e42: /motor.*current/i, e43: /inverter.*fault/i,
+    e45: /motor.*current/i, e46: /motor.*temperature/i,
+    e47: /heat.sink.*temperature/i, e48: /open.*motor.*phase/i,
+    e49: /motor.*power/i, e52: /wake.up.*communication/i,
+    e53: /software buffer/i, e54: /no motor response/i,
+    e57: /checksum/i, e58: /communication/i,
+    e60: /door.lock switch/i,
+  };
+  for (const [code, meaning] of Object.entries(reviewedGeMeanings)) {
+    const problem = problems.find((row) => row.slug === `ge-appliances-washer-${code}-error`);
+    assert.ok(problem && meaning.test(problem.title), `${code}: reviewed code meaning must survive all overrides`);
+    assert.ok(problem.appliesTo?.includes('WBVH6240'), `${code}: legacy model scope is required`);
+    assert.ok(problem.sources?.some((source) => source.url.includes('manual/739668/')), `${code}: cite the inspected model table`);
+    if (['e42','e43','e45','e46','e47','e48','e49'].includes(code)) {
+      assert.ok(!/door|lock/i.test(problem.title), `${code}: drive fault must not become a door-lock diagnosis`);
+      assert.ok(!problem.tags.some((tag) => /door.lock|door.switch/i.test(tag)), `${code}: stale diagnostic search metadata`);
+    }
+  }
   const modelNumberGuides = modelData.modelNumberGuides;
   const resetGuides = resetData.resetGuides;
   const sources = problems.flatMap((problem) => problem.sources || []);

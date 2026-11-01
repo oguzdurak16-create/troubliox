@@ -1,4 +1,5 @@
 import type { Problem } from "./problems";
+import { geWasherRevisions } from "./problemContentOverridesGeWasher";
 
 const GE_H2O_SOURCE = {
   label: "GE Appliances — Front Load Washer H2O Supply Error",
@@ -6,6 +7,7 @@ const GE_H2O_SOURCE = {
 };
 
 const overrides: Record<string, Partial<Problem>> = {
+  ...geWasherRevisions,
   "ge-appliances-dishwasher-c1-error": {
     "updated": "2026-11-01",
     "appliesTo": "GE dishwasher model families whose own manual lists the displayed code",
