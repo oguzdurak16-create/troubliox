@@ -83,6 +83,12 @@ const overrides: Record<string, Partial<Problem>> = {
       "Water is leaking, the breaker trips, or there is an electrical smell",
       "The next step requires opening panels, defeating a float or lock, or testing internal wiring",
       "The code returns after the permitted external checks"
+    ],
+    "tags": [
+      "dishwasher",
+      "c1",
+      "GE Appliances",
+      "drain pump-out exceeds two minutes"
     ]
   },
   "ge-appliances-dishwasher-c2-error": {
@@ -158,6 +164,12 @@ const overrides: Record<string, Partial<Problem>> = {
       "Water is leaking, the breaker trips, or there is an electrical smell",
       "The next step requires opening panels, defeating a float or lock, or testing internal wiring",
       "The code returns after the permitted external checks"
+    ],
+    "tags": [
+      "dishwasher",
+      "c2",
+      "GE Appliances",
+      "total pump-out exceeds seven minutes"
     ]
   },
   "ge-appliances-dishwasher-c3-error": {
@@ -233,6 +245,12 @@ const overrides: Record<string, Partial<Problem>> = {
       "Water is leaking, the breaker trips, or there is an electrical smell",
       "The next step requires opening panels, defeating a float or lock, or testing internal wiring",
       "The code returns after the permitted external checks"
+    ],
+    "tags": [
+      "dishwasher",
+      "c3",
+      "GE Appliances",
+      "the dishwasher will not drain"
     ]
   },
   "ge-appliances-dishwasher-ftd-error": {
@@ -323,6 +341,12 @@ const overrides: Record<string, Partial<Problem>> = {
       "Water is leaking, the breaker trips, or there is an electrical smell",
       "The next step requires opening panels, defeating a float or lock, or testing internal wiring",
       "The code returns after the permitted external checks"
+    ],
+    "tags": [
+      "dishwasher",
+      "FTD / F56",
+      "GE Appliances",
+      "failure to drain"
     ]
   },
   "ge-appliances-dishwasher-c5-error": {
@@ -394,6 +418,12 @@ const overrides: Record<string, Partial<Problem>> = {
       "Water is leaking, the breaker trips, or there is an electrical smell",
       "The next step requires opening panels, defeating a float or lock, or testing internal wiring",
       "The code returns after the permitted external checks"
+    ],
+    "tags": [
+      "dishwasher",
+      "c5",
+      "GE Appliances",
+      "pump-out time is too short"
     ]
   },
   "ge-appliances-dishwasher-c7-error": {
@@ -465,6 +495,12 @@ const overrides: Record<string, Partial<Problem>> = {
       "Water is leaking, the breaker trips, or there is an electrical smell",
       "The next step requires opening panels, defeating a float or lock, or testing internal wiring",
       "The code returns after the permitted external checks"
+    ],
+    "tags": [
+      "dishwasher",
+      "c7",
+      "GE Appliances",
+      "water-temperature sensor circuit fault"
     ]
   },
   "ge-appliances-washer-h2o-supply-error": {

@@ -73,7 +73,13 @@ const overrides: Record<string, Partial<Problem>> = {
       "A procedure requires internal access, forcing moving parts or bypassing protection",
       "The exact display cannot be matched to the model documentation"
     ],
-    "appliesTo": "LG dishwashers; exact display and model manual must be matched"
+    "appliesTo": "LG dishwashers; exact display and model manual must be matched",
+    "tags": [
+      "dishwasher",
+      "ne",
+      "LG",
+      "check load interference before service"
+    ]
   },
   "lg-dishwasher-ne1-error": {
     "title": "LG dishwasher nE1: confirm the model-specific code",
@@ -147,7 +153,14 @@ const overrides: Record<string, Partial<Problem>> = {
       "A procedure requires internal access, forcing moving parts or bypassing protection",
       "The exact display cannot be matched to the model documentation"
     ],
-    "appliesTo": "LG dishwashers; exact display and model manual must be matched"
+    "appliesTo": "LG dishwashers; exact display and model manual must be matched",
+    "tags": [
+      "dishwasher",
+      "ne1",
+      "LG",
+      "exact model manual",
+      "code confirmation"
+    ]
   },
   "lg-dishwasher-ne2-error": {
     "title": "LG dishwasher nE2: confirm the model-specific code",
@@ -221,7 +234,14 @@ const overrides: Record<string, Partial<Problem>> = {
       "A procedure requires internal access, forcing moving parts or bypassing protection",
       "The exact display cannot be matched to the model documentation"
     ],
-    "appliesTo": "LG dishwashers; exact display and model manual must be matched"
+    "appliesTo": "LG dishwashers; exact display and model manual must be matched",
+    "tags": [
+      "dishwasher",
+      "ne2",
+      "LG",
+      "exact model manual",
+      "code confirmation"
+    ]
   },
   "whirlpool-washer-f5e1-error": {
     summary: "Whirlpool F5E1 is a door-switch or lid-switch state fault on supported washer families: the control is not seeing the expected closed-door signal even though the door may appear shut.",
