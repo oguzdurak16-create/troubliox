@@ -1,6 +1,228 @@
 import type { Problem } from "./problems";
 
 const overrides: Record<string, Partial<Problem>> = {
+  "lg-dishwasher-ne-error": {
+    "title": "LG dishwasher nE: check load interference before service",
+    "summary": "LG’s general dishwasher support guide associates nE with abnormal impeller operation and advises rearranging dishes that may obstruct movement. If the display persists, LG calls for service. The message alone does not prove that a diverter motor or its position sensor must be replaced.",
+    "likelyCauses": [
+      "A dish or utensil interferes with a rotating wash component",
+      "The loaded arrangement prevents normal movement during washing",
+      "The impeller or model-specific wash mechanism needs service after loading interference is ruled out"
+    ],
+    "quickChecks": [
+      {
+        "title": "Record nE and the full model number",
+        "detail": "Check the exact characters before choosing this procedure. A suffix such as nE1 or nE2 requires its own model-manual check.",
+        "level": "safe"
+      },
+      {
+        "title": "Rearrange the load",
+        "detail": "Stop the cycle and follow the manual’s opening instructions. Reposition protruding dishes or utensils without reaching into a powered pump or forcing an internal mechanism.",
+        "level": "caution"
+      },
+      {
+        "title": "Retry only after the load is clear",
+        "detail": "If the manual permits a normal restart, observe whether the same nE display returns. A quieter cycle is not proof that an internal component has been repaired.",
+        "level": "safe"
+      },
+      {
+        "title": "Use service for a persistent nE",
+        "detail": "LG’s next step after loading checks is service. Do not dismantle an actuator, bypass feedback or order a motor from the display alone.",
+        "level": "stop"
+      }
+    ],
+    "decisionTitle": "Does nE return after obstructing dishes are repositioned?",
+    "observations": [
+      {
+        "label": "A protruding item was touching a rotating wash part",
+        "advice": "Correct the loading and observe one manual-permitted retry."
+      },
+      {
+        "label": "The load is clear but nE returns",
+        "advice": "Arrange model-specific inspection instead of repeating resets."
+      },
+      {
+        "label": "The display contains extra characters after nE",
+        "advice": "Record the whole message and confirm the suffix in the exact manual."
+      }
+    ],
+    "faq": [
+      {
+        "question": "Does LG nE establish a failed diverter motor?",
+        "answer": "No. The reviewed LG guide describes impeller operation and load interference. The exact assembly and failed component require the model documentation and diagnosis."
+      },
+      {
+        "question": "Can I use this guide for nE1 or nE2?",
+        "answer": "Do not assume those suffixes have the same definition. LG’s general article documents nE, so a suffixed display needs the exact model manual."
+      }
+    ],
+    "modelNote": "This page follows LG’s general nE loading/impeller guidance. “Impeller” wording in a general article must not be treated as permission to access an internal pump. Assembly names and codes can differ by model and market.",
+    "updated": "2026-11-01",
+    "sources": [
+      {
+        "label": "LG USA Support — Dishwasher guide to error codes (nE section)",
+        "url": "https://www.lg.com/us/support/help-library/lg-dishwasher-guide-to-error-codes--20154823515108"
+      },
+      {
+        "label": "LG — Find the exact owner manual",
+        "url": "https://www.lg.com/us/support/manuals-documents"
+      }
+    ],
+    "whenToStop": [
+      "The appliance leaks, trips a breaker or smells electrically hot",
+      "A procedure requires internal access, forcing moving parts or bypassing protection",
+      "The exact display cannot be matched to the model documentation"
+    ],
+    "appliesTo": "LG dishwashers; exact display and model manual must be matched"
+  },
+  "lg-dishwasher-ne1-error": {
+    "title": "LG dishwasher nE1: confirm the model-specific code",
+    "summary": "The reviewed LG general dishwasher article documents nE, but it does not establish a separate nE1 definition. Record the complete display and full model number before assuming a diverter-position or motor-feedback fault. The exact model manual is required to choose a repair path.",
+    "likelyCauses": [
+      "The displayed message has been transcribed incompletely or without its cycle context",
+      "The appliance uses a model-specific code or suffix that differs from a general chart",
+      "A wash mechanism fault may need service if the exact manual identifies that system"
+    ],
+    "quickChecks": [
+      {
+        "title": "Photograph the complete nE1 display",
+        "detail": "Include nearby symbols and note whether the message alternates with another display. Do not discard a character merely to match a code chart.",
+        "level": "safe"
+      },
+      {
+        "title": "Read the rating label",
+        "detail": "Use the complete model designation and local market when locating LG’s manual. A similar-looking front panel does not establish the same error table.",
+        "level": "safe"
+      },
+      {
+        "title": "Confirm whether the manual lists the exact suffix",
+        "detail": "The linked general nE article is context, not proof of a distinct nE1 component diagnosis. If the manual gives another instruction, that model-specific instruction controls.",
+        "level": "safe"
+      },
+      {
+        "title": "Send the recorded display to LG support if undocumented",
+        "detail": "Do not force a diverter, enter service mode or buy an actuator on the basis of an unverified suffix. Use model-specific support.",
+        "level": "stop"
+      }
+    ],
+    "decisionTitle": "Does the exact model manual define nE1?",
+    "observations": [
+      {
+        "label": "The model manual lists nE1",
+        "advice": "Follow that definition and its permitted owner checks; do not replace it with a general nE description."
+      },
+      {
+        "label": "The manual lists nE but not the displayed suffix",
+        "advice": "Have LG confirm the full message before selecting a repair."
+      },
+      {
+        "label": "The display is accompanied by leaking or an electrical smell",
+        "advice": "Stop operation and arrange service rather than trying to clear the code."
+      }
+    ],
+    "faq": [
+      {
+        "question": "Does nE1 definitely mean diverter feedback failure?",
+        "answer": "That separate definition is not established by the LG general article reviewed here. Verify it against the full model manual before diagnosing or ordering parts."
+      },
+      {
+        "question": "Is nE1 interchangeable with nE?",
+        "answer": "No equivalence should be assumed. The general article supports nE guidance, while an additional character needs model-specific confirmation."
+      }
+    ],
+    "modelNote": "Exact-code definition awaiting model-manual confirmation. This page does not present nE1 as a verified synonym of nE or as a confirmed part failure. The linked general support article documents the base nE code.",
+    "updated": "2026-11-01",
+    "sources": [
+      {
+        "label": "LG USA Support — Dishwasher guide to error codes (nE section)",
+        "url": "https://www.lg.com/us/support/help-library/lg-dishwasher-guide-to-error-codes--20154823515108"
+      },
+      {
+        "label": "LG — Find the exact owner manual",
+        "url": "https://www.lg.com/us/support/manuals-documents"
+      }
+    ],
+    "whenToStop": [
+      "The appliance leaks, trips a breaker or smells electrically hot",
+      "A procedure requires internal access, forcing moving parts or bypassing protection",
+      "The exact display cannot be matched to the model documentation"
+    ],
+    "appliesTo": "LG dishwashers; exact display and model manual must be matched"
+  },
+  "lg-dishwasher-ne2-error": {
+    "title": "LG dishwasher nE2: confirm the model-specific code",
+    "summary": "The reviewed LG general dishwasher article documents nE, but it does not establish a separate nE2 definition. Record the complete display and full model number before assuming a diverter-position or motor-feedback fault. The exact model manual is required to choose a repair path.",
+    "likelyCauses": [
+      "The displayed message has been transcribed incompletely or without its cycle context",
+      "The appliance uses a model-specific code or suffix that differs from a general chart",
+      "A wash mechanism fault may need service if the exact manual identifies that system"
+    ],
+    "quickChecks": [
+      {
+        "title": "Photograph the complete nE2 display",
+        "detail": "Include nearby symbols and note whether the message alternates with another display. Do not discard a character merely to match a code chart.",
+        "level": "safe"
+      },
+      {
+        "title": "Read the rating label",
+        "detail": "Use the complete model designation and local market when locating LG’s manual. A similar-looking front panel does not establish the same error table.",
+        "level": "safe"
+      },
+      {
+        "title": "Confirm whether the manual lists the exact suffix",
+        "detail": "The linked general nE article is context, not proof of a distinct nE2 component diagnosis. If the manual gives another instruction, that model-specific instruction controls.",
+        "level": "safe"
+      },
+      {
+        "title": "Send the recorded display to LG support if undocumented",
+        "detail": "Do not force a diverter, enter service mode or buy an actuator on the basis of an unverified suffix. Use model-specific support.",
+        "level": "stop"
+      }
+    ],
+    "decisionTitle": "Does the exact model manual define nE2?",
+    "observations": [
+      {
+        "label": "The model manual lists nE2",
+        "advice": "Follow that definition and its permitted owner checks; do not replace it with a general nE description."
+      },
+      {
+        "label": "The manual lists nE but not the displayed suffix",
+        "advice": "Have LG confirm the full message before selecting a repair."
+      },
+      {
+        "label": "The display is accompanied by leaking or an electrical smell",
+        "advice": "Stop operation and arrange service rather than trying to clear the code."
+      }
+    ],
+    "faq": [
+      {
+        "question": "Does nE2 definitely mean diverter feedback failure?",
+        "answer": "That separate definition is not established by the LG general article reviewed here. Verify it against the full model manual before diagnosing or ordering parts."
+      },
+      {
+        "question": "Is nE2 interchangeable with nE?",
+        "answer": "No equivalence should be assumed. The general article supports nE guidance, while an additional character needs model-specific confirmation."
+      }
+    ],
+    "modelNote": "Exact-code definition awaiting model-manual confirmation. This page does not present nE2 as a verified synonym of nE or as a confirmed part failure. The linked general support article documents the base nE code.",
+    "updated": "2026-11-01",
+    "sources": [
+      {
+        "label": "LG USA Support — Dishwasher guide to error codes (nE section)",
+        "url": "https://www.lg.com/us/support/help-library/lg-dishwasher-guide-to-error-codes--20154823515108"
+      },
+      {
+        "label": "LG — Find the exact owner manual",
+        "url": "https://www.lg.com/us/support/manuals-documents"
+      }
+    ],
+    "whenToStop": [
+      "The appliance leaks, trips a breaker or smells electrically hot",
+      "A procedure requires internal access, forcing moving parts or bypassing protection",
+      "The exact display cannot be matched to the model documentation"
+    ],
+    "appliesTo": "LG dishwashers; exact display and model manual must be matched"
+  },
   "whirlpool-washer-f5e1-error": {
     summary: "Whirlpool F5E1 is a door-switch or lid-switch state fault on supported washer families: the control is not seeing the expected closed-door signal even though the door may appear shut.",
     likelyCauses: [
