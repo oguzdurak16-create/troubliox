@@ -62,7 +62,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   };
 
   return (
-    <html lang="en">
+    <html data-scroll-behavior="smooth" lang="en">
       <head>
         <script id="troublio-consent-default" src="/consent-default.js" />
         <script

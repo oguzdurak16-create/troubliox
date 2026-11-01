@@ -310,6 +310,7 @@ export default async function ProblemPage({ params }: Props) {
               <span>{problem.device}</span>
               {problem.appliesTo ? <span>{problem.appliesTo}</span> : null}
             </div>
+            <a className="guide-jump" href="#checks">Go to the safe checks <span aria-hidden="true">↓</span></a>
             <div className="answer-capsule">
               <span>Quick answer</span>
               <p>{opportunitySeo?.quickAnswer || problem.summary}</p>

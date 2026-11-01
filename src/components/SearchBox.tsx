@@ -59,13 +59,6 @@ export function SearchBox({ compact = false, initialValue = "" }: { compact?: bo
 
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const selected = activeIndex >= 0 ? suggestions[activeIndex] : null;
-    if (selected) {
-      window.gtag?.("event", "search_suggestion_open", { guide_slug: selected.slug, search_term: query.trim() });
-      router.push(`/problems/${selected.slug}`);
-      setOpen(false);
-      return;
-    }
     const value = query.trim();
     if (value) window.gtag?.("event", "search", { search_term: value });
     router.push(value ? `/search?q=${encodeURIComponent(value)}` : "/search");
@@ -80,6 +73,12 @@ export function SearchBox({ compact = false, initialValue = "" }: { compact?: bo
     } else if (event.key === "ArrowUp") {
       event.preventDefault();
       setActiveIndex((current) => (current <= 0 ? suggestions.length - 1 : current - 1));
+    } else if (event.key === "Enter" && activeIndex >= 0) {
+      event.preventDefault();
+      const selected = suggestions[activeIndex];
+      window.gtag?.("event", "search_suggestion_open", { guide_slug: selected.slug, search_term: query.trim() });
+      router.push(`/problems/${selected.slug}`);
+      setOpen(false);
     } else if (event.key === "Escape") {
       setOpen(false);
       setActiveIndex(-1);
@@ -117,7 +116,6 @@ export function SearchBox({ compact = false, initialValue = "" }: { compact?: bo
               className={activeIndex === itemIndex ? "search-suggestion search-suggestion-active" : "search-suggestion"}
               href={`/problems/${item.slug}`}
               key={item.slug}
-              onMouseEnter={() => setActiveIndex(itemIndex)}
               onClick={() => window.gtag?.("event", "search_suggestion_open", { guide_slug: item.slug, search_term: query.trim() })}
             >
               <span>{item.errorCode || item.category}</span>

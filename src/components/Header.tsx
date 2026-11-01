@@ -1,7 +1,28 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { Logo } from "@/components/Logo";
 
 export function Header() {
+  const menuRef = useRef<HTMLDetailsElement>(null);
+  useEffect(() => {
+    const dismiss = (event: PointerEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) menuRef.current.open = false;
+    };
+    const escape = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && menuRef.current?.open) {
+        menuRef.current.open = false;
+        menuRef.current.querySelector("summary")?.focus();
+      }
+    };
+    document.addEventListener("pointerdown", dismiss);
+    document.addEventListener("keydown", escape);
+    return () => {
+      document.removeEventListener("pointerdown", dismiss);
+      document.removeEventListener("keydown", escape);
+    };
+  }, []);
   return (
     <header className="site-header">
       <div className="container header-inner">
@@ -24,9 +45,9 @@ export function Header() {
           <Link className="header-search" href="/search" aria-label="Search Troublio">
             <span aria-hidden="true">⌕</span><em>Search</em>
           </Link>
-          <details className="mobile-menu">
+          <details ref={menuRef} className="mobile-menu">
             <summary aria-label="Open navigation"><span aria-hidden="true">☰</span></summary>
-            <nav aria-label="Mobile navigation">
+            <nav aria-label="Mobile navigation" onClick={(event) => { if ((event.target as HTMLElement).closest("a") && menuRef.current) menuRef.current.open = false; }}>
               <Link href="/experience">Real-world experience</Link>
               <Link href="/models">Community model pages</Link>
               <Link href="/decoder">Error code decoder</Link>

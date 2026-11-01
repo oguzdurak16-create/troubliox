@@ -61,25 +61,24 @@ export default function HomePage() {
       <section className="hero">
         <div className="container hero-grid">
           <div className="hero-copy">
-            <span className="eyebrow">Troubleshooting without the runaround</span>
-            <h1>Appliance and Windows error codes. <em>Find your next safe check.</em></h1>
-            <p>Search the exact code or symptom to see the likely cause, the safest checks to try first, and the point where qualified service is the correct next step.</p>
+            <span className="eyebrow">Appliance & Windows troubleshooting</span>
+            <h1>Error codes.<br /><em>Clear next steps.</em></h1>
+            <p>Find the meaning of a code or symptom, check your model, and start with the safest checks.</p>
             <SearchBox />
             <div className="hero-actions"><Link className="button button-primary" href="/decoder">Decode an error code</Link><Link className="button button-secondary" href="/diagnose">Start guided diagnosis</Link></div>
             <div className="search-suggestions"><span>Start with a code:</span>{searchDemandGuides.slice(0, 3).map((problem) => <Link href={`/problems/${problem.slug}`} key={problem.slug}>{problem.shortTitle}</Link>)}</div>
           </div>
-          <div className="diagnostic-visual" aria-hidden="true">
-            <div className="visual-orbit" />
-            <div className="float-note float-note-one">Safe checks first</div>
-            <div className="float-note float-note-two">Model check required</div>
-            <div className="diagnostic-panel">
-              <div className="panel-top"><span className="panel-status">Diagnosis active</span><span className="panel-code">rL</span></div>
-              <div className="signal-row"><span className="signal-icon">01</span><span className="signal-copy"><strong>Display identified</strong><span>Whirlpool washer</span></span><span className="signal-score">Exact</span></div>
-              <div className="signal-row"><span className="signal-icon">02</span><span className="signal-copy"><strong>Likely condition</strong><span>Load detected in Clean Washer</span></span><span className="signal-score">Likely</span></div>
-              <div className="signal-row"><span className="signal-icon">03</span><span className="signal-copy"><strong>Safety state</strong><span>Empty drum before restart</span></span><span className="signal-score">Safe</span></div>
-              <div className="panel-result"><small>Next safe check</small><strong>Remove every item and restart the empty cleaning cycle</strong></div>
+          <aside className="home-guide-panel" aria-labelledby="start-guide-title">
+            <span className="eyebrow">Choose your starting point</span>
+            <h2 id="start-guide-title">What needs a closer look?</h2>
+            <div className="home-guide-links">
+              <Link href="/error-codes/washing-machines"><span aria-hidden="true">01</span><div><strong>Washing machines</strong><small>Fill, drain, spin & display codes</small></div><b aria-hidden="true">→</b></Link>
+              <Link href="/error-codes/dishwashers"><span aria-hidden="true">02</span><div><strong>Dishwashers</strong><small>Water, cleaning & error codes</small></div><b aria-hidden="true">→</b></Link>
+              <Link href="/devices/printers"><span aria-hidden="true">03</span><div><strong>Printers & connections</strong><small>Offline, queues & Wi-Fi</small></div><b aria-hidden="true">→</b></Link>
             </div>
-          </div>
+            <p>Have the full model number ready. Code meanings can differ between product families.</p>
+            <Link className="text-link" href="/model-number">Find your model number →</Link>
+          </aside>
         </div>
       </section>
 
