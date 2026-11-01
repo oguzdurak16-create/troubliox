@@ -87,11 +87,15 @@ export function SearchBox({ compact = false, initialValue = "" }: { compact?: bo
   }
 
   return (
-    <form ref={rootRef} className={compact ? "search-box search-box-compact smart-search" : "search-box smart-search"} onSubmit={submit} role="search">
+    <form ref={rootRef} className={compact ? "search-box search-box-compact smart-search" : "search-box smart-search"} onSubmit={submit} action="/search" method="get" role="search">
       <span className="search-icon" aria-hidden="true">⌕</span>
       <label className="sr-only" htmlFor={compact ? "site-search-compact" : "site-search"}>Describe your problem</label>
       <input
         id={compact ? "site-search-compact" : "site-search"}
+        name="q"
+        type="search"
+        role="combobox"
+        aria-autocomplete="list"
         value={query}
         onFocus={() => { ensureIndex(); setOpen(true); }}
         onChange={(event) => { setQuery(event.target.value); setOpen(true); setActiveIndex(-1); ensureIndex(); }}

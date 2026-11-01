@@ -12,6 +12,8 @@ export const metadata: Metadata = {
 };
 
 export const revalidate = 300;
+// Contributions belong to the live data service, not the build machine.
+export const dynamic = "force-dynamic";
 
 export default async function ModelsPage() {
   const models = await listModelExperiences(100);

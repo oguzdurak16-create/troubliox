@@ -1,4 +1,5 @@
 export const problemAliases = [
+  { sourceSlug: "whirlpool-washer-f0e1-error", destinationSlug: "whirlpool-washer-rl-code" },
   {
     sourceSlug: "bosch-washer-e29-f29-error",
     destinationSlug: "bosch-washer-f29-error",

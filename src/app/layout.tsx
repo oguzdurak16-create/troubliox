@@ -24,13 +24,13 @@ export const metadata: Metadata = {
     title: `${SITE_NAME} — Find what’s wrong. Know what to do.`,
     description: SITE_DESCRIPTION,
     url: SITE_URL,
-    images: [{ url: "/og-image.svg", width: 1200, height: 630, alt: "Troublio troubleshooting engine" }],
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Troublio troubleshooting engine" }],
   },
   twitter: {
     card: "summary_large_image",
     title: `${SITE_NAME} — Find what’s wrong`,
     description: SITE_DESCRIPTION,
-    images: ["/og-image.svg"],
+    images: ["/opengraph-image"],
   },
   icons: { icon: "/icon.svg" },
   alternates: {
@@ -77,8 +77,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }} />
         <ConsentManager gaId={gaId} />
+        <a className="seo-skip-link" href="#main-content">Skip to content</a>
         <Header />
-        <main>{children}</main>
+        <main id="main-content" tabIndex={-1}>{children}</main>
         <AdSlot slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT} afterSelector=".direct-answer" />
         <Footer />
       </body>
