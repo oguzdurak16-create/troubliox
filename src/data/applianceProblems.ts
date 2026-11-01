@@ -222,7 +222,7 @@ export const applianceProblems: Problem[] = [
     "brand": "Samsung",
     "brandSlug": "samsung",
     "device": "Washing machine",
-    "updated": "2026-09-29",
+    "updated": "2026-11-01",
     "readTime": 5,
     "likelyCauses": [
       "The drain hose is kinked, frozen, blocked, or installed incorrectly",
@@ -238,7 +238,7 @@ export const applianceProblems: Problem[] = [
       },
       {
         "title": "Drain retained water safely",
-        "detail": "If your model has an emergency drain hose or user procedure, unplug the washer and follow the manual before opening a filter.",
+        "detail": "If the model provides an emergency drain procedure, unplug the washer, let hot water cool, and prepare shallow containers and towels before following it. Do not force the door or unscrew a filter while the drum still holds water.",
         "level": "caution"
       },
       {
@@ -307,7 +307,7 @@ export const applianceProblems: Problem[] = [
       "1 5C"
     ],
     "appliesTo": "Samsung front-load and top-load model families that use the 5C / 5E no-drain code family",
-    "modelNote": "Drain-filter access and hose installation details vary by model. Use the exact model manual before removing covers or assuming a front-loader procedure applies.",
+    "modelNote": "Scope: Samsung front-load or top-load washers whose exact model manual identifies 5C / 5E as a drain error. Photograph the display so 5E is not confused with 5d / Sd. Front-loader pump-filter access is not a universal top-loader procedure. Drain-hose height and permitted insertion depth are model-specific; use the full model number and local manual, not a single height copied from another washer.",
     "sources": [
       {
         "label": "Samsung UK: Resolve a 5E or 5C washing-machine error",

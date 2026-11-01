@@ -1280,7 +1280,7 @@ export const trafficProblems: Problem[] = [
     "category": "Computers & printers",
     "categorySlug": "computers-printers",
     "device": "Printer",
-    "updated": "2026-07-17",
+    "updated": "2026-11-01",
     "readTime": 4,
     "likelyCauses": [
       "The wrong printer copy or port is selected",
@@ -1291,7 +1291,7 @@ export const trafficProblems: Problem[] = [
     "quickChecks": [
       {
         "title": "Check the printer display and connection",
-        "detail": "Confirm it is ready and connected to the same network as the computer.",
+        "detail": "Confirm the printer is ready. For a network model, read its current address from the printer display or network report; compare it with the port saved in Windows. For USB, check the cable and port instead.",
         "level": "safe"
       },
       {
@@ -1318,7 +1318,7 @@ export const trafficProblems: Problem[] = [
       },
       {
         "label": "Wi-Fi",
-        "advice": "Confirm the printer and computer are on the same SSID and subnet."
+        "advice": "On a home network, confirm the printer is on the intended network and guest isolation is not blocking access. Different SSIDs or subnets can work when routing permits; on a managed network ask the administrator rather than changing its segmentation."
       },
       {
         "label": "Ethernet",
@@ -1352,7 +1352,9 @@ export const trafficProblems: Problem[] = [
         "label": "Microsoft: Fix printer connection and printing problems",
         "url": "https://support.microsoft.com/en-us/windows/hardware/printer/fix-printer-connection-and-printing-problems-in-windows"
       }
-    ]
+    ],
+    "appliesTo": "Windows print queues for USB, Wi-Fi or Ethernet printers; setup varies by manufacturer",
+    "modelNote": "Start with the connection type and the Windows version. A saved queue can appear even when the physical printer is unreachable. Windows 11 uses Settings > Bluetooth & devices > Printers & scanners; older Windows layouts differ. Wi-Fi and Ethernet clients need a permitted network route to the printer, not necessarily the same SSID. Guest isolation or an organizational print server can change the checks."
   },
   {
     "slug": "printer-not-printing-black-ink",
@@ -4800,7 +4802,7 @@ export const trafficProblems: Problem[] = [
     "brand": "Microsoft",
     "brandSlug": "microsoft",
     "device": "Windows printer",
-    "updated": "2026-09-29",
+    "updated": "2026-11-01",
     "published": "2026-09-29",
     "readTime": 5,
     "likelyCauses": [
@@ -4822,7 +4824,7 @@ export const trafficProblems: Problem[] = [
       },
       {
         "title": "Add the shared printer manually",
-        "detail": "Use Windows Settings and enter the shared path such as \\\\computer_name\\printer_name. Microsoft also recommends trying the host IP address if the computer name fails.",
+        "detail": "In Windows printer setup, enter the host share path, for example \\\\computer_name\\printer_name. If name resolution fails, try the same shared path with the host IP address. A direct TCP/IP queue to the printer itself is a different setup and requires a network-capable model.",
         "level": "safe"
       },
       {
@@ -4886,7 +4888,7 @@ export const trafficProblems: Problem[] = [
       "operation failed with error 0x00000214"
     ],
     "appliesTo": "Windows 11 and Windows 10 shared or network-printer connection scenarios",
-    "modelNote": "This guide is scoped to 0x00000214 shown while adding or connecting to a Windows printer. The same hexadecimal value can appear in unrelated software contexts.",
+    "modelNote": "Scope: 0x00000214 shown while adding or connecting to a shared printer in Windows. It is not a diagnosis for every program that displays that hexadecimal value. Record the client Windows version, host or print-server version, full printer model, driver architecture and whether the host itself can print. Microsoft’s linked connection guidance covers the workflow; the linked Q&A is a reported scenario, not a universal error-code definition.",
     "sources": [
       {
         "label": "Microsoft Support: Fix shared printer connection problems in Windows",
@@ -4913,7 +4915,7 @@ export const trafficProblems: Problem[] = [
     "brand": "Microsoft",
     "brandSlug": "microsoft",
     "device": "Windows printer",
-    "updated": "2026-09-29",
+    "updated": "2026-11-01",
     "published": "2026-09-29",
     "readTime": 5,
     "likelyCauses": [
@@ -4930,7 +4932,7 @@ export const trafficProblems: Problem[] = [
       },
       {
         "title": "Install current Windows updates",
-        "detail": "Microsoft resolved the known Windows 11 issue in updates released from KB5053657 onward. Install the latest cumulative update offered for your supported Windows version rather than removing security updates as a first-line fix.",
+        "detail": "For the historical Windows 11 22H2 / 23H2 issue, Microsoft documented the resolution in KB5053657; for Windows 10 22H2, in KB5053643. Current cumulative updates for the matching supported branch include earlier fixes. Do not apply a package for another Windows version.",
         "level": "safe"
       },
       {
@@ -4976,7 +4978,7 @@ export const trafficProblems: Problem[] = [
       },
       {
         "question": "Was the Windows Internet Print Provider random-page problem fixed?",
-        "answer": "Yes. Microsoft marked the known Windows 11 issue resolved in KB5053657, released March 25, 2025, and says later Windows updates include the resolution. The corresponding Windows 10 issue was also addressed in later servicing updates."
+        "answer": "Microsoft documented the resolution in March 25, 2025 updates: KB5053657 for Windows 11 22H2 / 23H2 and KB5053643 for Windows 10 22H2. These are historical references. Match winver to the supported servicing branch and use the current offered cumulative update."
       },
       {
         "question": "Should I roll back Windows to stop the random printer pages?",
@@ -5004,7 +5006,7 @@ export const trafficProblems: Problem[] = [
       "Host localhost printer",
       "printer prints random IPP text"
     ],
-    "appliesTo": "Windows PCs with USB-connected dual-mode printers; the documented Microsoft issue affected specific 2025 Windows update builds",
+    "appliesTo": "Historical Windows 11 22H2 / 23H2 and Windows 10 22H2 issue on USB-connected dual-mode printers",
     "sources": [
       {
         "label": "Microsoft Support: KB5053602 USB printer issue and resolution",
@@ -5013,8 +5015,13 @@ export const trafficProblems: Problem[] = [
       {
         "label": "Microsoft Support: KB5053657 printer fix",
         "url": "https://support.microsoft.com/en-us/servicing/os/windows-11/2025/03/march-25-2025-kb5053657-os-builds-22621-5126-and-22631-5126-preview"
+      },
+      {
+        "label": "Microsoft Support: Windows 10 22H2 KB5053643 printer fix",
+        "url": "https://support.microsoft.com/en-us/servicing/os/windows-10/2025/03/march-25-2025-kb5053643-os-build-19045-5679-preview"
       }
     ],
-    "contentKind": "symptom"
+    "contentKind": "symptom",
+    "modelNote": "Check winver and Update history first. KB5053657 (March 25, 2025) documents the fix for Windows 11 22H2 / 23H2, builds 22621.5126 / 22631.5126; KB5053643 documents it for Windows 10 22H2, build 19045.5679. These build numbers identify historical resolutions, not updates to install on every Windows release. Use the latest cumulative update offered for your supported edition. A Wi-Fi-only printer or a different Windows branch needs a separate diagnosis."
   }
 ];

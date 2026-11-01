@@ -1,7 +1,7 @@
 import type { Problem } from "../problems";
 
 const modelWarning =
-  "Whirlpool error-code wording varies by model and market. Match the complete model number to the official manual before using service procedures or ordering parts.";
+  "Scope: selected Whirlpool front-load models with a Clean Washer cycle. rL, F0E1 and F34 are not universal aliases across all Whirlpool products; match the displayed code and full model number to the local manual. If the display appeared in a normal wash rather than Clean Washer, confirm the code before following this guide. Do not apply front-loader instructions to a top-loader without its manual.";
 
 export const whirlpoolWasherRlCodeProblem: Problem = {
   slug: "whirlpool-washer-rl-code",
@@ -14,7 +14,7 @@ export const whirlpoolWasherRlCodeProblem: Problem = {
   brand: "Whirlpool",
   brandSlug: "whirlpool",
   device: "Washing machine",
-  updated: "2026-08-24",
+  updated: "2026-11-01",
   readTime: 3,
   likelyCauses: [
     "Clothing, a cleaning cloth, or another item remains in the drum or door-seal folds",

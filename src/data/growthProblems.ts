@@ -100,7 +100,7 @@ export const growthProblems: Problem[] = [
     "category": "Internet & Wi-Fi",
     "categorySlug": "internet-wifi",
     "device": "Google Chrome",
-    "updated": "2026-07-17",
+    "updated": "2026-11-01",
     "readTime": 5,
     "likelyCauses": [
       "The web address is misspelled or no longer exists",
@@ -120,13 +120,13 @@ export const growthProblems: Problem[] = [
         "level": "safe"
       },
       {
-        "title": "Restart the browser and router",
-        "detail": "This clears common temporary resolver and gateway states.",
+        "title": "Restart Chrome, then isolate device or network state",
+        "detail": "Restart Chrome and retest the same hostname. If only this device fails, review its DNS or VPN settings; if all home devices fail, a normal router restart may help. Restarting Chrome alone does not guarantee the operating-system DNS cache is flushed.",
         "level": "safe"
       },
       {
         "title": "Review custom DNS or filtering settings",
-        "detail": "Return to automatic DNS temporarily if you intentionally use a custom resolver.",
+        "detail": "Check whether Chrome Secure DNS or a deliberately configured resolver differs from the system configuration. Use the setting available on your OS and Chrome version; do not bypass managed filtering or treat a DNS change as a fix for an unregistered domain.",
         "level": "caution"
       }
     ],
@@ -180,7 +180,7 @@ export const growthProblems: Problem[] = [
         "url": "https://support.google.com/chrome/answer/6098869"
       }
     ],
-    "modelNote": "Confirm the exact domain and test another network before treating this as a device fault."
+    "modelNote": "Scope: DNS_PROBE_FINISHED_NXDOMAIN in Chrome on desktop or mobile; it is a name-resolution error, not an HTTP 404 or a certificate warning. Windows DNS-cache commands do not apply to Android or iOS. Compare the same full hostname on another permitted network before changing settings. Managed Secure DNS, VPN and filtering policies belong with the administrator."
   },
   {
     "slug": "chrome-your-connection-is-not-private",
