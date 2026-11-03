@@ -11,7 +11,8 @@
     "audit:similarity": "node scripts/audit-content-similarity.mjs",
     "indexnow": "node scripts/submit-indexnow.mjs",
     "indexnow:check": "node scripts/submit-indexnow.mjs --dry-run",
-    "validate:content": "node scripts/validate-content.mjs"
+    "validate:content": "node scripts/validate-content.mjs",
+    "test:calculations": "node --experimental-strip-types scripts/check-repair-cost.mjs"
   },
   "dependencies": {
     "next": "16.4.3",

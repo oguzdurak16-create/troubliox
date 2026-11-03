@@ -2,7 +2,7 @@ import { problems } from "@/data/problems";
 import { listPublishedDemandProblems, mergePublishedProblems } from "@/lib/publishedDemandProblems";
 import { buildSearchIndex } from "@/lib/search-index";
 
-export const revalidate = 300;
+export const revalidate = 3600;
 
 export async function GET() {
   const published = await listPublishedDemandProblems();

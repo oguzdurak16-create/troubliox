@@ -9,7 +9,7 @@ import styles from "../../models.module.css";
 
 type Props = { params: Promise<{ brand: string; model: string }> };
 
-export const revalidate = 300;
+export const revalidate = 3600;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { brand, model } = await params;

@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/guides" },
 };
 
-export const revalidate = 300;
+export const revalidate = 3600;
 
 export default async function GuidesPage() {
   const published = await listPublishedDemandProblems();

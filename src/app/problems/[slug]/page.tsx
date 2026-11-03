@@ -181,7 +181,8 @@ const SEO_OPPORTUNITY_OVERRIDES: Record<string, OpportunitySeoOverride> = {
   },
 };
 
-export const revalidate = 300;
+// Local guides are versioned with the deployment. Remote fallback fetches set their own lifetime.
+export const revalidate = false;
 
 export async function generateStaticParams() {
   const published = await listPublishedDemandProblems();

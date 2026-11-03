@@ -10,7 +10,7 @@ import { listIndexableExperienceProducts } from "@/lib/experienceProducts";
 import { listPublishedDemandProblems, mergePublishedProblems } from "@/lib/publishedDemandProblems";
 import { SITE_URL } from "@/lib/site";
 
-export const revalidate = 300;
+export const revalidate = 3600;
 
 function addEnglishAlternates(entry: MetadataRoute.Sitemap[number]): MetadataRoute.Sitemap[number] {
   return {
@@ -61,6 +61,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     items.reduce((latest, problem) => problem.updated > latest ? problem.updated : latest, "2026-09-06"),
   );
   const pages = [
+    "/tools",
+    "/tools/repair-or-replace-calculator",
     "",
     "/decoder",
     "/model-number",
@@ -93,7 +95,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const entries: MetadataRoute.Sitemap = [
     ...pages.map((path) => ({
       url: `${SITE_URL}${path}`,
-      lastModified: path === "/editorial-policy" ? new Date("2026-11-01") : aggregatePages.has(path) ? latestProblemUpdated : updated,
+      lastModified: path.startsWith("/tools") ? new Date("2026-11-03") : path === "/editorial-policy" ? new Date("2026-11-01") : aggregatePages.has(path) ? latestProblemUpdated : updated,
       changeFrequency: path === "" || highPriorityPages.includes(path) || path.startsWith("/error-codes") || path.startsWith("/symptoms") ? "weekly" as const : "monthly" as const,
       priority: path === "" ? 1 : highPriorityPages.includes(path) ? 0.95 : path.startsWith("/error-codes") || path.startsWith("/symptoms") ? 0.9 : 0.6,
     })),

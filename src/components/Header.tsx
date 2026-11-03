@@ -30,6 +30,7 @@ export function Header() {
       <div className="container header-inner">
         <Logo />
         <nav className="main-nav" aria-label="Primary navigation">
+          <Link href="/tools">Tools</Link>
           <Link href="/decoder">Decoder</Link>
           <Link href="/reset">Reset</Link>
           <Link href="/error-codes">Error codes</Link>
@@ -50,6 +51,7 @@ export function Header() {
           <details ref={menuRef} className="mobile-menu">
             <summary aria-label="Open navigation"><span aria-hidden="true">☰</span></summary>
             <nav aria-label="Mobile navigation" onClick={(event) => { if ((event.target as HTMLElement).closest("a") && menuRef.current) menuRef.current.open = false; }}>
+              <Link href="/tools">Tools and cost comparison</Link>
               <Link href="/experience">Real-world experience</Link>
               <Link href="/models">Community model pages</Link>
               <Link href="/decoder">Error code decoder</Link>

@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
-export const revalidate = 300;
+export const revalidate = 3600;
 // Contributions belong to the live data service, not the build machine.
 export const dynamic = "force-dynamic";
 

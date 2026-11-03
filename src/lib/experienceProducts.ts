@@ -3,7 +3,7 @@ import { experienceSeed, type ExperienceProduct } from "@/data/experienceSeed";
 
 const SUPABASE_URL = process.env.SUPABASE_URL || "https://ivvzpzmojfhtlfapfrxf.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = process.env.SUPABASE_PUBLISHABLE_KEY || "sb_publishable_SNvWSL7fDWJMWe1YoQUE6Q_pGJRVzhv";
-const REVALIDATE_SECONDS = 300;
+const REVALIDATE_SECONDS = 3600;
 export const EXPERIENCE_INDEX_MIN_OWNERS = 10;
 
 type ProductRow = {

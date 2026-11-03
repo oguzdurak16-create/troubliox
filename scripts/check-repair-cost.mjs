@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import { compareRepairCost } from '../src/lib/repair-cost.ts';
+const c = compareRepairCost(300,900,0,0,3,9);
+assert.equal(c.repairAnnual,100); assert.equal(c.replacementAnnual,100); assert.equal(c.extraUpfront,600);
+const free = compareRepairCost(100,500,50,550,2,10);
+assert.equal(free.replacement,0); assert.equal(free.ratio,null);
+assert.throws(()=>compareRepairCost(300,100,0,101,3,9),RangeError);
+assert.throws(()=>compareRepairCost(300,900,0,0,0,9),RangeError);
+assert.throws(()=>compareRepairCost(Infinity,900,0,0,3,9),RangeError);
+console.log('Repair annual cost, credits, zero-net-cost and invalid-input checks passed.');

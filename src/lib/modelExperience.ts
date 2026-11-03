@@ -62,7 +62,7 @@ export async function getModelExperience(brandKey: string, modelKey: string): Pr
   const select = "brand_key,model_key,brand,model,report_count,resolved_count,resolution_rate,top_issues,top_solutions,last_contribution_at,updated_at";
   const response = await fetch(
     `${SUPABASE_URL}/rest/v1/troublio_model_aggregates?brand_key=eq.${encodeURIComponent(brandKey)}&model_key=eq.${encodeURIComponent(modelKey)}&select=${select}&limit=1`,
-    { headers: headers(), next: { revalidate: 300 } },
+    { headers: headers(), next: { revalidate: 3600 } },
   );
   if (!response.ok) return null;
   const rows = (await response.json()) as DbModelExperienceAggregate[];
@@ -73,7 +73,7 @@ export async function listModelExperiences(limit = 100): Promise<ModelExperience
   const select = "brand_key,model_key,brand,model,report_count,resolved_count,resolution_rate,top_issues,top_solutions,last_contribution_at,updated_at";
   const response = await fetch(
     `${SUPABASE_URL}/rest/v1/troublio_model_aggregates?select=${select}&order=report_count.desc,updated_at.desc&limit=${Math.max(1, Math.min(limit, 500))}`,
-    { headers: headers(), next: { revalidate: 300 } },
+    { headers: headers(), next: { revalidate: 3600 } },
   );
   if (!response.ok) return [];
   const rows = (await response.json()) as DbModelExperienceAggregate[];

@@ -3,7 +3,7 @@ import type { Problem } from "@/data/problems";
 
 const SUPABASE_URL = process.env.SUPABASE_URL || "https://ivvzpzmojfhtlfapfrxf.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = process.env.SUPABASE_PUBLISHABLE_KEY || "sb_publishable_SNvWSL7fDWJMWe1YoQUE6Q_pGJRVzhv";
-const REVALIDATE_SECONDS = 300;
+const REVALIDATE_SECONDS = 3600;
 
 type PublishedProblemRow = {
   slug: string;

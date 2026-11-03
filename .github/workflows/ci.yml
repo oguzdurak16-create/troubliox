@@ -61,5 +61,8 @@ jobs:
           if-no-files-found: warn
       - name: Typecheck
         run: pnpm typecheck
+      - name: Verify calculator formulas
+        run: npm run test:calculations
+
       - name: Production build
         run: pnpm build

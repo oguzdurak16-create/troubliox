@@ -8,7 +8,7 @@ import {
 } from "@/lib/experienceProducts";
 import styles from "../experience.module.css";
 
-export const revalidate = 300;
+export const revalidate = 3600;
 export const dynamicParams = true;
 
 export async function generateStaticParams() {
